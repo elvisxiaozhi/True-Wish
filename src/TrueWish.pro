@@ -26,11 +26,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    sidebar.cpp
+    sidebar.cpp \
+    titlebar.cpp
 
 HEADERS += \
         mainwindow.h \
-    sidebar.h
+    sidebar.h \
+    titlebar.h
 
 FORMS += \
         mainwindow.ui

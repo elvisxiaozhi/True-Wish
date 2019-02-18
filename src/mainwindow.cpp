@@ -9,6 +9,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     sidebar = new Sidebar(this);
     addDockWidget(Qt::LeftDockWidgetArea, sidebar);
+
+    titleBar = new TitleBar(this);
+
+//    ui->widget->setLayout(ui->);
+    ui->contentLayout->addWidget(titleBar);
 }
 
 MainWindow::~MainWindow()
