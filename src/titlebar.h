@@ -2,6 +2,7 @@
 #define TITLEBAR_H
 
 #include <QWidget>
+#include <QAction>
 
 class TitleBar : public QWidget
 {
@@ -9,9 +10,22 @@ class TitleBar : public QWidget
 public:
     explicit TitleBar(QWidget *parent = nullptr);
 
-signals:
+private:
+    QList<QAction *> actList;
+    QAction *checkedAct;
+    QAction *hoveredAct;
+    bool hoveredOnNotify;
 
-public slots:
+    QAction *addAction(const QString &, const QIcon &);
+    QAction *actionAt(const QPoint &);
+
+protected:
+    void paintEvent(QPaintEvent *);
+    void mousePressEvent(QMouseEvent *);
+    void mouseMoveEvent(QMouseEvent *);
+
+signals:
+    void actionChanged(int);
 };
 
 #endif // TITLEBAR_H

@@ -27,12 +27,15 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     sidebar.cpp \
-    titlebar.cpp
+    titlebar.cpp \
+    content.cpp
 
 HEADERS += \
         mainwindow.h \
     sidebar.h \
-    titlebar.h
+    titlebar.h \
+    content.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    content.ui

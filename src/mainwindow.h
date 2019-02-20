@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "sidebar.h"
 #include "titlebar.h"
+#include "content.h"
 
 namespace Ui {
 class MainWindow;
@@ -22,6 +23,7 @@ private:
 
     Sidebar *sidebar;
     TitleBar *titleBar;
+//    Content *content;
 };
 
 #endif // MAINWINDOW_H

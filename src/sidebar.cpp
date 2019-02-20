@@ -22,6 +22,8 @@ Sidebar::Sidebar(QWidget *parent) : QDockWidget(parent)
 
     checkedAct = actList[0];
     hoveredAct = NULL;
+
+    setFixedWidth(160);
 }
 
 QAction *Sidebar::addAction(const QString &text, const QIcon &icon)
@@ -50,7 +52,7 @@ void Sidebar::paintEvent(QPaintEvent *event)
     QPainter painter(this);
 
     //draw menu
-    painter.fillRect(rect(), QColor(240, 248, 255)); //set background color
+    painter.fillRect(rect(), QColor(46, 62, 77)); //set background color
     int posY = 110;
     for(auto action : actList) {
         if(action == checkedAct) {

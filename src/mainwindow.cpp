@@ -7,13 +7,13 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    sidebar = new Sidebar(this);
-    addDockWidget(Qt::LeftDockWidgetArea, sidebar);
-
     titleBar = new TitleBar(this);
+    sidebar = new Sidebar(this);
+//    content = new Content(this);
 
-//    ui->widget->setLayout(ui->);
-    ui->contentLayout->addWidget(titleBar);
+    ui->gridLayout->addWidget(titleBar, 0, 0);
+    ui->gridLayout->addWidget(sidebar, 1, 0);
+//    ui->gridLayout->addWidget(content, 1, 1);
 }
 
 MainWindow::~MainWindow()
