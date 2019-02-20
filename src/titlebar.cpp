@@ -4,21 +4,20 @@
 #include <QPainter>
 #include <windows.h>
 #include <QWindow>
+#include <QDebug>
 
-TitleBar::TitleBar(QWidget *parent) : QWidget(parent)
+TitleBar::TitleBar(QWidget *parent) : QWidget(parent), checkedAct(nullptr), hoveredAct(nullptr)
 {
     setMouseTracking(true);
 
-    checkedAct = NULL;
-    hoveredAct = NULL;
-
     addAction("—", QIcon(""));
-    addAction("×", QIcon(""));
+    addAction("X", QIcon(""));
 
     setStyleSheet("QWidget { background-color: #2E364D; }");
-    setFixedSize(1250, 50); //1050
+    setFixedSize(1250, 50);
 }
 
+//draw '-' and 'X' on title bar
 QAction *TitleBar::addAction(const QString &text, const QIcon &icon)
 {
     QAction *action = new QAction(icon, text, this);
@@ -29,23 +28,21 @@ QAction *TitleBar::addAction(const QString &text, const QIcon &icon)
 
 QAction *TitleBar::actionAt(const QPoint &point)
 {
-    int posX = 960;
+    int posX = 1155;
     for(auto action : actList) {
-        //35, 35 or whatever it fits, they have to be less than its width and height 45, 45
-        //or sometimes the hover effect will stay
-        QRect actRect(posX, 8, 35, 35);
-        if(actRect.contains(point)) {
+        QRect actRect(posX, 10, 35, 35); //35 or whatever less than its width(50) and height(50), or sometimes the hover effect will stay
+        if(actRect.contains(point))
             return action;
-        }
-        posX += 45;
+
+        posX += 50;
     }
 
-    return NULL;
+    return nullptr;
 }
 
 void TitleBar::paintEvent(QPaintEvent *event)
 {
-    //to make the custom widget able to set style sheet
+     //make custom widget able to set style sheet(change widget background color mainly)
      QStyleOption opt;
      opt.init(this);
      QPainter painter(this);
@@ -54,83 +51,75 @@ void TitleBar::paintEvent(QPaintEvent *event)
      QFont font("Times", 13);
      painter.setFont(font);
 
-     int posX = 960 + 12; //move the icon to the center, so + 12
+     int posX = 1155 + 15; //+15 to move '-' and 'X' to the center
      for(auto action : actList) {
          if(action == hoveredAct) {
-             QPen hoveredPen;
-             hoveredPen.setWidth(5);
-             hoveredPen.setBrush(QColor(255, 0, 0));
-             painter.setPen(hoveredPen);
+             QPen pen;
+             pen.setWidth(5);
+             pen.setBrush(QColor(255, 0, 0));
+             painter.setPen(pen);
 
-             painter.setPen(QColor(255,255,255)); //change text color when hover
-
+             //set on hover background color
              if(action->text() == "—") {
-                 painter.fillRect(QRect(960, 0, 45, 45), QColor(0,255,255)); //set background color
+                 painter.fillRect(QRect(1155, 0, 50, 50), QColor(35, 43, 62));
+                 painter.setPen(Qt::gray);
              }
-             if(action->text() == "×") {
-                 painter.fillRect(QRect(1005, 0, 45, 45), QColor(233, 75, 60)); //set background color
+             else if(action->text() == "X") {
+                 painter.fillRect(QRect(1203, 0, 50, 50), QColor(233, 75, 60));
+                 painter.setPen(Qt::white);
              }
          }
          else {
-             painter.setPen(QColor(128,128,128)); //change the text color to normal grey when not hover
+             //set icon text color to gray when unhover
+             painter.setPen(Qt::gray);
          }
 
-         QRect textRect(posX, 8, event->rect().width(), event->rect().height());
+         QRect textRect(posX, 10, event->rect().width(), event->rect().height());
          painter.drawText(textRect, action->text());
 
-         posX += 45;
+         posX += 50;
      }
 
-
-     if(hoveredOnNotify) {
-         painter.fillRect(QRect(915, 0, 45, 45), QColor(0,255,255)); //set background color
-     }
-     //paint icon
-     QIcon icon(":/icons/notification.png");
-     QRect iconRect(915 + 10, 10, 25, 25); //plus 12, so the icon can align center
-     icon.paint(&painter, iconRect);
+//     if(hoveredOnNotify) {
+//         painter.fillRect(QRect(915, 0, 45, 45), QColor(0,255,255)); //set background color
+//     }
+//     //paint icon
+//     QIcon icon(":/icons/notification.png");
+//     QRect iconRect(915 + 10, 10, 25, 25); //plus 12, so the icon can align center
+//     icon.paint(&painter, iconRect);
 }
 
 void TitleBar::mousePressEvent(QMouseEvent *event)
 {
-    //    startPos = event->pos();
+    //use native windows api to move window
+    if (event->buttons().testFlag(Qt::LeftButton))
+    {
+        HWND hWnd = ::GetAncestor((HWND)(window()->windowHandle()->winId()), GA_ROOT);
+        POINT pt;
+        ::GetCursorPos(&pt);
+        ::ReleaseCapture();
+        ::SendMessage(hWnd, WM_NCLBUTTONDOWN, HTCAPTION, POINTTOPOINTS(pt));
+    }
 
-        if (event->buttons().testFlag(Qt::LeftButton)) //use the native windows api, the issue that window suddently move will not show, do not know why
-        {
-            HWND hWnd = ::GetAncestor((HWND)(window()->windowHandle()->winId()), GA_ROOT);
-            POINT pt;
-            ::GetCursorPos(&pt);
-            ::ReleaseCapture();
-            ::SendMessage(hWnd, WM_NCLBUTTONDOWN, HTCAPTION, POINTTOPOINTS(pt));
-        }
-
-        QAction *action = actionAt(event->pos());
-        checkedAct = action;
-        if(checkedAct != NULL) {
-            int index = std::find(actList.begin(), actList.end(), checkedAct) - actList.begin();
-            emit actionChanged(index);
-        }
+    QAction *action = actionAt(event->pos());
+    checkedAct = action;
+    if(checkedAct != nullptr) {
+        int index = std::find(actList.begin(), actList.end(), checkedAct) - actList.begin();
+        emit actionChanged(index);
+    }
     //    update(); //update must be in the last, or the window will suddently move to another place
 }
 
 void TitleBar::mouseMoveEvent(QMouseEvent *event)
 {
-    //    if(event->buttons() == Qt::LeftButton) {
-    //        QPoint delta = event->pos() - startPos;
-    //        QWidget *w = window();
-    //        if(w) {
-    //            w->move(w->pos()+ delta);
-    //        }
-    //    }
+    if(event->x() < 1250 && event->x() >= 1155) {
+        hoveredOnNotify = true;
+    }
+    else {
+        hoveredOnNotify = false;
+    }
 
-        if(event->x() < 960 && event->x() >= 915) {
-            hoveredOnNotify = true;
-        }
-        else {
-            hoveredOnNotify = false;
-        }
-
-        QAction *action = actionAt(event->pos());
-        hoveredAct = action;
-        update(); //update must be in the last, or the window will suddently move to another place
+    QAction *action = actionAt(event->pos());
+    hoveredAct = action;
+//    update(); //update must be in the last, or the window will suddently move to another place
 }

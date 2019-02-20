@@ -24,6 +24,9 @@ private:
     Sidebar *sidebar;
     TitleBar *titleBar;
 //    Content *content;
+
+private slots:
+    void titleBarClicked(int);
 };
 
 #endif // MAINWINDOW_H
