@@ -6,6 +6,8 @@
 #include <QWindow>
 #include <QDebug>
 
+const int TitleBar::POS_X = 1155;
+
 TitleBar::TitleBar(QWidget *parent) : QWidget(parent), checkedAct(nullptr), hoveredAct(nullptr)
 {
     setMouseTracking(true);
@@ -28,7 +30,7 @@ QAction *TitleBar::addAction(const QString &text, const QIcon &icon)
 
 QAction *TitleBar::actionAt(const QPoint &point)
 {
-    int posX = 1155;
+    int posX = POS_X;
     for(auto action : actList) {
         QRect actRect(posX, 10, 35, 35); //35 or whatever less than its width(50) and height(50), or sometimes the hover effect will stay
         if(actRect.contains(point))
@@ -48,10 +50,9 @@ void TitleBar::paintEvent(QPaintEvent *event)
      QPainter painter(this);
      style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
 
-     QFont font("Times", 13);
-     painter.setFont(font);
+     painter.setFont(QFont("Times", 13));
 
-     int posX = 1155 + 15; //+15 to move '-' and 'X' to the center
+     int posX = POS_X + 15; //+15 to move '-' and 'X' to the center
      for(auto action : actList) {
          if(action == hoveredAct) {
              QPen pen;
@@ -61,7 +62,7 @@ void TitleBar::paintEvent(QPaintEvent *event)
 
              //set on hover background color
              if(action->text() == "—") {
-                 painter.fillRect(QRect(1155, 0, 50, 50), QColor(35, 43, 62));
+                 painter.fillRect(QRect(POS_X, 0, 50, 50), QColor(35, 43, 62));
                  painter.setPen(Qt::gray);
              }
              else if(action->text() == "X") {
@@ -107,12 +108,13 @@ void TitleBar::mousePressEvent(QMouseEvent *event)
         int index = std::find(actList.begin(), actList.end(), checkedAct) - actList.begin();
         emit actionChanged(index);
     }
-    //    update(); //update must be in the last, or the window will suddently move to another place
+
+    update();
 }
 
 void TitleBar::mouseMoveEvent(QMouseEvent *event)
 {
-    if(event->x() < 1250 && event->x() >= 1155) {
+    if(event->x() < 1250 && event->x() >= POS_X) {
         hoveredOnNotify = true;
     }
     else {
@@ -121,5 +123,6 @@ void TitleBar::mouseMoveEvent(QMouseEvent *event)
 
     QAction *action = actionAt(event->pos());
     hoveredAct = action;
-//    update(); //update must be in the last, or the window will suddently move to another place
+
+    update();
 }

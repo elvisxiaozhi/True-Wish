@@ -5,25 +5,20 @@
 #include <QDebug>
 #include <QIcon>
 
-Sidebar::Sidebar(QWidget *parent) : QDockWidget(parent)
-{
-    //hide dock widget title bar
-    QWidget *titleBarWidget = new QWidget(this);
-    setTitleBarWidget(titleBarWidget);
-    this->titleBarWidget()->hide(); //need to add this pointer
-    setMinimumSize(200, 100);
+const int Sidebar::POS_Y = 135;
 
+Sidebar::Sidebar(QWidget *parent) : QWidget(parent), hoveredAct(nullptr)
+{
     setMouseTracking(true);
 
     addAction(tr("Overview"), QIcon(":/icons/home_24px.png"));
-    addAction(tr("Dashboard"), QIcon(":/icons/dashboard_24px.png"));
+    addAction(tr("Protection"), QIcon(":/icons/dashboard_24px.png"));
     addAction(tr("Users"), QIcon(":/icons/users_24px.png"));
     addAction(tr("Settings"), QIcon(":/icons/settings_24px.png"));
 
     checkedAct = actList[0];
-    hoveredAct = NULL;
 
-    setFixedWidth(160);
+    setFixedSize(160, 800);
 }
 
 QAction *Sidebar::addAction(const QString &text, const QIcon &icon)
@@ -36,96 +31,64 @@ QAction *Sidebar::addAction(const QString &text, const QIcon &icon)
 
 QAction *Sidebar::actionAt(const QPoint &point)
 {
-    int posY = 110;
+    int posY = 0;
     for(auto action : actList) {
-        QRect actRect(0, posY, 195, 50); //set width to 195 and height to 50, or the hover effect will sometimes show and the checked effect will disappear
-        if(actRect.contains(point)) {
+        QRect actRect(0, 0, 160, posY);
+        if(actRect.contains(point))
             return action;
-        }
-        posY += 50;
+
+        posY += POS_Y;
     }
-    return NULL;
+    return nullptr;
 }
 
 void Sidebar::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-
-    //draw menu
     painter.fillRect(rect(), QColor(46, 62, 77)); //set background color
-    int posY = 110;
-    for(auto action : actList) {
-        if(action == checkedAct) {
-            QPen checkedPen;  // creates a default pen
-            checkedPen.setWidth(5);
-            checkedPen.setBrush(Qt::red);
-            painter.setPen(checkedPen);
-            painter.drawLine(0, posY, 0, posY + 30);
 
-            QFont checkedFont("Times", 10, QFont::Bold);
-            painter.setFont(checkedFont);
-            painter.setPen(QColor(102,102,102));
+    int posY = POS_Y;
+    for (auto action : actList) {
+        painter.setPen(QPen(QColor(46, 41, 41)));
+        painter.drawLine(0, posY, 160, posY);
+
+        if (action == checkedAct) {
+            painter.fillRect(QRect(0, checkedIndex * POS_Y, 160, posY - checkedIndex * POS_Y), QColor(101, 51, 172));
         }
-        else {
-            if(action == hoveredAct) {
-                QFont uncheckedFont("Times", 10, QFont::Bold);
-                painter.setFont(uncheckedFont);
-
-                QPen hoveredPen;
-                hoveredPen.setWidth(5);
-                hoveredPen.setBrush(QColor(255, 192, 203));
-                painter.setPen(hoveredPen);
-                painter.drawLine(0, posY, 0, posY + 30);
-            }
-            else {
-                QFont uncheckedFont("Times", 10);
-                painter.setFont(uncheckedFont);
-
-                QPen uncheckedPen;
-                uncheckedPen.setBrush(QColor(128,128,128));
-                painter.setPen(uncheckedPen);
-            }
+        if (action == hoveredAct && checkedIndex != hoveredIndex) {
+            painter.fillRect(QRect(0, hoveredIndex * POS_Y, 160, posY - hoveredIndex * POS_Y), QColor(35, 43, 62));
         }
 
-        QIcon icon(action->icon());
-        QRect iconRect(10, posY, 30, 30);
-        icon.paint(&painter, iconRect);
-        QRect textRect(50, posY + 10, event->rect().width(), event->rect().height());
+//        QIcon icon(action->icon());
+//        QRect iconRect(10, posY, 30, 30);
+//        icon.paint(&painter, iconRect);
+
+        QRect textRect(50, posY - 50, event->rect().width(), event->rect().height());
+        painter.setPen(QPen(Qt::white));
+        painter.setFont(QFont("times", 10));
         painter.drawText(textRect, action->text());
 
-        posY += 50;
+        posY += POS_Y;
     }
-
-    //paint icon
-    QIcon icon(":/icons/letter-n.png");
-    QRect iconRect(20, 39, 35, 35);
-    icon.paint(&painter, iconRect);
-
-    //paint the title and it has to be after menu is drew
-    painter.setPen(QColor(195,151,151));
-    painter.setFont(QFont("Futura", 25));
-    painter.drawText(QRect(65, 30, 100, 50), "Nana");
 }
 
 void Sidebar::mousePressEvent(QMouseEvent *event)
 {
     QAction *action = actionAt(event->pos());
 
-    //specify the sidebar clickable area,
-    //so to make sure that the sidebar menu will only change in the clickable area
-    if(event->pos().y() >= 110 && event->pos().y() <= 310) {
-        checkedAct = action;
-    }
-    if(checkedAct != NULL) {
-        int index = std::find(actList.begin(), actList.end(), checkedAct) - actList.begin();
-        emit actionChanged(index);
-    }
+    checkedIndex = std::find(actList.begin(), actList.end(), action) - actList.begin() - 1;
+    checkedAct = actList[checkedIndex];
+    emit actionChanged(checkedIndex);
+
     update();
 }
 
 void Sidebar::mouseMoveEvent(QMouseEvent *event)
 {
     QAction *action = actionAt(event->pos());
-    hoveredAct = action;
+
+    hoveredIndex = std::find(actList.begin(), actList.end(), action) - actList.begin() - 1;
+    hoveredAct = actList[hoveredIndex];
+
     update();
 }
