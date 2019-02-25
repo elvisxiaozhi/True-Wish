@@ -84,10 +84,17 @@ void TitleBar::paintEvent(QPaintEvent *event)
 //     if(hoveredOnNotify) {
 //         painter.fillRect(QRect(915, 0, 45, 45), QColor(0,255,255)); //set background color
 //     }
-//     //paint icon
-//     QIcon icon(":/icons/notification.png");
-//     QRect iconRect(915 + 10, 10, 25, 25); //plus 12, so the icon can align center
-//     icon.paint(&painter, iconRect);
+
+     //paint icon
+     QIcon icon(":/icons/star.png");
+     QRect iconRect(20, 5, 40, 40);
+     icon.paint(&painter, iconRect);
+
+     //paint name
+     QRect textRect(65, 10, event->rect().width(), event->rect().height());
+     painter.setPen(QPen(Qt::white));
+     painter.setFont(QFont("times", 11));
+     painter.drawText(textRect, "True Wish");
 }
 
 void TitleBar::mousePressEvent(QMouseEvent *event)

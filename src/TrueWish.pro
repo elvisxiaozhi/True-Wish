@@ -39,3 +39,6 @@ HEADERS += \
 FORMS += \
         mainwindow.ui \
     content.ui
+
+RESOURCES += \
+    ../icons/icons.qrc
