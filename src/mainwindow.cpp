@@ -9,11 +9,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     titleBar = new TitleBar(this);
     sidebar = new Sidebar(this);
-//    content = new Content(this);
+    content = new MainContent(this);
 
-    ui->gridLayout->addWidget(titleBar, 0, 0);
+    ui->gridLayout->addWidget(titleBar, 0, 0, 1, 0, Qt::AlignCenter);
     ui->gridLayout->addWidget(sidebar, 1, 0);
-//    ui->gridLayout->addWidget(content, 1, 1);
+    ui->gridLayout->addWidget(content, 1, 1);
 
     connect(titleBar, &TitleBar::actionChanged, this, &MainWindow::titleBarClicked);
 

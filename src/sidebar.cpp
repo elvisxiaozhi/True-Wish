@@ -17,6 +17,7 @@ Sidebar::Sidebar(QWidget *parent) : QWidget(parent), hoveredAct(nullptr)
     addAction(tr("Settings"), QIcon(":/icons/settings_24px.png"));
 
     checkedAct = actList[0];
+    checkedIndex = 0;
 
     setFixedSize(160, 800);
 }
