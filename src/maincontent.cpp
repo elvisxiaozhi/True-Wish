@@ -10,7 +10,7 @@ MainContent::MainContent(QWidget *parent) :
     ui->setupUi(this);
 
     setFixedSize(1090, 800);
-    setStyleSheet("background-color: #353F5A");
+    setStyleSheet("QWidget { background-color: #353F5A }");
 }
 
 MainContent::~MainContent()
