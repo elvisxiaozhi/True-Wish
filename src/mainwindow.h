@@ -24,6 +24,10 @@ private:
     Sidebar *sidebar;
     TitleBar *titleBar;
     MainContent *content;
+    QString userDataPath;
+
+    void createDataFile();
+    void writeData(QString income = "null", QString expenditure = "null");
 
 private slots:
     void titleBarClicked(int);
