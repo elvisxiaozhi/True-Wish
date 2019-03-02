@@ -28,17 +28,20 @@ SOURCES += \
         mainwindow.cpp \
     sidebar.cpp \
     titlebar.cpp \
-    maincontent.cpp
+    maincontent.cpp \
+    addincome.cpp
 
 HEADERS += \
         mainwindow.h \
     sidebar.h \
     titlebar.h \
-    maincontent.h
+    maincontent.h \
+    addincome.h
 
 FORMS += \
         mainwindow.ui \
-    maincontent.ui
+    maincontent.ui \
+    addincome.ui
 
 RESOURCES += \
     ../icons/icons.qrc

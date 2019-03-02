@@ -11,6 +11,8 @@ MainContent::MainContent(QWidget *parent) :
 
     setFixedSize(1090, 800);
     setStyleSheet("QWidget { background-color: #353F5A }");
+
+    income = new AddIncome();
 }
 
 MainContent::~MainContent()
@@ -24,4 +26,9 @@ void MainContent::paintEvent(QPaintEvent *)
     opt.init(this);
     QPainter painter(this);
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
+}
+
+void MainContent::on_incomeButton_clicked()
+{
+    income->show();
 }

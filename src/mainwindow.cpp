@@ -4,7 +4,6 @@
 #include <QDir>
 #include <QXmlStreamWriter>
 #include <QXmlStreamReader>
-#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),

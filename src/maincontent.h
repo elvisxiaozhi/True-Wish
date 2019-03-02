@@ -2,6 +2,8 @@
 #define MAINCONTENT_H
 
 #include <QWidget>
+#include <QDebug>
+#include "addincome.h"
 
 namespace Ui {
 class MainContent;
@@ -18,8 +20,13 @@ public:
 private:
     Ui::MainContent *ui;
 
+    AddIncome *income;
+
 protected:
     void paintEvent(QPaintEvent *);
+
+private slots:
+    void on_incomeButton_clicked();
 };
 
 #endif // MAINCONTENT_H
