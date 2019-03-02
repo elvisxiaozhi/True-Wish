@@ -18,6 +18,8 @@ AddIncome::AddIncome(QWidget *parent) :
 
     closetAction = addAction("X");
 
+    createLine();
+
     setStyleSheet("QWidget { background-color: #414B66 }");
 }
 
@@ -43,6 +45,18 @@ QAction *AddIncome::actionAt(const QPoint &point)
         return closetAction;
 
     return nullptr;
+}
+
+void AddIncome::createLine()
+{
+    line = new QFrame(this);
+    line->setObjectName("Line");
+    line->setFrameShape(QFrame::HLine);
+    line->setFrameShadow(QFrame::Plain);
+    line->setStyleSheet("#Line { color: #BFC6D6; }"
+                        "#Line:hover { color: white; }");
+
+    ui->lineEditLayout->addWidget(line);
 }
 
 void AddIncome::paintEvent(QPaintEvent *event)
@@ -91,4 +105,9 @@ void AddIncome::mousePressEvent(QMouseEvent *event)
         hide();
 
     update();
+}
+
+void AddIncome::on_closeButton_clicked()
+{
+    hide();
 }

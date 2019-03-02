@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1,1">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
@@ -56,10 +56,28 @@ font: 20px;</string>
     </layout>
    </item>
    <item>
-    <widget class="QLineEdit" name="lineEdit"/>
+    <layout class="QVBoxLayout" name="lineEditLayout">
+     <item>
+      <widget class="QLineEdit" name="lineEdit">
+       <property name="styleSheet">
+        <string notr="true">#lineEdit {
+background-color: #414B66; 
+border: 0px;
+padding: 14px 19px; 
+font: 20px; 
+color: white;
+}
+</string>
+       </property>
+       <property name="placeholderText">
+        <string>How much money did you make this month?</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0">
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
@@ -79,7 +97,7 @@ font: 20px;</string>
         <string notr="true">#addButton {
 background-color: #11B850; 
 border: 0px; 
-padding: 15px 20px; 
+padding: 11px 20px; 
 font: 20px; 
 color: white; 
 border-radius: 3px; }
@@ -89,14 +107,34 @@ border-radius: 3px; }
 #addButton:pressed { background-color: #0A863D; }</string>
        </property>
        <property name="text">
-        <string>Add</string>
+        <string>ADD INCOME</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>Close</string>
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="closeButton">
+       <property name="styleSheet">
+        <string notr="true">#closeButton {
+background-color: #414B66; 
+border: 1px solid white; 
+padding: 10px 19px; 
+font: 20px; 
+color: white; 
+border-radius: 3px; }
+
+#closeButton:hover { background-color: #565D79; }
+
+#closeButton:pressed { background-color: #565D79; }</string>
+       </property>
+       <property name="text">
+        <string>CLOSE</string>
        </property>
       </widget>
      </item>
