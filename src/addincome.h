@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QAction>
 #include <QFrame>
+#include "customlineedit.h"
 
 namespace Ui {
 class AddIncome;
@@ -22,16 +23,19 @@ private:
 
     QAction *closetAction;
     bool onHover;
+    CustomLineEdit *lineEdit;
     QFrame *line;
 
     QAction *addAction(const QString &);
     QAction *actionAt(const QPoint &);
+    void createLineEdit();
     void createLine();
 
 protected:
     void paintEvent(QPaintEvent *);
     void mouseMoveEvent(QMouseEvent *);
     void mousePressEvent(QMouseEvent *);
+
 private slots:
     void on_closeButton_clicked();
 };

@@ -31,4 +31,7 @@ void MainContent::paintEvent(QPaintEvent *)
 void MainContent::on_incomeButton_clicked()
 {
     income->show();
+    //make sure this winodw stays in the front
+    income->raise();
+    income->activateWindow();
 }

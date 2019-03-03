@@ -18,6 +18,7 @@ AddIncome::AddIncome(QWidget *parent) :
 
     closetAction = addAction("X");
 
+    createLineEdit();
     createLine();
 
     setStyleSheet("QWidget { background-color: #414B66 }");
@@ -45,6 +46,13 @@ QAction *AddIncome::actionAt(const QPoint &point)
         return closetAction;
 
     return nullptr;
+}
+
+void AddIncome::createLineEdit()
+{
+    lineEdit = new CustomLineEdit(this);
+
+    ui->lineEditLayout->addWidget(lineEdit);
 }
 
 void AddIncome::createLine()
@@ -100,6 +108,9 @@ void AddIncome::mousePressEvent(QMouseEvent *event)
         ::ReleaseCapture();
         ::SendMessage(hWnd, WM_NCLBUTTONDOWN, HTCAPTION, POINTTOPOINTS(pt));
     }
+
+    lineEdit->clearFocus();
+    emit lineEdit->isFocused(false); //emit signal here, so in CustomLineEdit class, it doesn't need focusOutEvent
 
     if (actionAt(event->pos()) == closetAction)
         hide();

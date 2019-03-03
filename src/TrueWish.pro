@@ -29,14 +29,16 @@ SOURCES += \
     sidebar.cpp \
     titlebar.cpp \
     maincontent.cpp \
-    addincome.cpp
+    addincome.cpp \
+    customlineedit.cpp
 
 HEADERS += \
         mainwindow.h \
     sidebar.h \
     titlebar.h \
     maincontent.h \
-    addincome.h
+    addincome.h \
+    customlineedit.h
 
 FORMS += \
         mainwindow.ui \
