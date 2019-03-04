@@ -57,14 +57,14 @@ void AddIncome::createLineEdit()
 
 void AddIncome::createLine()
 {
-    line = new QFrame(this);
-    line->setObjectName("Line");
-    line->setFrameShape(QFrame::HLine);
-    line->setFrameShadow(QFrame::Plain);
-    line->setStyleSheet("#Line { color: #BFC6D6; }"
-                        "#Line:hover { color: white; }");
+    ui->lineWidget->setFixedSize(540, 1);
 
-    ui->lineEditLayout->addWidget(line);
+    connect(lineEdit, &CustomLineEdit::isFocused, [this](bool isFocused){
+        if (isFocused)
+            ui->lineWidget->setStyleSheet("background-color: white;");
+        else
+            ui->lineWidget->setStyleSheet("background-color: #BFC6D6;");
+    });
 }
 
 void AddIncome::paintEvent(QPaintEvent *event)

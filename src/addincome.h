@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include <QAction>
-#include <QFrame>
 #include "customlineedit.h"
 
 namespace Ui {
@@ -24,7 +23,6 @@ private:
     QAction *closetAction;
     bool onHover;
     CustomLineEdit *lineEdit;
-    QFrame *line;
 
     QAction *addAction(const QString &);
     QAction *actionAt(const QPoint &);
