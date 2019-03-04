@@ -17,10 +17,13 @@ public:
 private:
     QString mText;
     QColor color;
+    bool focused;
 
 protected:
-    virtual void focusInEvent(QFocusEvent *);
+    void focusInEvent(QFocusEvent *);
     void paintEvent(QPaintEvent *);
+    void enterEvent(QEvent *) override;
+    void leaveEvent(QEvent *) override;
 
 signals:
     void isFocused(bool);
