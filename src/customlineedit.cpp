@@ -10,7 +10,7 @@ CustomLineEdit::CustomLineEdit(QWidget *parent)
     color = QColor(199, 205, 221);
 
     setCustomPlaceholderText("How much money did you make this month?");
-    setStyleSheet("background-color: #414B66; padding: 0px 19px; font: 20px; border: none;");
+    setStyleSheet("background-color: #414B66; padding: 0px 19px; font: 20px; border: none; color: white;");
 
     connect(this, &CustomLineEdit::isFocused, this, &CustomLineEdit::onFocus);
 }
