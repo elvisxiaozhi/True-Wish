@@ -3,6 +3,7 @@
 #include <QPaintEvent>
 #include <QPainter>
 #include <QDebug>
+#include <QIntValidator>
 
 CustomLineEdit::CustomLineEdit(QWidget *parent)
     : QLineEdit(parent)
@@ -11,6 +12,7 @@ CustomLineEdit::CustomLineEdit(QWidget *parent)
 
     setCustomPlaceholderText("How much money did you make this month?");
     setStyleSheet("background-color: #414B66; padding: 0px 19px; font: 20px; border: none; color: white;");
+    setValidator(new QIntValidator(0, INT_MAX, this));
 
     connect(this, &CustomLineEdit::isFocused, this, &CustomLineEdit::onFocus);
 }

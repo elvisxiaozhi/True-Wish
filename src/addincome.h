@@ -36,6 +36,7 @@ protected:
 
 private slots:
     void on_closeButton_clicked();
+    void on_addButton_clicked();
 };
 
 #endif // ADDINCOME_H

@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT += sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -30,7 +31,8 @@ SOURCES += \
     titlebar.cpp \
     maincontent.cpp \
     addincome.cpp \
-    customlineedit.cpp
+    customlineedit.cpp \
+    database.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -38,7 +40,8 @@ HEADERS += \
     titlebar.h \
     maincontent.h \
     addincome.h \
-    customlineedit.h
+    customlineedit.h \
+    database.h
 
 FORMS += \
         mainwindow.ui \

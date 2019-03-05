@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "sidebar.h"
 #include "titlebar.h"
+#include "database.h"
 #include "maincontent.h"
 
 namespace Ui {
@@ -23,6 +24,7 @@ private:
 
     Sidebar *sidebar;
     TitleBar *titleBar;
+    Database *database;
     MainContent *content;
     QString userDataPath;
 

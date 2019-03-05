@@ -5,6 +5,8 @@
 #include <QDebug>
 #include <windows.h>
 #include <QWindow>
+#include "database.h"
+#include <QDate>
 
 AddIncome::AddIncome(QWidget *parent) :
     QWidget(parent),
@@ -120,5 +122,17 @@ void AddIncome::mousePressEvent(QMouseEvent *event)
 
 void AddIncome::on_closeButton_clicked()
 {
+    hide();
+}
+
+void AddIncome::on_addButton_clicked()
+{
+    int income = lineEdit->text().toInt();
+    QString date = QDate::currentDate().toString("yyyy-MM-dd");
+
+    qDebug() << date << income;
+
+    Database::addIncome(date, income);
+
     hide();
 }

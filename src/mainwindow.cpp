@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     titleBar = new TitleBar(this);
     sidebar = new Sidebar(this);
+    database = new Database(this);
     content = new MainContent(this);
 
     ui->gridLayout->addWidget(titleBar, 0, 0, 1, 0, Qt::AlignCenter);
