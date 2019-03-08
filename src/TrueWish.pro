@@ -32,7 +32,8 @@ SOURCES += \
     maincontent.cpp \
     addincome.cpp \
     customlineedit.cpp \
-    database.cpp
+    database.cpp \
+    customlabel.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -41,7 +42,8 @@ HEADERS += \
     maincontent.h \
     addincome.h \
     customlineedit.h \
-    database.h
+    database.h \
+    customlabel.h
 
 FORMS += \
         mainwindow.ui \

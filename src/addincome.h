@@ -3,7 +3,9 @@
 
 #include <QWidget>
 #include <QAction>
+#include <QDate>
 #include "customlineedit.h"
+#include "database.h"
 
 namespace Ui {
 class AddIncome;

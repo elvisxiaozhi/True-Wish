@@ -32,7 +32,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="incomeInfo">
          <property name="styleSheet">
           <string notr="true">color: #DCDCDC; 
 font: 20px;</string>
@@ -58,7 +58,7 @@ font: 20px;</string>
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <layout class="QHBoxLayout" name="incomeLayout">
        <item>
         <spacer name="horizontalSpacer_9">
          <property name="orientation">
