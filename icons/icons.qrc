@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/icons">
         <file>star.png</file>
-        <file>recycle bin bold.png</file>
         <file>recycle bin.png</file>
     </qresource>
 </RCC>

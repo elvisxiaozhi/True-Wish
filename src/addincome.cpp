@@ -24,10 +24,10 @@ AddIncome::AddIncome(QWidget *parent) :
     createBinLabel();
     createLine();
 
-    connect(lineEdit, &CustomLineEdit::entered, [this](){ binLabel->show(); });
-    connect(lineEdit, &CustomLineEdit::left, [this](){ binLabel->hide(); });
-    connect(binLabel, &CustomLabel::entered, [this](){ binLabel->show(); setBinLabelPixmap(QColor(255, 255, 255)); });
-    connect(binLabel, &CustomLabel::left, [this](){ binLabel->hide(); setBinLabelPixmap(QColor(206, 216, 226)); });
+    connect(lineEdit, &CustomLineEdit::entered, [this](){ setBinLabelPixmap(QColor(206, 216, 226)); });
+    connect(lineEdit, &CustomLineEdit::left, [this](){ binLabel->setPixmap(QPixmap()); });
+    connect(binLabel, &CustomLabel::entered, [this](){ setBinLabelPixmap(QColor(255, 255, 255)); });
+    connect(binLabel, &CustomLabel::left, [this](){ setBinLabelPixmap(QColor(206, 216, 226)); });
 }
 
 AddIncome::~AddIncome()
@@ -66,7 +66,7 @@ void AddIncome::createLineEdit()
 {
     lineEdit = new CustomLineEdit(this);
     lineEdit->setFrame(false);
-    lineEdit->setFixedSize(530, 30);
+    lineEdit->setFixedSize(525, 30);
 
     ui->lineEditLayout->insertWidget(0, lineEdit);
 }
@@ -74,9 +74,7 @@ void AddIncome::createLineEdit()
 void AddIncome::createBinLabel()
 {
     binLabel = new CustomLabel(this);
-    binLabel->hide();
     binLabel->setFixedSize(30, 30);
-    setBinLabelPixmap(QColor(206, 216, 226));
 
     ui->lineEditLayout->insertWidget(1, binLabel);
 }
