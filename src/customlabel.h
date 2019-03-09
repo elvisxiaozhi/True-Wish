@@ -12,9 +12,13 @@ public:
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *);
+    void enterEvent(QEvent *);
+    void leaveEvent(QEvent *);
 
 signals:
     void doubleClicked();
+    void entered();
+    void left();
 };
 
 #endif // CUSTOMLABEL_H

@@ -27,6 +27,8 @@ protected:
 
 signals:
     void isFocused(bool);
+    void entered();
+    void left();
 
 private slots:
     void onFocus(bool);

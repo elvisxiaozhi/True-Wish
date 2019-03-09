@@ -13,12 +13,8 @@ MainContent::MainContent(QWidget *parent) :
     setStyleSheet("QWidget { background-color: #353F5A }");
 
     income = new AddIncome();
-    incomeLabel = new CustomLabel(this);
-    incomeLabel->hide();
 
-    connect(incomeLabel, &CustomLabel::doubleClicked, this, &MainContent::changeIncome);
-
-    ui->incomeLayout->insertWidget(2, incomeLabel);
+    createIncomeLabel();
 
     setIncome();
 }
@@ -26,6 +22,21 @@ MainContent::MainContent(QWidget *parent) :
 MainContent::~MainContent()
 {
     delete ui;
+}
+
+void MainContent::createIncomeLabel()
+{
+    incomeLabel = new CustomLabel(this);
+
+    incomeLabel->setStyleSheet("background-color: #11B850; border: 0px; padding: 15px 20px; font: 60px; color: white; border-radius: 3px;");
+    incomeLabel->setAlignment(Qt::AlignCenter);
+    incomeLabel->setFixedSize(250, 100);
+
+    incomeLabel->hide();
+
+    connect(incomeLabel, &CustomLabel::doubleClicked, this, &MainContent::changeIncome);
+
+    ui->incomeLayout->insertWidget(2, incomeLabel);
 }
 
 void MainContent::setIncome()
@@ -62,5 +73,6 @@ void MainContent::on_incomeButton_clicked()
 
 void MainContent::changeIncome()
 {
+    income->changeIncome(incomeLabel->text());
     income->show();
 }

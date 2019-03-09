@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <windows.h>
 #include <QWindow>
+#include <QBitmap>
 
 AddIncome::AddIncome(QWidget *parent) :
     QWidget(parent),
@@ -14,19 +15,32 @@ AddIncome::AddIncome(QWidget *parent) :
 
     setMouseTracking(this);
     setWindowFlags(Qt::FramelessWindowHint);
-    setFixedSize(600, 250);
+    setFixedSize(600, 250);    
+    setStyleSheet("QWidget { background-color: #414B66 }");
 
     closetAction = addAction("X");
 
     createLineEdit();
+    createBinLabel();
     createLine();
 
-    setStyleSheet("QWidget { background-color: #414B66 }");
+    connect(lineEdit, &CustomLineEdit::entered, [this](){ binLabel->show(); });
+    connect(lineEdit, &CustomLineEdit::left, [this](){ binLabel->hide(); });
+    connect(binLabel, &CustomLabel::entered, [this](){ binLabel->show(); setBinLabelPixmap(QColor(255, 255, 255)); });
+    connect(binLabel, &CustomLabel::left, [this](){ binLabel->hide(); setBinLabelPixmap(QColor(206, 216, 226)); });
 }
 
 AddIncome::~AddIncome()
 {
     delete ui;
+}
+
+void AddIncome::changeIncome(QString income)
+{
+    ui->title->setText("Change Income");
+
+    QString str = QString("You made %1 this month.").arg(income);
+    lineEdit->setCustomPlaceholderText(str);
 }
 
 QAction *AddIncome::addAction(const QString &text)
@@ -51,8 +65,30 @@ QAction *AddIncome::actionAt(const QPoint &point)
 void AddIncome::createLineEdit()
 {
     lineEdit = new CustomLineEdit(this);
+    lineEdit->setFrame(false);
+    lineEdit->setFixedSize(530, 30);
 
-    ui->lineEditLayout->addWidget(lineEdit);
+    ui->lineEditLayout->insertWidget(0, lineEdit);
+}
+
+void AddIncome::createBinLabel()
+{
+    binLabel = new CustomLabel(this);
+    binLabel->hide();
+    binLabel->setFixedSize(30, 30);
+    setBinLabelPixmap(QColor(206, 216, 226));
+
+    ui->lineEditLayout->insertWidget(1, binLabel);
+}
+
+void AddIncome::setBinLabelPixmap(QColor color)
+{
+    QPixmap px(":/icons/recycle bin.png");
+    QPixmap pixmap(px.size());
+    pixmap.fill(color);
+    pixmap.setMask(px.createMaskFromColor(Qt::transparent));
+
+    binLabel->setPixmap(pixmap);
 }
 
 void AddIncome::createLine()

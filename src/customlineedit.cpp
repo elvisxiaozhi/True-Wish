@@ -57,7 +57,7 @@ void CustomLineEdit::paintEvent(QPaintEvent *event)
 void CustomLineEdit::enterEvent(QEvent *)
 {
     color = QColor(255, 255, 255);
-
+    emit entered();
 }
 
 void CustomLineEdit::leaveEvent(QEvent *)
@@ -65,6 +65,7 @@ void CustomLineEdit::leaveEvent(QEvent *)
     if (!focused) {
         color = QColor(199, 205, 221);
     }
+    emit left();
 }
 
 void CustomLineEdit::onFocus(bool isFocused)

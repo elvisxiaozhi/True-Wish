@@ -24,6 +24,7 @@ private:
     AddIncome *income;
     CustomLabel *incomeLabel;
 
+    void createIncomeLabel();
     void setIncome();
 
 protected:

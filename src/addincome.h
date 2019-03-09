@@ -6,6 +6,7 @@
 #include <QDate>
 #include "customlineedit.h"
 #include "database.h"
+#include "customlabel.h"
 
 namespace Ui {
 class AddIncome;
@@ -19,16 +20,21 @@ public:
     explicit AddIncome(QWidget *parent = 0);
     ~AddIncome();
 
+    void changeIncome(QString);
+
 private:
     Ui::AddIncome *ui;
 
     QAction *closetAction;
     bool onHover;
     CustomLineEdit *lineEdit;
+    CustomLabel *binLabel;
 
     QAction *addAction(const QString &);
     QAction *actionAt(const QPoint &);
     void createLineEdit();
+    void createBinLabel();
+    void setBinLabelPixmap(QColor);
     void createLine();
 
 protected:
