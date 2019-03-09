@@ -142,7 +142,7 @@ font: 20px;</string>
     </spacer>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0,0">
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
@@ -173,6 +173,26 @@ border-radius: 3px; }
        </property>
        <property name="text">
         <string>ADD INCOME</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="modifyButton">
+       <property name="styleSheet">
+        <string notr="true">#modifyButton {
+background-color: #11B850; 
+border: 0px; 
+padding: 11px 20px; 
+font: 20px; 
+color: white; 
+border-radius: 3px; }
+
+#modifyButton:hover { background-color: #0A863D; }
+
+#modifyButton:pressed { background-color: #0A863D; }</string>
+       </property>
+       <property name="text">
+        <string>MODIFY</string>
        </property>
       </widget>
      </item>

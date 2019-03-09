@@ -41,8 +41,7 @@ void MainContent::createIncomeLabel()
 
 void MainContent::setIncome()
 {
-    int income = Database::returnIncome(QDate::currentDate().toString("yyyy-MM"));
-    if (income == 0) {
+    if (AddIncome::income == 0) {
         ui->incomeInfo->setText("How much money did you make this month?");
         incomeLabel->hide();
         ui->incomeButton->show();
@@ -51,7 +50,7 @@ void MainContent::setIncome()
         ui->incomeInfo->setText("This month you made");
         ui->incomeButton->hide();
         incomeLabel->show();
-        incomeLabel->setText(QString::number(income));
+        incomeLabel->setText(QString::number(AddIncome::income));
     }
 }
 
@@ -73,6 +72,6 @@ void MainContent::on_incomeButton_clicked()
 
 void MainContent::changeIncome()
 {
-    income->changeIncome(incomeLabel->text());
+    income->changeIncome();
     income->show();
 }

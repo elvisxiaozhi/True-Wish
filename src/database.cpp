@@ -32,7 +32,16 @@ void Database::addIncome(QString date, int income)
     query.exec();
 }
 
-int Database::returnIncome(QString date)
+void Database::changeIncome(QString date, int income)
+{
+    QSqlQuery query;
+    QString str = QString("UPDATE income SET income = %1 WHERE created_date = '%2'").arg(income).arg(date);
+    qDebug() << str;
+    query.prepare(str);
+    query.exec();
+}
+
+tuple<QString, int> Database::returnIncomeInfo(QString date)
 {
     QString str = QString("SELECT *FROM income WHERE created_date LIKE '%1-%'").arg(date);
     QSqlQuery query;
@@ -40,10 +49,10 @@ int Database::returnIncome(QString date)
     query.exec();
 
     if (query.next()) {
-        return query.value(2).toInt();
+        return make_tuple(query.value(1).toString(), query.value(2).toInt());
     }
 
-    return 0;
+    return make_tuple("", 0);
 }
 
 void Database::modifyData(QString id, QString date, QString title, QString link, int views, int likes, int comments, QString keywords, QString remark)

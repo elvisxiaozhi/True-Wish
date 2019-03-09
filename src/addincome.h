@@ -19,8 +19,10 @@ class AddIncome : public QWidget
 public:
     explicit AddIncome(QWidget *parent = 0);
     ~AddIncome();
+    static int income;
+    static QString incomeAddedDate;
 
-    void changeIncome(QString);
+    void changeIncome();
 
 private:
     Ui::AddIncome *ui;
@@ -45,6 +47,7 @@ protected:
 private slots:
     void on_closeButton_clicked();
     void on_addButton_clicked();
+    void on_modifyButton_clicked();
 };
 
 #endif // ADDINCOME_H

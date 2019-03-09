@@ -7,6 +7,9 @@
 #include <QWindow>
 #include <QBitmap>
 
+int AddIncome::income;
+QString AddIncome::incomeAddedDate;
+
 AddIncome::AddIncome(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AddIncome)
@@ -20,6 +23,8 @@ AddIncome::AddIncome(QWidget *parent) :
 
     closetAction = addAction("X");
 
+    tie(incomeAddedDate, income) = Database::returnIncomeInfo(QDate::currentDate().toString("yyyy-MM"));
+
     createLineEdit();
     createBinLabel();
     createLine();
@@ -27,7 +32,7 @@ AddIncome::AddIncome(QWidget *parent) :
     connect(lineEdit, &CustomLineEdit::entered, [this](){ setBinLabelPixmap(QColor(206, 216, 226)); });
     connect(lineEdit, &CustomLineEdit::left, [this](){ binLabel->setPixmap(QPixmap()); });
     connect(binLabel, &CustomLabel::entered, [this](){ setBinLabelPixmap(QColor(255, 255, 255)); });
-    connect(binLabel, &CustomLabel::left, [this](){ setBinLabelPixmap(QColor(206, 216, 226)); });
+    connect(binLabel, &CustomLabel::left, [this](){ binLabel->setPixmap(QPixmap()); });
 }
 
 AddIncome::~AddIncome()
@@ -35,9 +40,11 @@ AddIncome::~AddIncome()
     delete ui;
 }
 
-void AddIncome::changeIncome(QString income)
+void AddIncome::changeIncome()
 {
     ui->title->setText("Change Income");
+    ui->addButton->hide();
+    ui->modifyButton->show();
 
     QString str = QString("You made %1 this month.").arg(income);
     lineEdit->setCustomPlaceholderText(str);
@@ -163,5 +170,11 @@ void AddIncome::on_addButton_clicked()
     QString date = QDate::currentDate().toString("yyyy-MM-dd");
     Database::addIncome(date, income);
 
+    hide();
+}
+
+void AddIncome::on_modifyButton_clicked()
+{
+    Database::changeIncome(incomeAddedDate, lineEdit->text().toInt());
     hide();
 }
