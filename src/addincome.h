@@ -23,6 +23,8 @@ public:
     static QString incomeAddedDate;
 
     void changeIncome();
+    void addIncome();
+    static void updateIncomeInfo();
 
 private:
     Ui::AddIncome *ui;
@@ -45,12 +47,15 @@ protected:
     void mousePressEvent(QMouseEvent *);
 
 signals:
+    void incomeAdded();
     void incomeChanged();
+    void incomeDeleted();
 
 private slots:
     void on_closeButton_clicked();
     void on_addButton_clicked();
     void on_modifyButton_clicked();
+    void deleteIncome();
 };
 
 #endif // ADDINCOME_H

@@ -23,16 +23,9 @@ AddIncome::AddIncome(QWidget *parent) :
 
     closetAction = addAction("X");
 
-    tie(incomeAddedDate, income) = Database::returnIncomeInfo(QDate::currentDate().toString("yyyy-MM"));
-
     createLineEdit();
     createBinLabel();
     createLine();
-
-    connect(lineEdit, &CustomLineEdit::entered, [this](){ setBinLabelPixmap(QColor(206, 216, 226)); });
-    connect(lineEdit, &CustomLineEdit::left, [this](){ binLabel->setPixmap(QPixmap()); });
-    connect(binLabel, &CustomLabel::entered, [this](){ setBinLabelPixmap(QColor(255, 255, 255)); });
-    connect(binLabel, &CustomLabel::left, [this](){ binLabel->setPixmap(QPixmap()); });
 }
 
 AddIncome::~AddIncome()
@@ -45,9 +38,24 @@ void AddIncome::changeIncome()
     ui->title->setText("Change Income");
     ui->addButton->hide();
     ui->modifyButton->show();
+    binLabel->show();
 
     QString str = QString("You made %1 this month.").arg(income);
     lineEdit->setCustomPlaceholderText(str);
+}
+
+void AddIncome::addIncome()
+{
+    ui->title->setText("Add Income");
+    ui->addButton->show();
+    ui->modifyButton->hide();
+    binLabel->hide();
+    lineEdit->setCustomPlaceholderText("How much money did you make this month?");
+}
+
+void AddIncome::updateIncomeInfo()
+{
+    tie(incomeAddedDate, income) = Database::returnIncomeInfo(QDate::currentDate().toString("yyyy-MM"));
 }
 
 QAction *AddIncome::addAction(const QString &text)
@@ -76,6 +84,9 @@ void AddIncome::createLineEdit()
     lineEdit->setFixedSize(525, 30);
 
     ui->lineEditLayout->insertWidget(0, lineEdit);
+
+    connect(lineEdit, &CustomLineEdit::entered, [this](){ setBinLabelPixmap(QColor(206, 216, 226)); });
+    connect(lineEdit, &CustomLineEdit::left, [this](){ binLabel->setPixmap(QPixmap()); });
 }
 
 void AddIncome::createBinLabel()
@@ -84,6 +95,10 @@ void AddIncome::createBinLabel()
     binLabel->setFixedSize(30, 30);
 
     ui->lineEditLayout->insertWidget(1, binLabel);
+
+    connect(binLabel, &CustomLabel::clicked, this, &AddIncome::deleteIncome);
+    connect(binLabel, &CustomLabel::entered, [this](){ setBinLabelPixmap(QColor(255, 255, 255)); });
+    connect(binLabel, &CustomLabel::left, [this](){ binLabel->setPixmap(QPixmap()); });
 }
 
 void AddIncome::setBinLabelPixmap(QColor color)
@@ -166,19 +181,26 @@ void AddIncome::on_closeButton_clicked()
 
 void AddIncome::on_addButton_clicked()
 {
-    int income = lineEdit->text().toInt();
-    QString date = QDate::currentDate().toString("yyyy-MM-dd");
-    Database::addIncome(date, income);
-
+    Database::addIncome(QDate::currentDate().toString("yyyy-MM-dd"), lineEdit->text().toInt());
+    lineEdit->setText(QString(""));  //clear line edit text after modify button is clicked, clear function is not working here
     hide();
+
+    emit incomeAdded();
 }
 
 void AddIncome::on_modifyButton_clicked()
 {
-    income = lineEdit->text().toInt();
-    lineEdit->setText(QString("")); //clear line edit text after modify button is clicked, clear function is not working here
-    Database::changeIncome(incomeAddedDate, income);
+    Database::changeIncome(incomeAddedDate, lineEdit->text().toInt());
+    lineEdit->setText(QString(""));
     hide();
 
     emit incomeChanged();
+}
+
+void AddIncome::deleteIncome()
+{
+    Database::deleteIncome(incomeAddedDate);
+    hide();
+
+    emit incomeDeleted();
 }

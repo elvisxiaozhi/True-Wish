@@ -18,8 +18,7 @@ public:
     static void addIncome(QString, int);
     static void changeIncome(QString, int);
     static tuple<QString, int> returnIncomeInfo(QString);
-    static void modifyData(QString, QString, QString, QString, int, int, int, QString, QString);
-    static void deleteRow(QString);
+    static void deleteIncome(QString);
 
 private:
     QSqlDatabase db;

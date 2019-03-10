@@ -54,31 +54,10 @@ tuple<QString, int> Database::returnIncomeInfo(QString date)
     return make_tuple("", 0);
 }
 
-void Database::modifyData(QString id, QString date, QString title, QString link, int views, int likes, int comments, QString keywords, QString remark)
+void Database::deleteIncome(QString date)
 {
     QSqlQuery query;
-
-    query.prepare("UPDATE articles SET "
-                  "publication_date = :dateValue, title = :titleValue, link = :linkValue,"
-                  "views = :viewsValue, likes = :likesValue, comments = :commentsValue,"
-                  "keywords = :keywordsValue, remark = :remarkValue "
-                  "WHERE article_id = :id;");
-    query.bindValue(":dateValue", date);
-    query.bindValue(":titleValue", title);
-    query.bindValue(":linkValue", link);
-    query.bindValue(":viewsValue", views);
-    query.bindValue(":likesValue", likes);
-    query.bindValue(":commentsValue", comments);
-    query.bindValue(":keywordsValue", keywords);
-    query.bindValue(":remarkValue", remark);
-    query.bindValue(":id", id);
-    query.exec();
-}
-
-void Database::deleteRow(QString id)
-{
-    QSqlQuery query;
-    query.prepare("DELETE FROM articles WHERE article_id = :id");
-    query.bindValue(":id", id);
+    QString str = QString("DELETE FROM income WHERE created_date = '%1'").arg(date);
+    query.prepare(str);
     query.exec();
 }

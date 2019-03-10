@@ -12,6 +12,11 @@ CustomLabel::~CustomLabel()
 
 }
 
+void CustomLabel::mousePressEvent(QMouseEvent *)
+{
+    emit clicked();
+}
+
 void CustomLabel::mouseDoubleClickEvent(QMouseEvent *)
 {
     emit doubleClicked();
