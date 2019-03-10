@@ -36,7 +36,6 @@ void Database::changeIncome(QString date, int income)
 {
     QSqlQuery query;
     QString str = QString("UPDATE income SET income = %1 WHERE created_date = '%2'").arg(income).arg(date);
-    qDebug() << str;
     query.prepare(str);
     query.exec();
 }

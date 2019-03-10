@@ -25,7 +25,7 @@ private:
     CustomLabel *incomeLabel;
 
     void createIncomeLabel();
-    void setIncome();
+    void setIncomeWindowInfo();
 
 protected:
     void paintEvent(QPaintEvent *);

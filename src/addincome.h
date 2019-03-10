@@ -44,6 +44,9 @@ protected:
     void mouseMoveEvent(QMouseEvent *);
     void mousePressEvent(QMouseEvent *);
 
+signals:
+    void incomeChanged();
+
 private slots:
     void on_closeButton_clicked();
     void on_addButton_clicked();

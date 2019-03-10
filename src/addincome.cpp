@@ -175,6 +175,10 @@ void AddIncome::on_addButton_clicked()
 
 void AddIncome::on_modifyButton_clicked()
 {
-    Database::changeIncome(incomeAddedDate, lineEdit->text().toInt());
+    income = lineEdit->text().toInt();
+    lineEdit->setText(QString("")); //clear line edit text after modify button is clicked, clear function is not working here
+    Database::changeIncome(incomeAddedDate, income);
     hide();
+
+    emit incomeChanged();
 }
