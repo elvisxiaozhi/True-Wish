@@ -34,7 +34,8 @@ SOURCES += \
     database.cpp \
     customlabel.cpp \
     income.cpp \
-    expenditure.cpp
+    expenditure.cpp \
+    customwidget.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -45,7 +46,8 @@ HEADERS += \
     database.h \
     customlabel.h \
     income.h \
-    expenditure.h
+    expenditure.h \
+    customwidget.h
 
 FORMS += \
         mainwindow.ui \

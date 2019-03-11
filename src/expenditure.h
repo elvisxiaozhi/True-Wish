@@ -1,21 +1,16 @@
 #ifndef EXPENDITURE_H
 #define EXPENDITURE_H
 
-#include <QWidget>
+#include "customwidget.h"
 
-namespace Ui {
-class InAndEx;
-}
-
-class Expenditure : public QWidget
+class Expenditure : public CustomWidget
 {
     Q_OBJECT
 public:
-    explicit Expenditure(QWidget *parent = nullptr);
+    explicit Expenditure(CustomWidget *parent = nullptr);
     ~Expenditure();
 
 private:
-    Ui::InAndEx *ui;
 };
 
 #endif // EXPENDITURE_H
