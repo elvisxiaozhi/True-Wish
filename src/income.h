@@ -1,5 +1,5 @@
-#ifndef ADDINCOME_H
-#define ADDINCOME_H
+#ifndef INCOME_H
+#define INCOME_H
 
 #include <QWidget>
 #include <QAction>
@@ -9,16 +9,16 @@
 #include "customlabel.h"
 
 namespace Ui {
-class AddIncome;
+class InAndEx;
 }
 
-class AddIncome : public QWidget
+class Income : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit AddIncome(QWidget *parent = 0);
-    ~AddIncome();
+    explicit Income(QWidget *parent = 0);
+    ~Income();
     static int income;
     static QString incomeAddedDate;
 
@@ -27,7 +27,7 @@ public:
     static void updateIncomeInfo();
 
 private:
-    Ui::AddIncome *ui;
+    Ui::InAndEx *ui;
 
     QAction *closetAction;
     bool onHover;
@@ -58,4 +58,4 @@ private slots:
     void deleteIncome();
 };
 
-#endif // ADDINCOME_H
+#endif // INCOME_H

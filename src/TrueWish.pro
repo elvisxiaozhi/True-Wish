@@ -30,25 +30,27 @@ SOURCES += \
     sidebar.cpp \
     titlebar.cpp \
     maincontent.cpp \
-    addincome.cpp \
     customlineedit.cpp \
     database.cpp \
-    customlabel.cpp
+    customlabel.cpp \
+    income.cpp \
+    expenditure.cpp
 
 HEADERS += \
         mainwindow.h \
     sidebar.h \
     titlebar.h \
     maincontent.h \
-    addincome.h \
     customlineedit.h \
     database.h \
-    customlabel.h
+    customlabel.h \
+    income.h \
+    expenditure.h
 
 FORMS += \
         mainwindow.ui \
     maincontent.ui \
-    addincome.ui
+    inandex.ui
 
 RESOURCES += \
     ../icons/icons.qrc

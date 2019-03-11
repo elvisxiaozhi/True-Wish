@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AddIncome</class>
- <widget class="QWidget" name="AddIncome">
+ <class>InAndEx</class>
+ <widget class="QWidget" name="InAndEx">
   <property name="geometry">
    <rect>
     <x>0</x>

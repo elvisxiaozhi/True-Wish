@@ -1,5 +1,5 @@
-#include "addincome.h"
-#include "ui_addincome.h"
+#include "income.h"
+#include "ui_inandex.h"
 #include <QPaintEvent>
 #include <QPainter>
 #include <QDebug>
@@ -7,12 +7,12 @@
 #include <QWindow>
 #include <QBitmap>
 
-int AddIncome::income;
-QString AddIncome::incomeAddedDate;
+int Income::income;
+QString Income::incomeAddedDate;
 
-AddIncome::AddIncome(QWidget *parent) :
+Income::Income(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::AddIncome)
+    ui(new Ui::InAndEx)
 {
     ui->setupUi(this);
 
@@ -28,12 +28,12 @@ AddIncome::AddIncome(QWidget *parent) :
     createLine();
 }
 
-AddIncome::~AddIncome()
+Income::~Income()
 {
     delete ui;
 }
 
-void AddIncome::changeIncome()
+void Income::changeIncome()
 {
     ui->title->setText("Change Income");
     ui->addButton->hide();
@@ -44,7 +44,7 @@ void AddIncome::changeIncome()
     lineEdit->setCustomPlaceholderText(str);
 }
 
-void AddIncome::addIncome()
+void Income::addIncome()
 {
     ui->title->setText("Add Income");
     ui->addButton->show();
@@ -53,12 +53,12 @@ void AddIncome::addIncome()
     lineEdit->setCustomPlaceholderText("How much money did you make this month?");
 }
 
-void AddIncome::updateIncomeInfo()
+void Income::updateIncomeInfo()
 {
     tie(incomeAddedDate, income) = Database::returnIncomeInfo(QDate::currentDate().toString("yyyy-MM"));
 }
 
-QAction *AddIncome::addAction(const QString &text)
+QAction *Income::addAction(const QString &text)
 {
     QAction *action = new QAction(text, this);
     action->setCheckable(true);
@@ -66,7 +66,7 @@ QAction *AddIncome::addAction(const QString &text)
     return action;
 }
 
-QAction *AddIncome::actionAt(const QPoint &point)
+QAction *Income::actionAt(const QPoint &point)
 {
     int posX = 570;
     QRect rec(posX, 10, 35, 35);
@@ -77,7 +77,7 @@ QAction *AddIncome::actionAt(const QPoint &point)
     return nullptr;
 }
 
-void AddIncome::createLineEdit()
+void Income::createLineEdit()
 {
     lineEdit = new CustomLineEdit(this);
     lineEdit->setFrame(false);
@@ -89,19 +89,19 @@ void AddIncome::createLineEdit()
     connect(lineEdit, &CustomLineEdit::left, [this](){ binLabel->setPixmap(QPixmap()); });
 }
 
-void AddIncome::createBinLabel()
+void Income::createBinLabel()
 {
     binLabel = new CustomLabel(this);
     binLabel->setFixedSize(30, 30);
 
     ui->lineEditLayout->insertWidget(1, binLabel);
 
-    connect(binLabel, &CustomLabel::clicked, this, &AddIncome::deleteIncome);
+    connect(binLabel, &CustomLabel::clicked, this, &Income::deleteIncome);
     connect(binLabel, &CustomLabel::entered, [this](){ setBinLabelPixmap(QColor(255, 255, 255)); });
     connect(binLabel, &CustomLabel::left, [this](){ binLabel->setPixmap(QPixmap()); });
 }
 
-void AddIncome::setBinLabelPixmap(QColor color)
+void Income::setBinLabelPixmap(QColor color)
 {
     QPixmap px(":/icons/recycle bin.png");
     QPixmap pixmap(px.size());
@@ -111,7 +111,7 @@ void AddIncome::setBinLabelPixmap(QColor color)
     binLabel->setPixmap(pixmap);
 }
 
-void AddIncome::createLine()
+void Income::createLine()
 {
     ui->lineWidget->setFixedSize(540, 1);
 
@@ -123,7 +123,7 @@ void AddIncome::createLine()
     });
 }
 
-void AddIncome::paintEvent(QPaintEvent *event)
+void Income::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
     painter.setFont(QFont("Times", 13));
@@ -141,7 +141,7 @@ void AddIncome::paintEvent(QPaintEvent *event)
     painter.drawText(textRect, closetAction->text());
 }
 
-void AddIncome::mouseMoveEvent(QMouseEvent *event)
+void Income::mouseMoveEvent(QMouseEvent *event)
 {
     if (actionAt(event->pos()) == closetAction) {
         onHover = true;
@@ -153,7 +153,7 @@ void AddIncome::mouseMoveEvent(QMouseEvent *event)
     update();
 }
 
-void AddIncome::mousePressEvent(QMouseEvent *event)
+void Income::mousePressEvent(QMouseEvent *event)
 {
     //use native windows api to move window
     if (event->buttons().testFlag(Qt::LeftButton))
@@ -174,12 +174,12 @@ void AddIncome::mousePressEvent(QMouseEvent *event)
     update();
 }
 
-void AddIncome::on_closeButton_clicked()
+void Income::on_closeButton_clicked()
 {
     hide();
 }
 
-void AddIncome::on_addButton_clicked()
+void Income::on_addButton_clicked()
 {
     Database::addIncome(QDate::currentDate().toString("yyyy-MM-dd"), lineEdit->text().toInt());
     lineEdit->setText(QString(""));  //clear line edit text after modify button is clicked, clear function is not working here
@@ -188,7 +188,7 @@ void AddIncome::on_addButton_clicked()
     emit incomeAdded();
 }
 
-void AddIncome::on_modifyButton_clicked()
+void Income::on_modifyButton_clicked()
 {
     Database::changeIncome(incomeAddedDate, lineEdit->text().toInt());
     lineEdit->setText(QString(""));
@@ -197,7 +197,7 @@ void AddIncome::on_modifyButton_clicked()
     emit incomeChanged();
 }
 
-void AddIncome::deleteIncome()
+void Income::deleteIncome()
 {
     Database::deleteIncome(incomeAddedDate);
     hide();

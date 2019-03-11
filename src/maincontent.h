@@ -3,7 +3,8 @@
 
 #include <QWidget>
 #include <QDebug>
-#include "addincome.h"
+#include "income.h"
+#include "expenditure.h"
 #include "customlabel.h"
 
 namespace Ui {
@@ -21,7 +22,8 @@ public:
 private:
     Ui::MainContent *ui;
 
-    AddIncome *income;
+    Income *income;
+    Expenditure *expenditure;
     CustomLabel *incomeLabel;
 
     void createIncomeLabel();
@@ -33,6 +35,7 @@ protected:
 private slots:
     void on_incomeButton_clicked();
     void changeIncome();
+    void on_expenditureBtn_clicked();
 };
 
 #endif // MAINCONTENT_H

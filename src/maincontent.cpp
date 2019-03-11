@@ -12,10 +12,12 @@ MainContent::MainContent(QWidget *parent) :
     setFixedSize(1090, 800);
     setStyleSheet("QWidget { background-color: #353F5A }");
 
-    income = new AddIncome();
-    connect(income, &AddIncome::incomeAdded, [this](){ setIncomeWindowInfo(); });
-    connect(income, &AddIncome::incomeChanged, [this](){ setIncomeWindowInfo(); });
-    connect(income, &AddIncome::incomeDeleted, [this](){ setIncomeWindowInfo(); });
+    income = new Income();
+    connect(income, &Income::incomeAdded, [this](){ setIncomeWindowInfo(); });
+    connect(income, &Income::incomeChanged, [this](){ setIncomeWindowInfo(); });
+    connect(income, &Income::incomeDeleted, [this](){ setIncomeWindowInfo(); });
+
+    expenditure = new Expenditure();
 
     createIncomeLabel();
     setIncomeWindowInfo();
@@ -43,9 +45,9 @@ void MainContent::createIncomeLabel()
 
 void MainContent::setIncomeWindowInfo()
 {
-    AddIncome::updateIncomeInfo();
+    Income::updateIncomeInfo();
 
-    if (AddIncome::income == 0) {
+    if (Income::income == 0) {
         ui->incomeInfo->setText("How much money did you make this month?");
         incomeLabel->hide();
         ui->incomeButton->show();
@@ -54,7 +56,7 @@ void MainContent::setIncomeWindowInfo()
         ui->incomeInfo->setText("This month you made");
         ui->incomeButton->hide();
         incomeLabel->show();
-        incomeLabel->setText(QString::number(AddIncome::income));
+        incomeLabel->setText(QString::number(Income::income));
     }
 }
 
@@ -80,4 +82,11 @@ void MainContent::changeIncome()
     setIncomeWindowInfo();
     income->changeIncome();
     income->show();
+}
+
+void MainContent::on_expenditureBtn_clicked()
+{
+    expenditure->show();
+    expenditure->raise();
+    expenditure->activateWindow();
 }
