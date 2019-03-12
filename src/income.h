@@ -3,8 +3,6 @@
 
 #include "customwidget.h"
 #include <QDate>
-#include "database.h"
-#include "customlabel.h"
 
 class Income : public CustomWidget
 {
@@ -23,7 +21,7 @@ private:
     static QString incomeAddedDate;
     CustomLabel *binLabel;
 
-    void createBinLabel();
+    void setIncomeButtons();
 
 signals:
     void incomeAdded();

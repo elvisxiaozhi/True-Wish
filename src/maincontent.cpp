@@ -12,20 +12,29 @@ MainContent::MainContent(QWidget *parent) :
     setFixedSize(1090, 800);
     setStyleSheet("QWidget { background-color: #353F5A }");
 
-    income = new Income();
-    connect(income, &Income::incomeAdded, [this](){ setIncomeWindowInfo(); });
-    connect(income, &Income::incomeChanged, [this](){ setIncomeWindowInfo(); });
-    connect(income, &Income::incomeDeleted, [this](){ setIncomeWindowInfo(); });
-
-    expenditure = new Expenditure();
-
-    createIncomeLabel();
-    setIncomeWindowInfo();
+    createIncomeWindow();
+    createExpenditureWindow();
 }
 
 MainContent::~MainContent()
 {
     delete ui;
+}
+
+void MainContent::createIncomeWindow()
+{
+    income = new Income();
+    connect(income, &Income::incomeAdded, [this](){ setIncomeWindowInfo(); });
+    connect(income, &Income::incomeChanged, [this](){ setIncomeWindowInfo(); });
+    connect(income, &Income::incomeDeleted, [this](){ setIncomeWindowInfo(); });
+
+    createIncomeLabel();
+    setIncomeWindowInfo();
+}
+
+void MainContent::createExpenditureWindow()
+{
+    expenditure = new Expenditure();
 }
 
 void MainContent::createIncomeLabel()
@@ -89,4 +98,5 @@ void MainContent::on_expenditureBtn_clicked()
     expenditure->show();
     expenditure->raise();
     expenditure->activateWindow();
+    expenditure->setAddExpenditureWindow();
 }

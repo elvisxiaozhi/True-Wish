@@ -10,6 +10,13 @@ public:
     explicit Expenditure(CustomWidget *parent = nullptr);
     ~Expenditure();
 
+    void setAddExpenditureWindow();
+
+private:
+    CustomLabel *binLabel;
+
+    void setExpenditureButtons();
+
 private:
 };
 

@@ -26,6 +26,8 @@ private:
     Expenditure *expenditure;
     CustomLabel *incomeLabel;
 
+    void createIncomeWindow();
+    void createExpenditureWindow();
     void createIncomeLabel();
     void setIncomeWindowInfo();
 

@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QAction>
 #include "customlineedit.h"
+#include "database.h"
+#include "customlabel.h"
 
 namespace Ui {
 class InAndEx;
@@ -33,6 +35,7 @@ protected:
     Ui::InAndEx *ui;
     CustomLineEdit *lineEdit;
 
+    CustomLabel *createBinLabel();
     QPixmap returnBinLabelPixmap(QColor);
 
 private slots:
