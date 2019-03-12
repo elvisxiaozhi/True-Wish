@@ -14,15 +14,13 @@ class CustomWidget : public QWidget
 {
     Q_OBJECT
 
-private:
+public:
     explicit CustomWidget(QWidget *parent = nullptr);
     ~CustomWidget();
 
-    Ui::InAndEx *ui;
+private:
     QAction *closetAction;
     bool onHover;
-    CustomLineEdit *lineEdit;
-    CustomLabel *binLabel;
 
     QAction *addAction(const QString &);
     QAction *actionAt(const QPoint &);
@@ -33,6 +31,15 @@ private:
     void paintEvent(QPaintEvent *);
     void mouseMoveEvent(QMouseEvent *);
     void mousePressEvent(QMouseEvent *);
+
+protected:
+    Ui::InAndEx *ui;
+    CustomLineEdit *lineEdit;
+    CustomLabel *binLabel;
+
+private slots:
+
+    void on_closeButton_clicked();
 };
 
 #endif // CUSTOMWIDGET_H

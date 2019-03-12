@@ -66,7 +66,6 @@ void CustomWidget::createBinLabel()
 
     ui->lineEditLayout->insertWidget(1, binLabel);
 
-//    connect(binLabel, &CustomLabel::clicked, this, &Income::deleteIncome);
     connect(binLabel, &CustomLabel::entered, [this](){ setBinLabelPixmap(QColor(255, 255, 255)); });
     connect(binLabel, &CustomLabel::left, [this](){ binLabel->setPixmap(QPixmap()); });
 }
@@ -135,11 +134,16 @@ void CustomWidget::mousePressEvent(QMouseEvent *event)
         ::SendMessage(hWnd, WM_NCLBUTTONDOWN, HTCAPTION, POINTTOPOINTS(pt));
     }
 
-//    lineEdit->clearFocus();
-//    emit lineEdit->isFocused(false); //emit signal here, so in CustomLineEdit class, it doesn't need focusOutEvent
+    lineEdit->clearFocus();
+    emit lineEdit->isFocused(false); //emit signal here, so in CustomLineEdit class, it doesn't need focusOutEvent
 
     if (actionAt(event->pos()) == closetAction)
         hide();
 
     update();
+}
+
+void CustomWidget::on_closeButton_clicked()
+{
+    hide();
 }

@@ -74,13 +74,13 @@ void MainContent::on_incomeButton_clicked()
     //make sure this winodw stays in the front
     income->raise();
     income->activateWindow();
-    income->addIncome();
+    income->setAddIncomeWindow();
 }
 
 void MainContent::changeIncome()
 {
     setIncomeWindowInfo();
-    income->changeIncome();
+    income->setChangeIncomeWindow();
     income->show();
 }
 
