@@ -45,9 +45,9 @@ void MainContent::createIncomeLabel()
 
 void MainContent::setIncomeWindowInfo()
 {
-    Income::updateIncomeInfo();
+    int income = get<1>(Income::updateIncomeInfo());
 
-    if (Income::income == 0) {
+    if (income == 0) {
         ui->incomeInfo->setText("How much money did you make this month?");
         incomeLabel->hide();
         ui->incomeButton->show();
@@ -56,7 +56,7 @@ void MainContent::setIncomeWindowInfo()
         ui->incomeInfo->setText("This month you made");
         ui->incomeButton->hide();
         incomeLabel->show();
-        incomeLabel->setText(QString::number(Income::income));
+        incomeLabel->setText(QString::number(income));
     }
 }
 

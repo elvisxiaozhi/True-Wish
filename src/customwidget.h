@@ -4,7 +4,6 @@
 #include <QWidget>
 #include <QAction>
 #include "customlineedit.h"
-#include "customlabel.h"
 
 namespace Ui {
 class InAndEx;
@@ -25,9 +24,7 @@ private:
     QAction *addAction(const QString &);
     QAction *actionAt(const QPoint &);
     void createLineEdit();
-    void createBinLabel();
     void createLine();
-    void setBinLabelPixmap(QColor);
     void paintEvent(QPaintEvent *);
     void mouseMoveEvent(QMouseEvent *);
     void mousePressEvent(QMouseEvent *);
@@ -35,10 +32,10 @@ private:
 protected:
     Ui::InAndEx *ui;
     CustomLineEdit *lineEdit;
-    CustomLabel *binLabel;
+
+    QPixmap returnBinLabelPixmap(QColor);
 
 private slots:
-
     void on_closeButton_clicked();
 };
 

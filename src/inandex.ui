@@ -36,7 +36,7 @@
 font: 20px;</string>
        </property>
        <property name="text">
-        <string>Add Income</string>
+        <string>Title</string>
        </property>
       </widget>
      </item>
@@ -142,7 +142,7 @@ font: 20px;</string>
     </spacer>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0,0">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0,0,0,0">
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
@@ -157,19 +157,9 @@ font: 20px;</string>
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="addButton">
+      <widget class="QPushButton" name="addIncome">
        <property name="styleSheet">
-        <string notr="true">#addButton {
-background-color: #11B850; 
-border: 0px; 
-padding: 11px 20px; 
-font: 20px; 
-color: white; 
-border-radius: 3px; }
-
-#addButton:hover { background-color: #0A863D; }
-
-#addButton:pressed { background-color: #0A863D; }</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string>ADD INCOME</string>
@@ -177,20 +167,24 @@ border-radius: 3px; }
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="modifyButton">
+      <widget class="QPushButton" name="modifyIncome">
        <property name="styleSheet">
-        <string notr="true">#modifyButton {
-background-color: #11B850; 
-border: 0px; 
-padding: 11px 20px; 
-font: 20px; 
-color: white; 
-border-radius: 3px; }
-
-#modifyButton:hover { background-color: #0A863D; }
-
-#modifyButton:pressed { background-color: #0A863D; }</string>
+        <string notr="true"/>
        </property>
+       <property name="text">
+        <string>MODIFY</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="addEx">
+       <property name="text">
+        <string>ADD EX</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="modifyEx">
        <property name="text">
         <string>MODIFY</string>
        </property>

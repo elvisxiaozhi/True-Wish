@@ -3,7 +3,6 @@
 
 #include "customwidget.h"
 #include <QDate>
-#include "customlineedit.h"
 #include "database.h"
 #include "customlabel.h"
 
@@ -14,12 +13,17 @@ class Income : public CustomWidget
 public:
     explicit Income(CustomWidget *parent = 0);
     ~Income();
-    static int income;
-    static QString incomeAddedDate;
 
     void setAddIncomeWindow();
     void setChangeIncomeWindow();
-    static void updateIncomeInfo();
+    static tuple<QString, int> updateIncomeInfo();
+
+private:
+    static int income;
+    static QString incomeAddedDate;
+    CustomLabel *binLabel;
+
+    void createBinLabel();
 
 signals:
     void incomeAdded();

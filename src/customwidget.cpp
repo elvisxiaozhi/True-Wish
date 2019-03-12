@@ -14,12 +14,14 @@ CustomWidget::CustomWidget(QWidget *parent) : QWidget(parent),
     setMouseTracking(this);
     setWindowFlags(Qt::FramelessWindowHint);
     setFixedSize(600, 250);
-    setStyleSheet("QWidget { background-color: #414B66 }");
+    setStyleSheet("QWidget { background-color: #414B66 }"
+                  "#addIncome, #modifyIncome, #addEx, #modifyEx { background-color: #11B850; border: 0px; padding: 11px 20px; font: 20px; color: white; border-radius: 3px; }"
+                  "#addIncome:hover, #modifyIncome:hover, #addEx:hover, #modifyEx:hover { background-color: #0A863D; }"
+                  "#addIncome:pressed, #modifyIncome:pressed, #addEx:pressed, #modifyEx:pressed { background-color: #0A863D; }");
 
     closetAction = addAction("X");
 
     createLineEdit();
-    createBinLabel();
     createLine();
 }
 
@@ -54,20 +56,6 @@ void CustomWidget::createLineEdit()
     lineEdit->setFixedSize(525, 30);
 
     ui->lineEditLayout->insertWidget(0, lineEdit);
-
-    connect(lineEdit, &CustomLineEdit::entered, [this](){ setBinLabelPixmap(QColor(206, 216, 226)); });
-    connect(lineEdit, &CustomLineEdit::left, [this](){ binLabel->setPixmap(QPixmap()); });
-}
-
-void CustomWidget::createBinLabel()
-{
-    binLabel = new CustomLabel(this);
-    binLabel->setFixedSize(30, 30);
-
-    ui->lineEditLayout->insertWidget(1, binLabel);
-
-    connect(binLabel, &CustomLabel::entered, [this](){ setBinLabelPixmap(QColor(255, 255, 255)); });
-    connect(binLabel, &CustomLabel::left, [this](){ binLabel->setPixmap(QPixmap()); });
 }
 
 void CustomWidget::createLine()
@@ -82,14 +70,14 @@ void CustomWidget::createLine()
     });
 }
 
-void CustomWidget::setBinLabelPixmap(QColor color)
+QPixmap CustomWidget::returnBinLabelPixmap(QColor color)
 {
     QPixmap px(":/icons/recycle bin.png");
     QPixmap pixmap(px.size());
     pixmap.fill(color);
     pixmap.setMask(px.createMaskFromColor(Qt::transparent));
 
-    binLabel->setPixmap(pixmap);
+    return pixmap;
 }
 
 void CustomWidget::paintEvent(QPaintEvent *event)

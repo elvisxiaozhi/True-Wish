@@ -8,6 +8,7 @@
 using std::tuple;
 using std::make_tuple;
 using std::tie;
+using std::get;
 
 class Database : public QObject
 {
