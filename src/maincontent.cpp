@@ -24,6 +24,7 @@ MainContent::~MainContent()
 void MainContent::createIncomeWindow()
 {
     income = new Income();
+
     connect(income, &Income::incomeAdded, [this](){ setIncomeWindowInfo(); });
     connect(income, &Income::incomeChanged, [this](){ setIncomeWindowInfo(); });
     connect(income, &Income::incomeDeleted, [this](){ setIncomeWindowInfo(); });
@@ -35,21 +36,33 @@ void MainContent::createIncomeWindow()
 void MainContent::createExpenditureWindow()
 {
     expenditure = new Expenditure();
+
+    connect(expenditure, &Expenditure::expenditureAdded, [this](){ setExpenditureWindowInfo(); });
+    connect(expenditure, &Expenditure::expenditureChanged, [this](){ setExpenditureWindowInfo(); });
+    connect(expenditure, &Expenditure::expenditureDeleted, [this](){ setExpenditureWindowInfo(); });
+
+    createExpenditureLabel();
+    setExpenditureWindowInfo();
 }
 
 void MainContent::createIncomeLabel()
 {
     incomeLabel = new CustomLabel(this);
-
-    incomeLabel->setStyleSheet("background-color: #11B850; border: 0px; padding: 15px 20px; font: 60px; color: white; border-radius: 3px;");
-    incomeLabel->setAlignment(Qt::AlignCenter);
-    incomeLabel->setFixedSize(250, 100);
-
-    incomeLabel->hide();
+    incomeLabel->setInAndExAttr();
 
     connect(incomeLabel, &CustomLabel::doubleClicked, this, &MainContent::changeIncome);
 
     ui->incomeLayout->insertWidget(2, incomeLabel);
+}
+
+void MainContent::createExpenditureLabel()
+{
+    expenditureLabel = new CustomLabel(this);
+    expenditureLabel->setInAndExAttr();
+
+    connect(expenditureLabel, &CustomLabel::doubleClicked, this, &MainContent::changeExpenditure);
+
+    ui->expenditureLayout->insertWidget(2, expenditureLabel);
 }
 
 void MainContent::setIncomeWindowInfo()
@@ -66,6 +79,23 @@ void MainContent::setIncomeWindowInfo()
         ui->incomeButton->hide();
         incomeLabel->show();
         incomeLabel->setText(QString::number(income));
+    }
+}
+
+void MainContent::setExpenditureWindowInfo()
+{
+    int expenditure = get<1>(Expenditure::updateExpenditureInfo());
+
+    if (expenditure == 0) {
+        ui->expenditureInfo->setText("How much money did you spend this month?");
+        expenditureLabel->hide();
+        ui->expenditureBtn->show();
+    }
+    else {
+        ui->expenditureInfo->setText("This month you made");
+        ui->expenditureBtn->hide();
+        expenditureLabel->show();
+        expenditureLabel->setText(QString::number(expenditure));
     }
 }
 
@@ -91,6 +121,13 @@ void MainContent::changeIncome()
     setIncomeWindowInfo();
     income->setChangeIncomeWindow();
     income->show();
+}
+
+void MainContent::changeExpenditure()
+{
+    setExpenditureWindowInfo();
+    expenditure->setChangeExpenditureWindow();
+    expenditure->show();
 }
 
 void MainContent::on_expenditureBtn_clicked()

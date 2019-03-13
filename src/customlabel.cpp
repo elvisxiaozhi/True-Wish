@@ -12,6 +12,15 @@ CustomLabel::~CustomLabel()
 
 }
 
+void CustomLabel::setInAndExAttr()
+{
+    setStyleSheet("background-color: #11B850; border: 0px; padding: 15px 20px; font: 60px; color: white; border-radius: 3px;");
+    setAlignment(Qt::AlignCenter);
+    setFixedSize(250, 100);
+
+    hide();
+}
+
 void CustomLabel::mousePressEvent(QMouseEvent *)
 {
     emit clicked();

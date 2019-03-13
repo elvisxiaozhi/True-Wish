@@ -127,7 +127,7 @@ border-radius: 3px; }
         </spacer>
        </item>
        <item>
-        <widget class="QLabel" name="label_2">
+        <widget class="QLabel" name="expenditureInfo">
          <property name="styleSheet">
           <string notr="true">color: #DCDCDC; 
 font: 20px;</string>
@@ -153,7 +153,7 @@ font: 20px;</string>
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <layout class="QHBoxLayout" name="expenditureLayout">
        <item>
         <spacer name="horizontalSpacer_11">
          <property name="orientation">

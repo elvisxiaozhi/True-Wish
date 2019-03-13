@@ -2,7 +2,6 @@
 #define INCOME_H
 
 #include "customwidget.h"
-#include <QDate>
 
 class Income : public CustomWidget
 {

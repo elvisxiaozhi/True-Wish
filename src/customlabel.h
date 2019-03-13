@@ -10,6 +10,8 @@ public:
     CustomLabel(QWidget *parent = nullptr);
     ~CustomLabel();
 
+    void setInAndExAttr();
+
 protected:
     void mousePressEvent(QMouseEvent *);
     void mouseDoubleClickEvent(QMouseEvent *);

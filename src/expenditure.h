@@ -11,13 +11,25 @@ public:
     ~Expenditure();
 
     void setAddExpenditureWindow();
+    void setChangeExpenditureWindow();
+    static tuple<QString, int> updateExpenditureInfo();
 
 private:
+    static int expenditure;
+    static QString expenditureAddedDate;
     CustomLabel *binLabel;
 
     void setExpenditureButtons();
 
-private:
+signals:
+    void expenditureAdded();
+    void expenditureChanged();
+    void expenditureDeleted();
+
+private slots:
+    void addExpenditure();
+    void changeExpenditure();
+    void deleteExpenditure();
 };
 
 #endif // EXPENDITURE_H

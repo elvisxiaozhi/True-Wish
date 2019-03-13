@@ -17,9 +17,13 @@ public:
     explicit Database(QObject *parent = nullptr);
     ~Database();
     static void addIncome(QString, int);
+    static void addExpenditure(QString, int);
     static void changeIncome(QString, int);
+    static void changeExpenditure(QString, int);
     static tuple<QString, int> returnIncomeInfo(QString);
+    static tuple<QString, int> returnExpenditureInfo(QString);
     static void deleteIncome(QString);
+    static void deleteExpendture(QString);
 
 private:
     QSqlDatabase db;

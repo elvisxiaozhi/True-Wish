@@ -6,6 +6,7 @@
 #include "customlineedit.h"
 #include "database.h"
 #include "customlabel.h"
+#include <QDate>
 
 namespace Ui {
 class InAndEx;

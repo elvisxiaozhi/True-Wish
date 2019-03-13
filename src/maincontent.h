@@ -24,12 +24,14 @@ private:
 
     Income *income;
     Expenditure *expenditure;
-    CustomLabel *incomeLabel;
+    CustomLabel *incomeLabel, *expenditureLabel;
 
     void createIncomeWindow();
     void createExpenditureWindow();
     void createIncomeLabel();
+    void createExpenditureLabel();
     void setIncomeWindowInfo();
+    void setExpenditureWindowInfo();
 
 protected:
     void paintEvent(QPaintEvent *);
@@ -37,6 +39,7 @@ protected:
 private slots:
     void on_incomeButton_clicked();
     void changeIncome();
+    void changeExpenditure();
     void on_expenditureBtn_clicked();
 };
 
