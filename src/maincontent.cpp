@@ -102,10 +102,7 @@ void MainContent::setExpenditureWindowInfo()
 
 void MainContent::setComboBox()
 {
-    QStringList list;
-    list.push_back("March 2019");
-    list.push_back("April 2019");
-    ui->comboBox->addItems(list);
+    ui->comboBox->addItems(Database::returnStoredMonth());
 }
 
 void MainContent::paintEvent(QPaintEvent *)

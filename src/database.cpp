@@ -1,6 +1,7 @@
 #include "database.h"
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QDate>
 
 Database::Database(QObject *parent) : QObject(parent)
 {
@@ -13,8 +14,6 @@ Database::Database(QObject *parent) : QObject(parent)
     if(!db.open()) {
         qDebug() << db.lastError();
     }
-
-    returnStoredMonth();
 }
 
 Database::~Database()
@@ -111,17 +110,16 @@ QStringList Database::returnStoredMonth()
     QStringList list;
 
     QString str = QString("SELECT * FROM income join expenditure WHERE income.created_date >= '2019-01-01' AND expenditure.created_date >= '2019-01-01';");
-//    qDebug() << str;
     QSqlQuery query;
     query.prepare(str);
     query.exec();
 
     while (query.next()) {
-        list.push_back(query.value(1).toString());
-        list.push_back(query.value(4).toString());
+        list.push_back(QDate::fromString(query.value(1).toString(), "yyyy-MM-dd").toString("MMMM"));
+        list.push_back(QDate::fromString(query.value(4).toString(), "yyyy-MM-dd").toString("MMMM"));
     }
 
-    qDebug() << list;
+    list = list.toSet().toList();
 
     return list;
 }
