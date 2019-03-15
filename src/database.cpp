@@ -13,6 +13,8 @@ Database::Database(QObject *parent) : QObject(parent)
     if(!db.open()) {
         qDebug() << db.lastError();
     }
+
+    returnStoredMonth();
 }
 
 Database::~Database()
@@ -62,7 +64,7 @@ void Database::changeExpenditure(QString date, int expenditure)
 
 tuple<QString, int> Database::returnIncomeInfo(QString date)
 {
-    QString str = QString("SELECT *FROM income WHERE created_date LIKE '%1-%'").arg(date);
+    QString str = QString("SELECT *FROM income WHERE created_date >= '%1-01-01'").arg(date);
     QSqlQuery query;
     query.prepare(str);
     query.exec();
@@ -76,7 +78,7 @@ tuple<QString, int> Database::returnIncomeInfo(QString date)
 
 tuple<QString, int> Database::returnExpenditureInfo(QString date)
 {
-    QString str = QString("SELECT *FROM expenditure WHERE created_date LIKE '%1-%'").arg(date);
+    QString str = QString("SELECT *FROM expenditure WHERE created_date >= '%1-01-01'").arg(date);
     QSqlQuery query;
     query.prepare(str);
     query.exec();
@@ -102,4 +104,24 @@ void Database::deleteExpendture(QString date)
     QString str = QString("DELETE FROM expenditure WHERE created_date = '%1'").arg(date);
     query.prepare(str);
     query.exec();
+}
+
+QStringList Database::returnStoredMonth()
+{
+    QStringList list;
+
+    QString str = QString("SELECT * FROM income join expenditure WHERE income.created_date >= '2019-01-01' AND expenditure.created_date >= '2019-01-01';");
+//    qDebug() << str;
+    QSqlQuery query;
+    query.prepare(str);
+    query.exec();
+
+    while (query.next()) {
+        list.push_back(query.value(1).toString());
+        list.push_back(query.value(4).toString());
+    }
+
+    qDebug() << list;
+
+    return list;
 }

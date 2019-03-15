@@ -32,6 +32,7 @@ private:
     void createExpenditureLabel();
     void setIncomeWindowInfo();
     void setExpenditureWindowInfo();
+    void setComboBox();
 
 protected:
     void paintEvent(QPaintEvent *);

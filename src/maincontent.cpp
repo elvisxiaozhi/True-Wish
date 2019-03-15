@@ -14,6 +14,7 @@ MainContent::MainContent(QWidget *parent) :
 
     createIncomeWindow();
     createExpenditureWindow();
+    setComboBox();
 }
 
 MainContent::~MainContent()
@@ -97,6 +98,14 @@ void MainContent::setExpenditureWindowInfo()
         expenditureLabel->show();
         expenditureLabel->setText(QString::number(expenditure));
     }
+}
+
+void MainContent::setComboBox()
+{
+    QStringList list;
+    list.push_back("March 2019");
+    list.push_back("April 2019");
+    ui->comboBox->addItems(list);
 }
 
 void MainContent::paintEvent(QPaintEvent *)
