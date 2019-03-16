@@ -103,6 +103,19 @@ void MainContent::setExpenditureWindowInfo()
 void MainContent::setComboBox()
 {
     ui->comboBox->addItems(Database::returnStoredMonth());
+
+    QLineEdit *edit = new QLineEdit(this);
+    ui->comboBox->setLineEdit(edit);
+    ui->comboBox->lineEdit()->setReadOnly(true);
+    ui->comboBox->lineEdit()->setAlignment(Qt::AlignCenter);
+
+    ui->comboBox->setFixedSize(150, 40);
+    ui->comboBox->setStyleSheet("QComboBox { background: #414B66; border: 0px; color: white; font: 20px; }"
+                                "QComboBox::drop-down { border: 0px; width: 35px; }" //replace the whole arrow of the combo box
+                                "QComboBox::down-arrow { image: url(:/icons/right arrow.png); width: 20px; height: 20px; }" //Define a new custom arrow icon for the combo box
+                                "QComboBox::down-arrow:on { image: url(:/icons/down arrow.png); }"
+                                "QComboBox QAbstractItemView { selection-background-color: #A9A9A9; }" //change the selection bgcolor
+                                );
 }
 
 void MainContent::paintEvent(QPaintEvent *)
