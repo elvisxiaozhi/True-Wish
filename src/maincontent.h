@@ -46,6 +46,7 @@ private slots:
     void changeIncome();
     void changeExpenditure();
     void on_expenditureBtn_clicked();
+    void enterPressedOnYearEdit();
 };
 
 #endif // MAINCONTENT_H

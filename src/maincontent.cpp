@@ -48,11 +48,14 @@ void MainContent::createExpenditureWindow()
 
 void MainContent::createYearEdit()
 {
-    yearEdit = new CustomLineEdit(this);
+    yearEdit = new CustomLineEdit(this, 0); //set the second value to 0 for the custom placeholder text distance
     yearEdit->setFixedSize(50, 40);
     yearEdit->setStyleSheet("background-color: #414B66; font: 20px; color: white;");
+    yearEdit->hide();
 
     ui->comboLayout->addWidget(yearEdit);
+
+    connect(yearEdit, &CustomLineEdit::returnPressed, this, &MainContent::enterPressedOnYearEdit);
 }
 
 void MainContent::createYearLabel()
@@ -64,6 +67,9 @@ void MainContent::createYearLabel()
     yearLabel->setStyleSheet("color: white; font: 20px;");
 
     ui->comboLayout->addWidget(yearLabel);
+
+    connect(yearLabel, &CustomLabel::doubleClicked, [this](){ yearLabel->hide(); yearEdit->show();
+        yearEdit->setCustomPlaceholderText(yearLabel->text()); });
 }
 
 void MainContent::createIncomeLabel()
@@ -181,4 +187,17 @@ void MainContent::on_expenditureBtn_clicked()
 {
     setWindowToTop(expenditure);
     expenditure->setAddExpenditureWindow();
+}
+
+void MainContent::enterPressedOnYearEdit()
+{
+    yearEdit->hide();
+    yearLabel->show();
+    if (yearEdit->text() != "") {
+        yearLabel->setText(yearEdit->text());
+    }
+    yearEdit->setText("");
+
+    //use the following line to remove comboBox lineEdit text is selected bug after enter key is pressed
+    ui->comboBox->lineEdit()->deselect();
 }

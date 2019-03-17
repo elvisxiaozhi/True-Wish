@@ -5,11 +5,11 @@
 #include <QDebug>
 #include <QIntValidator>
 
-CustomLineEdit::CustomLineEdit(QWidget *parent)
+CustomLineEdit::CustomLineEdit(QWidget *parent, int distance)
     : QLineEdit(parent)
 {
+    paintDistance = distance;
     color = QColor(199, 205, 221);
-
     setValidator(new QIntValidator(0, INT_MAX, this));
     setFrame(false);
 
@@ -54,7 +54,7 @@ void CustomLineEdit::paintEvent(QPaintEvent *event)
         QFontMetrics fm = fontMetrics();
         int minLB = qMax(0, -fm.minLeftBearing());
         QRect lineRect = this->rect();
-        QRect ph = lineRect.adjusted(minLB + 20, 0, 0, 0);
+        QRect ph = lineRect.adjusted(minLB + paintDistance, 0, 0, 0);
         QString elidedText = fm.elidedText(mText, Qt::ElideRight, ph.width());
         painter.drawText(ph, Qt::AlignVCenter, elidedText);
     }
