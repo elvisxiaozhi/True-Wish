@@ -52,8 +52,7 @@ QAction *CustomWidget::actionAt(const QPoint &point)
 void CustomWidget::createLineEdit()
 {
     lineEdit = new CustomLineEdit(this);
-    lineEdit->setFrame(false);
-    lineEdit->setFixedSize(525, 30);
+    lineEdit->setInAndExAttr();
 
     ui->lineEditLayout->insertWidget(0, lineEdit);
 }

@@ -13,6 +13,7 @@ public:
 
     void setCustomPlaceholderText(const QString &);
     void setCustomPlaceholderColor(const QColor &);
+    void setInAndExAttr();
 
 private:
     QString mText;

@@ -10,9 +10,8 @@ CustomLineEdit::CustomLineEdit(QWidget *parent)
 {
     color = QColor(199, 205, 221);
 
-    setCustomPlaceholderText("How much money did you make this month?");
-    setStyleSheet("background-color: #414B66; padding: 0px 19px; font: 20px; border: none; color: white;");
     setValidator(new QIntValidator(0, INT_MAX, this));
+    setFrame(false);
 
     connect(this, &CustomLineEdit::isFocused, this, &CustomLineEdit::onFocus);
 }
@@ -29,6 +28,13 @@ void CustomLineEdit::setCustomPlaceholderText(const QString &text)
 void CustomLineEdit::setCustomPlaceholderColor(const QColor &color)
 {
     this->color = color;
+}
+
+void CustomLineEdit::setInAndExAttr()
+{
+    setFixedSize(525, 30);
+    setCustomPlaceholderText("How much money did you make this month?");
+    setStyleSheet("background-color: #414B66; padding: 0px 19px; font: 20px; border: none; color: white;");
 }
 
 void CustomLineEdit::focusInEvent(QFocusEvent *event)

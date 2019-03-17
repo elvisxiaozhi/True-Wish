@@ -24,15 +24,19 @@ private:
 
     Income *income;
     Expenditure *expenditure;
-    CustomLabel *incomeLabel, *expenditureLabel;
+    CustomLabel *yearLabel, *incomeLabel, *expenditureLabel;
+    CustomLineEdit *yearEdit;
 
     void createIncomeWindow();
     void createExpenditureWindow();
+    void createYearEdit();
+    void createYearLabel();
     void createIncomeLabel();
     void createExpenditureLabel();
     void setIncomeWindowInfo();
     void setExpenditureWindowInfo();
     void setComboBox();
+    void setWindowToTop(QWidget *);
 
 protected:
     void paintEvent(QPaintEvent *);

@@ -46,6 +46,26 @@ void MainContent::createExpenditureWindow()
     setExpenditureWindowInfo();
 }
 
+void MainContent::createYearEdit()
+{
+    yearEdit = new CustomLineEdit(this);
+    yearEdit->setFixedSize(50, 40);
+    yearEdit->setStyleSheet("background-color: #414B66; font: 20px; color: white;");
+
+    ui->comboLayout->addWidget(yearEdit);
+}
+
+void MainContent::createYearLabel()
+{
+    yearLabel = new CustomLabel(this);
+    yearLabel->setText(QString::number(QDate::currentDate().year()));
+    yearLabel->setAlignment(Qt::AlignCenter);
+    yearLabel->setFixedSize(50, 40);
+    yearLabel->setStyleSheet("color: white; font: 20px;");
+
+    ui->comboLayout->addWidget(yearLabel);
+}
+
 void MainContent::createIncomeLabel()
 {
     incomeLabel = new CustomLabel(this);
@@ -116,6 +136,17 @@ void MainContent::setComboBox()
                                 "QComboBox::down-arrow:on { image: url(:/icons/down arrow.png); }"
                                 "QComboBox QAbstractItemView { selection-background-color: #A9A9A9; }" //change the selection bgcolor
                                 );
+
+    createYearEdit();
+    createYearLabel();
+}
+
+//make sure winodw stays in the front
+void MainContent::setWindowToTop(QWidget *w)
+{
+    w->show();
+    w->raise();
+    w->activateWindow();
 }
 
 void MainContent::paintEvent(QPaintEvent *)
@@ -128,10 +159,7 @@ void MainContent::paintEvent(QPaintEvent *)
 
 void MainContent::on_incomeButton_clicked()
 {
-    income->show();
-    //make sure this winodw stays in the front
-    income->raise();
-    income->activateWindow();
+    setWindowToTop(income);
     income->setAddIncomeWindow();
 }
 
@@ -139,20 +167,18 @@ void MainContent::changeIncome()
 {
     setIncomeWindowInfo();
     income->setChangeIncomeWindow();
-    income->show();
+    setWindowToTop(income);
 }
 
 void MainContent::changeExpenditure()
 {
     setExpenditureWindowInfo();
     expenditure->setChangeExpenditureWindow();
-    expenditure->show();
+    setWindowToTop(expenditure);
 }
 
 void MainContent::on_expenditureBtn_clicked()
 {
-    expenditure->show();
-    expenditure->raise();
-    expenditure->activateWindow();
+    setWindowToTop(expenditure);
     expenditure->setAddExpenditureWindow();
 }
