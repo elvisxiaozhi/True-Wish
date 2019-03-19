@@ -13,7 +13,7 @@ public:
 
     void setAddIncomeWindow();
     void setChangeIncomeWindow();
-    static tuple<QString, int> updateIncomeInfo();
+    static tuple<QString, int> updateIncomeInfo(QString);
 
 private:
     static int income;

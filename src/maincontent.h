@@ -33,8 +33,8 @@ private:
     void createYearLabel();
     void createIncomeLabel();
     void createExpenditureLabel();
-    void setIncomeWindowInfo();
-    void setExpenditureWindowInfo();
+    void setIncomeWindowInfo(QString date = QDate::currentDate().toString("yyyy-MM-dd"));
+    void setExpenditureWindowInfo(QString date = QDate::currentDate().toString("yyyy-MM-dd"));
     void setComboBox();
     void setWindowToTop(QWidget *);
     void resetComboBox();
@@ -48,6 +48,7 @@ private slots:
     void changeExpenditure();
     void on_expenditureBtn_clicked();
     void enterPressedOnYearEdit();
+    void changeContentData(int);
 };
 
 #endif // MAINCONTENT_H

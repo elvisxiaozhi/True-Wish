@@ -92,9 +92,9 @@ void MainContent::createExpenditureLabel()
     ui->expenditureLayout->insertWidget(2, expenditureLabel);
 }
 
-void MainContent::setIncomeWindowInfo()
+void MainContent::setIncomeWindowInfo(QString date)
 {
-    int income = get<1>(Income::updateIncomeInfo());
+    int income = get<1>(Income::updateIncomeInfo(date));
 
     if (income == 0) {
         ui->incomeInfo->setText("How much money did you make this month?");
@@ -109,9 +109,9 @@ void MainContent::setIncomeWindowInfo()
     }
 }
 
-void MainContent::setExpenditureWindowInfo()
+void MainContent::setExpenditureWindowInfo(QString date)
 {
-    int expenditure = get<1>(Expenditure::updateExpenditureInfo());
+    int expenditure = get<1>(Expenditure::updateExpenditureInfo(date));
 
     if (expenditure == 0) {
         ui->expenditureInfo->setText("How much money did you spend this month?");
@@ -145,6 +145,8 @@ void MainContent::setComboBox()
                                 "QComboBox::down-arrow:on { image: url(:/icons/down arrow.png); }"
                                 "QComboBox QAbstractItemView { selection-background-color: #A9A9A9; }" //change the selection bgcolor
                                 );
+
+    connect(ui->comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainContent::changeContentData);
 }
 
 //make sure winodw stays in the front
@@ -219,4 +221,12 @@ void MainContent::enterPressedOnYearEdit()
     yearEdit->setText("");
 
     resetComboBox();
+}
+
+void MainContent::changeContentData(int index)
+{
+    QString month = Database::months.key(ui->comboBox->itemText(index));
+    QString date = QString("%1-%2").arg(yearLabel->text()).arg(month);
+    setIncomeWindowInfo(date);
+    setExpenditureWindowInfo(date);
 }

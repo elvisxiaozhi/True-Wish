@@ -1,7 +1,12 @@
 #include "database.h"
 #include <QSqlError>
 #include <QSqlQuery>
-#include <QDate>
+
+const QMap<QString, QString> Database::months = {
+    {"01", "January"}, {"02", "February"}, {"03", "March"}, {"04", "April"},
+    {"05", "May"}, {"06", "June"}, {"07", "July"}, {"08", "August"},
+    {"09", "September"}, {"10", "October"}, {"11", "November"}, {"12", "December"}
+};
 
 Database::Database(QObject *parent) : QObject(parent)
 {
@@ -63,7 +68,8 @@ void Database::changeExpenditure(QString date, int expenditure)
 
 tuple<QString, int> Database::returnIncomeInfo(QString date)
 {
-    QString str = QString("SELECT *FROM income WHERE created_date >= '%1-01-01'").arg(date);
+    QStringList list = date.split("-");
+    QString str = QString("SELECT *FROM income WHERE created_date >= '%1-%2-01' AND created_date <= '%1-%2-31'").arg(list[0]).arg(list[1]);
     QSqlQuery query;
     query.prepare(str);
     query.exec();
@@ -77,7 +83,8 @@ tuple<QString, int> Database::returnIncomeInfo(QString date)
 
 tuple<QString, int> Database::returnExpenditureInfo(QString date)
 {
-    QString str = QString("SELECT *FROM expenditure WHERE created_date >= '%1-01-01'").arg(date);
+    QStringList list = date.split("-");
+    QString str = QString("SELECT *FROM expenditure WHERE created_date >= '%1-%2-01' AND created_date <= '%1-%2-31'").arg(list[0]).arg(list[1]);
     QSqlQuery query;
     query.prepare(str);
     query.exec();
@@ -117,8 +124,8 @@ QStringList Database::returnStoredMonth(QString date)
     query.exec();
 
     while (query.next()) {
-        list.push_back(QDate::fromString(query.value(1).toString(), "yyyy-MM-dd").toString("MMMM"));
-        list.push_back(QDate::fromString(query.value(4).toString(), "yyyy-MM-dd").toString("MMMM"));
+        list.push_back(months.value(QString(query.value(1).toString()).split("-")[1]));
+        list.push_back(months.value(QString(query.value(4).toString()).split("-")[1]));
     }
 
     list = list.toSet().toList();

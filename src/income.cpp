@@ -48,9 +48,9 @@ void Income::setChangeIncomeWindow()
     lineEdit->setCustomPlaceholderText(str);
 }
 
-tuple<QString, int> Income::updateIncomeInfo()
+tuple<QString, int> Income::updateIncomeInfo(QString date)
 {
-    tie(incomeAddedDate, income) = Database::returnIncomeInfo(QDate::currentDate().toString("yyyy-MM"));
+    tie(incomeAddedDate, income) = Database::returnIncomeInfo(date);
 
     return make_tuple(incomeAddedDate, income);
 }

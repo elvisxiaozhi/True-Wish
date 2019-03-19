@@ -40,9 +40,9 @@ void Expenditure::setChangeExpenditureWindow()
     lineEdit->setCustomPlaceholderText(str);
 }
 
-tuple<QString, int> Expenditure::updateExpenditureInfo()
+tuple<QString, int> Expenditure::updateExpenditureInfo(QString date)
 {
-    tie(expenditureAddedDate, expenditure) = Database::returnExpenditureInfo(QDate::currentDate().toString("yyyy-MM"));
+    tie(expenditureAddedDate, expenditure) = Database::returnExpenditureInfo(date);
 
     return make_tuple(expenditureAddedDate, expenditure);
 }

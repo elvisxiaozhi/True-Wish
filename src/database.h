@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QSqlDatabase>
 #include <QDebug>
+#include <QMap>
 
 using std::tuple;
 using std::make_tuple;
@@ -16,6 +17,7 @@ class Database : public QObject
 public:
     explicit Database(QObject *parent = nullptr);
     ~Database();
+    static const QMap<QString, QString> months;
     static void addIncome(QString, int);
     static void addExpenditure(QString, int);
     static void changeIncome(QString, int);
