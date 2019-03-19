@@ -128,7 +128,10 @@ void MainContent::setExpenditureWindowInfo()
 
 void MainContent::setComboBox()
 {
-    ui->comboBox->addItems(Database::returnStoredMonth());
+    createYearEdit();
+    createYearLabel();
+
+    ui->comboBox->addItems(Database::returnStoredMonth(yearLabel->text()));
 
     QLineEdit *edit = new QLineEdit(this);
     ui->comboBox->setLineEdit(edit);
@@ -142,9 +145,6 @@ void MainContent::setComboBox()
                                 "QComboBox::down-arrow:on { image: url(:/icons/down arrow.png); }"
                                 "QComboBox QAbstractItemView { selection-background-color: #A9A9A9; }" //change the selection bgcolor
                                 );
-
-    createYearEdit();
-    createYearLabel();
 }
 
 //make sure winodw stays in the front
@@ -153,6 +153,26 @@ void MainContent::setWindowToTop(QWidget *w)
     w->show();
     w->raise();
     w->activateWindow();
+}
+
+void MainContent::resetComboBox()
+{
+    QString item = ui->comboBox->currentText();
+    ui->comboBox->clear();
+
+    QStringList list = Database::returnStoredMonth(yearLabel->text());
+    if (list.empty()) {
+        ui->comboBox->insertItem(0, item);
+    }
+    else {
+        ui->comboBox->addItems(list);
+        for (int i = 0; i < list.size(); ++i) {
+            if (item == list[i]) {
+                ui->comboBox->setCurrentIndex(i);
+                break;
+            }
+        }
+    }
 }
 
 void MainContent::paintEvent(QPaintEvent *)
@@ -198,6 +218,5 @@ void MainContent::enterPressedOnYearEdit()
     }
     yearEdit->setText("");
 
-    //use the following line to remove comboBox lineEdit text is selected bug after enter key is pressed
-    ui->comboBox->lineEdit()->deselect();
+    resetComboBox();
 }

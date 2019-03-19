@@ -37,6 +37,7 @@ private:
     void setExpenditureWindowInfo();
     void setComboBox();
     void setWindowToTop(QWidget *);
+    void resetComboBox();
 
 protected:
     void paintEvent(QPaintEvent *);

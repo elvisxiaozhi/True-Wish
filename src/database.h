@@ -24,7 +24,7 @@ public:
     static tuple<QString, int> returnExpenditureInfo(QString);
     static void deleteIncome(QString);
     static void deleteExpendture(QString);
-    static QStringList returnStoredMonth();
+    static QStringList returnStoredMonth(QString);
 
 private:
     QSqlDatabase db;

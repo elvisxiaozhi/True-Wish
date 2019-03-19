@@ -105,11 +105,13 @@ void Database::deleteExpendture(QString date)
     query.exec();
 }
 
-QStringList Database::returnStoredMonth()
+QStringList Database::returnStoredMonth(QString date)
 {
     QStringList list;
 
-    QString str = QString("SELECT * FROM income join expenditure WHERE income.created_date >= '2019-01-01' AND expenditure.created_date >= '2019-01-01';");
+    QString str = QString("SELECT * FROM income join expenditure "
+                          "WHERE income.created_date >= '%1-01-01' AND income.created_date <= '%1-12-31'"
+                          "AND expenditure.created_date >= '%1-01-01 'AND expenditure.created_date <= '%1-12-31';").arg(date);
     QSqlQuery query;
     query.prepare(str);
     query.exec();
