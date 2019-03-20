@@ -68,8 +68,7 @@ void Database::changeExpenditure(QString date, int expenditure)
 
 tuple<QString, int> Database::returnIncomeInfo(QString date)
 {
-    QStringList list = date.split("-");
-    QString str = QString("SELECT *FROM income WHERE created_date >= '%1-%2-01' AND created_date <= '%1-%2-31'").arg(list[0]).arg(list[1]);
+    QString str = QString("SELECT * FROM income WHERE created_date BETWEEN DATE_SUB('%1', INTERVAL DAY('%1') - 1 DAY) AND LAST_DAY('%1')").arg(date);
     QSqlQuery query;
     query.prepare(str);
     query.exec();
@@ -83,8 +82,7 @@ tuple<QString, int> Database::returnIncomeInfo(QString date)
 
 tuple<QString, int> Database::returnExpenditureInfo(QString date)
 {
-    QStringList list = date.split("-");
-    QString str = QString("SELECT *FROM expenditure WHERE created_date >= '%1-%2-01' AND created_date <= '%1-%2-31'").arg(list[0]).arg(list[1]);
+    QString str = QString("SELECT * FROM expenditure WHERE created_date BETWEEN DATE_SUB('%1', INTERVAL DAY('%1') - 1 DAY) AND LAST_DAY('%1')").arg(date);
     QSqlQuery query;
     query.prepare(str);
     query.exec();

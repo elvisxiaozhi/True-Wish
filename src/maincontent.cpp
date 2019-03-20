@@ -226,7 +226,7 @@ void MainContent::enterPressedOnYearEdit()
 void MainContent::changeContentData(int index)
 {
     QString month = Database::months.key(ui->comboBox->itemText(index));
-    QString date = QString("%1-%2").arg(yearLabel->text()).arg(month);
+    QString date = QString("%1-%2-15").arg(yearLabel->text()).arg(month); //day is set to 15, but it doesn't really matter
     setIncomeWindowInfo(date);
     setExpenditureWindowInfo(date);
 }
