@@ -47,6 +47,11 @@ tuple<QString, int> Expenditure::updateExpenditureInfo(QString date)
     return make_tuple(expenditureAddedDate, expenditure);
 }
 
+void Expenditure::updateExpenditureAddedDate(const QString date)
+{
+    expenditureAddedDate = date;
+}
+
 void Expenditure::setExpenditureButtons()
 {
     ui->addEx->show();
@@ -59,7 +64,7 @@ void Expenditure::addExpenditure()
 {
     setAddExpenditureWindow();
 
-    Database::addExpenditure(QDate::currentDate().toString("yyyy-MM-dd"), lineEdit->text().toInt());
+    Database::addExpenditure(expenditureAddedDate, lineEdit->text().toInt());
     lineEdit->setText(QString(""));  //clear line edit text after modify button is clicked, clear function is not working here
     hide();
 

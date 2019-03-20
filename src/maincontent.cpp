@@ -38,7 +38,7 @@ void MainContent::createExpenditureWindow()
 {
     expenditure = new Expenditure();
 
-    connect(expenditure, &Expenditure::expenditureAdded, [this](){ setIncomeWindowInfo(returnSelectedDate()); });
+    connect(expenditure, &Expenditure::expenditureAdded, [this](){ setExpenditureWindowInfo(returnSelectedDate()); });
     connect(expenditure, &Expenditure::expenditureChanged, [this](){ setExpenditureWindowInfo(returnSelectedDate()); });
     connect(expenditure, &Expenditure::expenditureDeleted, [this](){ setExpenditureWindowInfo(); });
 
@@ -196,6 +196,7 @@ void MainContent::paintEvent(QPaintEvent *)
 void MainContent::on_incomeButton_clicked()
 {
     setWindowToTop(income);
+    Income::updateIncomeAddedDate(returnSelectedDate());
     income->setAddIncomeWindow();
 }
 
@@ -216,6 +217,7 @@ void MainContent::changeExpenditure()
 void MainContent::on_expenditureBtn_clicked()
 {
     setWindowToTop(expenditure);
+    Expenditure::updateExpenditureAddedDate(returnSelectedDate());
     expenditure->setAddExpenditureWindow();
 }
 

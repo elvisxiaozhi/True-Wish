@@ -55,11 +55,16 @@ tuple<QString, int> Income::updateIncomeInfo(QString date)
     return make_tuple(incomeAddedDate, income);
 }
 
+void Income::updateIncomeAddedDate(const QString date)
+{
+    incomeAddedDate = date;
+}
+
 void Income::addIncome()
 {
     setAddIncomeWindow();
 
-    Database::addIncome(QDate::currentDate().toString("yyyy-MM-dd"), lineEdit->text().toInt());
+    Database::addIncome(incomeAddedDate, lineEdit->text().toInt());
     lineEdit->setText(QString(""));  //clear line edit text after modify button is clicked, clear function is not working here
     hide();
 

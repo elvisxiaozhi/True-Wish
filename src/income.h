@@ -14,6 +14,7 @@ public:
     void setAddIncomeWindow();
     void setChangeIncomeWindow();
     static tuple<QString, int> updateIncomeInfo(QString);
+    static void updateIncomeAddedDate(const QString);
 
 private:
     static int income;

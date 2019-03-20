@@ -13,6 +13,7 @@ public:
     void setAddExpenditureWindow();
     void setChangeExpenditureWindow();
     static tuple<QString, int> updateExpenditureInfo(QString);
+    static void updateExpenditureAddedDate(const QString);
 
 private:
     static int expenditure;
