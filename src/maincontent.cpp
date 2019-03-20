@@ -107,6 +107,8 @@ void MainContent::setIncomeWindowInfo(QString date)
         incomeLabel->show();
         incomeLabel->setText(QString::number(income));
     }
+
+    this->income->setChangeIncomeWindow(date);
 }
 
 void MainContent::setExpenditureWindowInfo(QString date)
@@ -124,6 +126,8 @@ void MainContent::setExpenditureWindowInfo(QString date)
         expenditureLabel->show();
         expenditureLabel->setText(QString::number(expenditure));
     }
+
+    this->expenditure->setChangeExpenditureWindow(date);
 }
 
 void MainContent::setComboBox()
@@ -196,29 +200,25 @@ void MainContent::paintEvent(QPaintEvent *)
 void MainContent::on_incomeButton_clicked()
 {
     setWindowToTop(income);
-    Income::updateIncomeAddedDate(returnSelectedDate());
-    income->setAddIncomeWindow();
+    income->setAddIncomeWindow(returnSelectedDate());
 }
 
 void MainContent::changeIncome()
 {
     setIncomeWindowInfo(returnSelectedDate());
-    income->setChangeIncomeWindow();
     setWindowToTop(income);
 }
 
 void MainContent::changeExpenditure()
 {
     setExpenditureWindowInfo(returnSelectedDate());
-    expenditure->setChangeExpenditureWindow();
     setWindowToTop(expenditure);
 }
 
 void MainContent::on_expenditureBtn_clicked()
 {
     setWindowToTop(expenditure);
-    Expenditure::updateExpenditureAddedDate(returnSelectedDate());
-    expenditure->setAddExpenditureWindow();
+    expenditure->setAddExpenditureWindow(returnSelectedDate());
 }
 
 void MainContent::enterPressedOnYearEdit()

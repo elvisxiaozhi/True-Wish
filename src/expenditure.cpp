@@ -18,8 +18,10 @@ Expenditure::~Expenditure()
 
 }
 
-void Expenditure::setAddExpenditureWindow()
+void Expenditure::setAddExpenditureWindow(const QString date)
 {
+    expenditureAddedDate = date;
+
     setExpenditureButtons();
     ui->modifyEx->hide();
 
@@ -28,8 +30,10 @@ void Expenditure::setAddExpenditureWindow()
     binLabel->hide();
 }
 
-void Expenditure::setChangeExpenditureWindow()
+void Expenditure::setChangeExpenditureWindow(const QString date)
 {
+    expenditureAddedDate = date;
+
     setExpenditureButtons();
     ui->addEx->hide();
 
@@ -47,11 +51,6 @@ tuple<QString, int> Expenditure::updateExpenditureInfo(QString date)
     return make_tuple(expenditureAddedDate, expenditure);
 }
 
-void Expenditure::updateExpenditureAddedDate(const QString date)
-{
-    expenditureAddedDate = date;
-}
-
 void Expenditure::setExpenditureButtons()
 {
     ui->addEx->show();
@@ -62,8 +61,6 @@ void Expenditure::setExpenditureButtons()
 
 void Expenditure::addExpenditure()
 {
-    setAddExpenditureWindow();
-
     Database::addExpenditure(expenditureAddedDate, lineEdit->text().toInt());
     lineEdit->setText(QString(""));  //clear line edit text after modify button is clicked, clear function is not working here
     hide();

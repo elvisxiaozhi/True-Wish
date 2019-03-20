@@ -10,10 +10,9 @@ public:
     explicit Expenditure(CustomWidget *parent = nullptr);
     ~Expenditure();
 
-    void setAddExpenditureWindow();
-    void setChangeExpenditureWindow();
+    void setAddExpenditureWindow(const QString);
+    void setChangeExpenditureWindow(const QString);
     static tuple<QString, int> updateExpenditureInfo(QString);
-    static void updateExpenditureAddedDate(const QString);
 
 private:
     static int expenditure;

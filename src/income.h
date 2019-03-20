@@ -11,10 +11,9 @@ public:
     explicit Income(CustomWidget *parent = 0);
     ~Income();
 
-    void setAddIncomeWindow();
-    void setChangeIncomeWindow();
+    void setAddIncomeWindow(const QString);
+    void setChangeIncomeWindow(const QString);
     static tuple<QString, int> updateIncomeInfo(QString);
-    static void updateIncomeAddedDate(const QString);
 
 private:
     static int income;
