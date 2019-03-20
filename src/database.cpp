@@ -112,21 +112,28 @@ void Database::deleteExpendture(QString date)
 
 QStringList Database::returnStoredMonth(QString date)
 {
-    QStringList list;
-
-    QString str = QString("SELECT * FROM income join expenditure "
-                          "WHERE income.created_date >= '%1-01-01' AND income.created_date <= '%1-12-31'"
-                          "AND expenditure.created_date >= '%1-01-01 'AND expenditure.created_date <= '%1-12-31';").arg(date);
+    QString str = QString("SELECT created_date FROM income WHERE created_date BETWEEN '%1-01-01' AND '%1-12-31'"
+                          "UNION ALL "
+                          "SELECT created_date FROM expenditure WHERE created_date BETWEEN '%1-01-01' AND '%1-12-31';").arg(date);
     QSqlQuery query;
     query.prepare(str);
     query.exec();
 
+    QStringList list;
     while (query.next()) {
-        list.push_back(months.value(QString(query.value(1).toString()).split("-")[1]));
-        list.push_back(months.value(QString(query.value(4).toString()).split("-")[1]));
+//        list.push_back(months.value(QString(query.value(0).toString()).split("-")[1]));
+        list.push_back(QString(query.value(0).toString()).split("-")[1]);
     }
 
-    list = list.toSet().toList();
+    qDebug() << list;
+
+    std::sort(list.begin(), list.end());
+    list.erase(std::unique(list.begin(), list.end()), list.end());
+    for (int i = 0; i < list.size(); ++i) {
+        list[i] = months.value(list[i]);
+    }
+
+    qDebug() << list;
 
     return list;
 }

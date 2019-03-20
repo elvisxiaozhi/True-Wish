@@ -26,8 +26,8 @@ void MainContent::createIncomeWindow()
 {
     income = new Income();
 
-    connect(income, &Income::incomeAdded, [this](){ setIncomeWindowInfo(); });
-    connect(income, &Income::incomeChanged, [this](){ setIncomeWindowInfo(); });
+    connect(income, &Income::incomeAdded, [this](){ setIncomeWindowInfo(returnSelectedDate()); });
+    connect(income, &Income::incomeChanged, [this](){ setIncomeWindowInfo(returnSelectedDate()); });
     connect(income, &Income::incomeDeleted, [this](){ setIncomeWindowInfo(); });
 
     createIncomeLabel();
@@ -38,8 +38,8 @@ void MainContent::createExpenditureWindow()
 {
     expenditure = new Expenditure();
 
-    connect(expenditure, &Expenditure::expenditureAdded, [this](){ setExpenditureWindowInfo(); });
-    connect(expenditure, &Expenditure::expenditureChanged, [this](){ setExpenditureWindowInfo(); });
+    connect(expenditure, &Expenditure::expenditureAdded, [this](){ setIncomeWindowInfo(returnSelectedDate()); });
+    connect(expenditure, &Expenditure::expenditureChanged, [this](){ setExpenditureWindowInfo(returnSelectedDate()); });
     connect(expenditure, &Expenditure::expenditureDeleted, [this](){ setExpenditureWindowInfo(); });
 
     createExpenditureLabel();
@@ -177,6 +177,14 @@ void MainContent::resetComboBox()
     }
 }
 
+QString MainContent::returnSelectedDate()
+{
+    QString month = Database::months.key(ui->comboBox->currentText());
+    QString date = QString("%1-%2-15").arg(yearLabel->text()).arg(month); //day is set to 15, but it doesn't really matter
+
+    return date;
+}
+
 void MainContent::paintEvent(QPaintEvent *)
 {
     QStyleOption opt;
@@ -193,14 +201,14 @@ void MainContent::on_incomeButton_clicked()
 
 void MainContent::changeIncome()
 {
-    setIncomeWindowInfo();
+    setIncomeWindowInfo(returnSelectedDate());
     income->setChangeIncomeWindow();
     setWindowToTop(income);
 }
 
 void MainContent::changeExpenditure()
 {
-    setExpenditureWindowInfo();
+    setExpenditureWindowInfo(returnSelectedDate());
     expenditure->setChangeExpenditureWindow();
     setWindowToTop(expenditure);
 }
@@ -223,10 +231,9 @@ void MainContent::enterPressedOnYearEdit()
     resetComboBox();
 }
 
-void MainContent::changeContentData(int index)
+void MainContent::changeContentData(int)
 {
-    QString month = Database::months.key(ui->comboBox->itemText(index));
-    QString date = QString("%1-%2-15").arg(yearLabel->text()).arg(month); //day is set to 15, but it doesn't really matter
+    QString date = returnSelectedDate();
     setIncomeWindowInfo(date);
     setExpenditureWindowInfo(date);
 }

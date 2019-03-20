@@ -38,6 +38,7 @@ private:
     void setComboBox();
     void setWindowToTop(QWidget *);
     void resetComboBox();
+    QString returnSelectedDate();
 
 protected:
     void paintEvent(QPaintEvent *);
