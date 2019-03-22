@@ -33,8 +33,8 @@ private:
     void createYearLabel();
     void createIncomeLabel();
     void createExpenditureLabel();
-    void setIncomeWindowInfo(QString date = QDate::currentDate().toString("yyyy-MM-dd"));
-    void setExpenditureWindowInfo(QString date = QDate::currentDate().toString("yyyy-MM-dd"));
+    void setIncomeWindowInfo();
+    void setExpenditureWindowInfo();
     void setComboBox();
     void createCompleter();
     void setWindowToTop(QWidget *);
@@ -42,7 +42,7 @@ private:
     QString returnSelectedDate();
     void paintEvent(QPaintEvent *);
     void mousePressEvent(QMouseEvent *);
-    void sortQStringList(QStringList &, const bool isValue = 0); //set isValue to 1 if Database::returnStoredMonth() is not called
+    void sortQStringList(QStringList &);
 
 private slots:
     void on_incomeButton_clicked();

@@ -13,9 +13,9 @@ MainContent::MainContent(QWidget *parent) :
     setFixedSize(1090, 800);
     setStyleSheet("QWidget { background-color: #353F5A }");
 
+    setComboBox();
     createIncomeWindow();
     createExpenditureWindow();
-    setComboBox();
 }
 
 MainContent::~MainContent()
@@ -27,8 +27,8 @@ void MainContent::createIncomeWindow()
 {
     income = new Income();
 
-    connect(income, &Income::incomeAdded, [this](){ setIncomeWindowInfo(returnSelectedDate()); });
-    connect(income, &Income::incomeChanged, [this](){ setIncomeWindowInfo(returnSelectedDate()); });
+    connect(income, &Income::incomeAdded, [this](){ setIncomeWindowInfo(); });
+    connect(income, &Income::incomeChanged, [this](){ setIncomeWindowInfo(); });
     connect(income, &Income::incomeDeleted, [this](){ setIncomeWindowInfo(); });
 
     createIncomeLabel();
@@ -39,8 +39,8 @@ void MainContent::createExpenditureWindow()
 {
     expenditure = new Expenditure();
 
-    connect(expenditure, &Expenditure::expenditureAdded, [this](){ setExpenditureWindowInfo(returnSelectedDate()); });
-    connect(expenditure, &Expenditure::expenditureChanged, [this](){ setExpenditureWindowInfo(returnSelectedDate()); });
+    connect(expenditure, &Expenditure::expenditureAdded, [this](){ setExpenditureWindowInfo(); });
+    connect(expenditure, &Expenditure::expenditureChanged, [this](){ setExpenditureWindowInfo(); });
     connect(expenditure, &Expenditure::expenditureDeleted, [this](){ setExpenditureWindowInfo(); });
 
     createExpenditureLabel();
@@ -93,8 +93,9 @@ void MainContent::createExpenditureLabel()
     ui->expenditureLayout->insertWidget(2, expenditureLabel);
 }
 
-void MainContent::setIncomeWindowInfo(QString date)
+void MainContent::setIncomeWindowInfo()
 {
+    QString date = returnSelectedDate();
     int income = get<1>(Income::updateIncomeInfo(date));
 
     if (income == 0) {
@@ -112,8 +113,9 @@ void MainContent::setIncomeWindowInfo(QString date)
     this->income->setChangeIncomeWindow(date);
 }
 
-void MainContent::setExpenditureWindowInfo(QString date)
+void MainContent::setExpenditureWindowInfo()
 {
+    QString date = returnSelectedDate();
     int expenditure = get<1>(Expenditure::updateExpenditureInfo(date));
 
     if (expenditure == 0) {
@@ -224,14 +226,8 @@ void MainContent::mousePressEvent(QMouseEvent *)
     yearLabel->show();
 }
 
-void MainContent::sortQStringList(QStringList &list, const bool isValue)
+void MainContent::sortQStringList(QStringList &list)
 {
-    if (isValue == true) {
-        for (int i = 0; i < list.size(); ++i) {
-            list[i] = Database::months.key(list[i]);
-        }
-    }
-
     std::sort(list.begin(), list.end());
     list.erase(std::unique(list.begin(), list.end()), list.end());
 
@@ -248,13 +244,13 @@ void MainContent::on_incomeButton_clicked()
 
 void MainContent::changeIncome()
 {
-    setIncomeWindowInfo(returnSelectedDate());
+    setIncomeWindowInfo();
     setWindowToTop(income);
 }
 
 void MainContent::changeExpenditure()
 {
-    setExpenditureWindowInfo(returnSelectedDate());
+    setExpenditureWindowInfo();
     setWindowToTop(expenditure);
 }
 
@@ -283,19 +279,21 @@ void MainContent::enterPressedOnComboEdit()
 
 void MainContent::changeContentData(int)
 {
-    QString date = returnSelectedDate();
-    setIncomeWindowInfo(date);
-    setExpenditureWindowInfo(date);
+    setIncomeWindowInfo();
+    setExpenditureWindowInfo();
 }
 
 void MainContent::completerActivated(const QString &text)
 {
-    QStringList list;
-    for (int i = 0; i < ui->comboBox->count(); ++i) {
-        list.push_back(ui->comboBox->itemText(i));
-    }
     ui->comboBox->clear();
-    sortQStringList(list, true);
+    QStringList list = Database::returnStoredMonth(yearLabel->text());
+    list.push_back(QString(Database::months.key(text)));
+    sortQStringList(list);
     ui->comboBox->addItems(list);
-    ui->comboBox->setCurrentText(text);
+
+    for (int i = 0; i < list.size(); ++i) {
+        if (text == list[i]) {
+            ui->comboBox->setCurrentIndex(i);
+        }
+    }
 }
