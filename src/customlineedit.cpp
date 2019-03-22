@@ -39,7 +39,7 @@ void CustomLineEdit::setInAndExAttr()
 
 void CustomLineEdit::focusInEvent(QFocusEvent *event)
 {
-    QLineEdit::focusInEvent(event);
+    QLineEdit::focusInEvent(event);   
     emit isFocused(true);
 }
 

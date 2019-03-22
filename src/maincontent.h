@@ -39,9 +39,8 @@ private:
     void setWindowToTop(QWidget *);
     void resetComboBox();
     QString returnSelectedDate();
-
-protected:
     void paintEvent(QPaintEvent *);
+    void mousePressEvent(QMouseEvent *);
 
 private slots:
     void on_incomeButton_clicked();

@@ -50,7 +50,7 @@ void MainContent::createYearEdit()
 {
     yearEdit = new CustomLineEdit(this, 0); //set the second value to 0 for the custom placeholder text distance
     yearEdit->setFixedSize(50, 40);
-    yearEdit->setStyleSheet("background-color: #414B66; font: 20px; color: white;");
+    yearEdit->setStyleSheet("background-color: #414B66; font: 20px; color: white; border: 0px;");
     yearEdit->hide();
 
     ui->comboLayout->addWidget(yearEdit);
@@ -68,7 +68,7 @@ void MainContent::createYearLabel()
 
     ui->comboLayout->addWidget(yearLabel);
 
-    connect(yearLabel, &CustomLabel::doubleClicked, [this](){ yearLabel->hide(); yearEdit->show();
+    connect(yearLabel, &CustomLabel::clicked, [this](){ yearLabel->hide(); yearEdit->show();
         yearEdit->setCustomPlaceholderText(yearLabel->text()); });
 }
 
@@ -139,9 +139,8 @@ void MainContent::setComboBox()
 
     QLineEdit *edit = new QLineEdit(this);
     ui->comboBox->setLineEdit(edit);
-    ui->comboBox->lineEdit()->setReadOnly(true);
+    ui->comboBox->lineEdit()->setFocusPolicy(Qt::ClickFocus);
     ui->comboBox->lineEdit()->setAlignment(Qt::AlignCenter);
-
     ui->comboBox->setFixedSize(150, 40);
     ui->comboBox->setStyleSheet("QComboBox { background: #414B66; border: 0px; color: white; font: 20px; }"
                                 "QComboBox::drop-down { border: 0px; width: 35px; }" //replace the whole arrow of the combo box
@@ -195,6 +194,13 @@ void MainContent::paintEvent(QPaintEvent *)
     opt.init(this);
     QPainter painter(this);
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
+}
+
+void MainContent::mousePressEvent(QMouseEvent *)
+{
+    ui->comboBox->lineEdit()->clearFocus();
+    yearEdit->hide();
+    yearLabel->show();
 }
 
 void MainContent::on_incomeButton_clicked()
