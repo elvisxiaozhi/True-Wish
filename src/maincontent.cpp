@@ -136,7 +136,9 @@ void MainContent::setComboBox()
     createYearEdit();
     createYearLabel();
 
-    ui->comboBox->addItems(Database::returnStoredMonth(yearLabel->text()));
+    QStringList list = Database::returnStoredMonth(yearLabel->text());
+    sortQStringList(list);
+    ui->comboBox->addItems(list);
 
     QLineEdit *edit = new QLineEdit(this);
     ui->comboBox->setLineEdit(edit);
@@ -166,6 +168,8 @@ void MainContent::createCompleter()
     completer->setCaseSensitivity(Qt::CaseInsensitive);
     completer->popup()->setStyleSheet("background: #414B66; font: 20px;");
     ui->comboBox->lineEdit()->setCompleter(completer);
+
+    connect(completer, QOverload<const QString &>::of(&QCompleter::activated), this, &MainContent::completerActivated);
 }
 
 //make sure winodw stays in the front
@@ -182,6 +186,7 @@ void MainContent::resetComboBox()
     ui->comboBox->clear();
 
     QStringList list = Database::returnStoredMonth(yearLabel->text());
+    sortQStringList(list);
     if (list.empty()) {
         ui->comboBox->insertItem(0, item);
     }
@@ -217,6 +222,22 @@ void MainContent::mousePressEvent(QMouseEvent *)
     ui->comboBox->lineEdit()->clearFocus();
     yearEdit->hide();
     yearLabel->show();
+}
+
+void MainContent::sortQStringList(QStringList &list, const bool isValue)
+{
+    if (isValue == true) {
+        for (int i = 0; i < list.size(); ++i) {
+            list[i] = Database::months.key(list[i]);
+        }
+    }
+
+    std::sort(list.begin(), list.end());
+    list.erase(std::unique(list.begin(), list.end()), list.end());
+
+    for (int i = 0; i < list.size(); ++i) {
+        list[i] = Database::months.value(list[i]);
+    }
 }
 
 void MainContent::on_incomeButton_clicked()
@@ -265,4 +286,16 @@ void MainContent::changeContentData(int)
     QString date = returnSelectedDate();
     setIncomeWindowInfo(date);
     setExpenditureWindowInfo(date);
+}
+
+void MainContent::completerActivated(const QString &text)
+{
+    QStringList list;
+    for (int i = 0; i < ui->comboBox->count(); ++i) {
+        list.push_back(ui->comboBox->itemText(i));
+    }
+    ui->comboBox->clear();
+    sortQStringList(list, true);
+    ui->comboBox->addItems(list);
+    ui->comboBox->setCurrentText(text);
 }

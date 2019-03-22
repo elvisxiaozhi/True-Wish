@@ -124,11 +124,5 @@ QStringList Database::returnStoredMonth(QString date)
         list.push_back(QString(query.value(0).toString()).split("-")[1]);
     }
 
-    std::sort(list.begin(), list.end());
-    list.erase(std::unique(list.begin(), list.end()), list.end());
-    for (int i = 0; i < list.size(); ++i) {
-        list[i] = months.value(list[i]);
-    }
-
     return list;
 }

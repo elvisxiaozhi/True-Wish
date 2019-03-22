@@ -42,6 +42,7 @@ private:
     QString returnSelectedDate();
     void paintEvent(QPaintEvent *);
     void mousePressEvent(QMouseEvent *);
+    void sortQStringList(QStringList &, const bool isValue = 0); //set isValue to 1 if Database::returnStoredMonth() is not called
 
 private slots:
     void on_incomeButton_clicked();
@@ -51,6 +52,7 @@ private slots:
     void enterPressedOnYearEdit();
     void enterPressedOnComboEdit();
     void changeContentData(int);
+    void completerActivated(const QString &);
 };
 
 #endif // MAINCONTENT_H
