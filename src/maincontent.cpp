@@ -2,6 +2,7 @@
 #include "ui_maincontent.h"
 #include <QPainter>
 #include <QPaintEvent>
+#include <QCompleter>
 
 MainContent::MainContent(QWidget *parent) :
     QWidget(parent),
@@ -50,7 +51,7 @@ void MainContent::createYearEdit()
 {
     yearEdit = new CustomLineEdit(this, 0); //set the second value to 0 for the custom placeholder text distance
     yearEdit->setFixedSize(50, 40);
-    yearEdit->setStyleSheet("background-color: #414B66; font: 20px; color: white; border: 0px;");
+    yearEdit->setStyleSheet("/*background-color: #414B66;*/ font: 20px; color: white; border: 0px;"); //Don't set background-color, uncomment to see the difference
     yearEdit->hide();
 
     ui->comboLayout->addWidget(yearEdit);
@@ -150,6 +151,21 @@ void MainContent::setComboBox()
                                 );
 
     connect(ui->comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainContent::changeContentData);
+    connect(ui->comboBox->lineEdit(), &QLineEdit::returnPressed, this, &MainContent::enterPressedOnComboEdit);
+
+    createCompleter();
+}
+
+void MainContent::createCompleter()
+{
+    QStringList list;
+    for (auto e : Database::months.keys()) {
+        list.push_back(Database::months.value(e));
+    }
+    QCompleter *completer = new QCompleter(list, this);
+    completer->setCaseSensitivity(Qt::CaseInsensitive);
+    completer->popup()->setStyleSheet("background: #414B66; font: 20px;");
+    ui->comboBox->lineEdit()->setCompleter(completer);
 }
 
 //make sure winodw stays in the front
@@ -237,6 +253,11 @@ void MainContent::enterPressedOnYearEdit()
     yearEdit->setText("");
 
     resetComboBox();
+}
+
+void MainContent::enterPressedOnComboEdit()
+{
+    ui->comboBox->lineEdit()->clearFocus();
 }
 
 void MainContent::changeContentData(int)

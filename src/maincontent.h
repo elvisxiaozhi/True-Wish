@@ -36,6 +36,7 @@ private:
     void setIncomeWindowInfo(QString date = QDate::currentDate().toString("yyyy-MM-dd"));
     void setExpenditureWindowInfo(QString date = QDate::currentDate().toString("yyyy-MM-dd"));
     void setComboBox();
+    void createCompleter();
     void setWindowToTop(QWidget *);
     void resetComboBox();
     QString returnSelectedDate();
@@ -48,6 +49,7 @@ private slots:
     void changeExpenditure();
     void on_expenditureBtn_clicked();
     void enterPressedOnYearEdit();
+    void enterPressedOnComboEdit();
     void changeContentData(int);
 };
 
