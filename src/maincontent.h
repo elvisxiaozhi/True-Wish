@@ -53,6 +53,7 @@ private slots:
     void enterPressedOnComboEdit();
     void changeContentData(int);
     void completerActivated(const QString &);
+    void on_wishButton_clicked();
 };
 
 #endif // MAINCONTENT_H

@@ -304,3 +304,8 @@ void MainContent::completerActivated(const QString &text)
         }
     }
 }
+
+void MainContent::on_wishButton_clicked()
+{
+    qDebug() << "wish";
+}
