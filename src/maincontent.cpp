@@ -16,6 +16,13 @@ MainContent::MainContent(QWidget *parent) :
     setComboBox();
     createIncomeWindow();
     createExpenditureWindow();
+
+    QString month = Database::months.value(QDate::currentDate().toString("yyyy-MM-dd").split("-")[1]);
+    for (int i = 0; i < ui->comboBox->count(); ++i) {
+        if (month == ui->comboBox->itemText(i)) {
+            ui->comboBox->setCurrentIndex(i);
+        }
+    }
 }
 
 MainContent::~MainContent()
