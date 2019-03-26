@@ -19,7 +19,7 @@ CustomWidget::CustomWidget(QWidget *parent) : QWidget(parent),
                   "#addIncome:hover, #modifyIncome:hover, #addEx:hover, #modifyEx:hover { background-color: #0A863D; }"
                   "#addIncome:pressed, #modifyIncome:pressed, #addEx:pressed, #modifyEx:pressed { background-color: #0A863D; }");
 
-    closetAction = addAction("X");
+    closeAction = addAction("X");
 
     createLineEdit();
     createLine();
@@ -44,7 +44,7 @@ QAction *CustomWidget::actionAt(const QPoint &point)
     QRect rec(posX, 10, 35, 35);
 
     if (rec.contains(point))
-        return closetAction;
+        return closeAction;
 
     return nullptr;
 }
@@ -94,12 +94,12 @@ void CustomWidget::paintEvent(QPaintEvent *event)
 
     QRect textRect(570, 10, event->rect().width(), event->rect().height());
     painter.setPen(pen);
-    painter.drawText(textRect, closetAction->text());
+    painter.drawText(textRect, closeAction->text());
 }
 
 void CustomWidget::mouseMoveEvent(QMouseEvent *event)
 {
-    if (actionAt(event->pos()) == closetAction) {
+    if (actionAt(event->pos()) == closeAction) {
         onHover = true;
     }
     else {
@@ -124,7 +124,7 @@ void CustomWidget::mousePressEvent(QMouseEvent *event)
     lineEdit->clearFocus();
     emit lineEdit->isFocused(false); //emit signal here, so in CustomLineEdit class, it doesn't need focusOutEvent
 
-    if (actionAt(event->pos()) == closetAction)
+    if (actionAt(event->pos()) == closeAction)
         hide();
 
     update();

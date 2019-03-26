@@ -21,7 +21,7 @@ public:
     ~CustomWidget();
 
 private:
-    QAction *closetAction;
+    QAction *closeAction;
     bool onHover;
 
     QAction *addAction(const QString &);

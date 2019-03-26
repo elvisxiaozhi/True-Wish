@@ -6,6 +6,7 @@
 #include "income.h"
 #include "expenditure.h"
 #include "customlabel.h"
+#include "wish.h"
 
 namespace Ui {
 class MainContent;
@@ -24,11 +25,13 @@ private:
 
     Income *income;
     Expenditure *expenditure;
+    Wish *wish;
     CustomLabel *yearLabel, *incomeLabel, *expenditureLabel;
     CustomLineEdit *yearEdit;
 
     void createIncomeWindow();
     void createExpenditureWindow();
+    void createWishWindow();
     void createYearEdit();
     void createYearLabel();
     void createIncomeLabel();
