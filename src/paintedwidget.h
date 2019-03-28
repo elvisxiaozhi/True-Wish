@@ -17,18 +17,17 @@ protected:
     void setWidth(const int width);
 
     QAction *addAction(const QString &);
-    void setOnHoverMap();
+    void setOnHoverVec();
 
 private:
     const int WIDTH = 600, GAP = 50;
     QList<QAction *> actionList;
-    QMap<pair<int, int>, QRect> onHoverMap;
-    bool onHover = false;
-    QRect onHoverRec;
+    QVector<pair<bool, QRect> > onHoverVec;
+    QRect onHoverRect;
     void paintEvent(QPaintEvent *);
     void mouseMoveEvent(QMouseEvent *);
     void mousePressEvent(QMouseEvent *);
-
+    bool hoveredOnIcon();
 };
 
 #endif // PAINTEDWIDGET_H

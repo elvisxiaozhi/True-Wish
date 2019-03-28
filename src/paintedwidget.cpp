@@ -26,11 +26,11 @@ QAction *PaintedWidget::addAction(const QString &text)
     return action;
 }
 
-void PaintedWidget::setOnHoverMap()
+void PaintedWidget::setOnHoverVec()
 {
     int n = actionList.size();
     for (int i = n; i > 0; --i) {
-        onHoverMap.insert(std::make_pair(WIDTH - i * GAP, WIDTH - (i - 1) * GAP), QRect(WIDTH - i * GAP, 0, 50, 50));
+        onHoverVec.push_back(std::make_pair(false, QRect(WIDTH - i * GAP, 0, 50, 50)));
     }
 }
 
@@ -41,45 +41,38 @@ void PaintedWidget::paintEvent(QPaintEvent *event)
 
     int n = actionList.size();
     for (auto action : actionList) {
-//        if (onHoverRec)
-//        if (onHover) {
-//            if (onHoverRec == QRect(550, 0, 50, 50)) { //when hover on the 'X'
-//                painter.fillRect(onHoverRec, QColor(233, 75, 60));
-//                painter.setPen(Qt::white);
-//            }
-//            else {
-//                painter.fillRect(onHoverRec, Qt::yellow);
-////                painter.fillRect(onHoverRec, QColor(35, 43, 62));
-////                painter.setPen(Qt::white);
-//            }
-//        }
-//        else {
-//            painter.setPen(Qt::gray);
-//        }
+        if (hoveredOnIcon() && WIDTH - n * GAP == onHoverRect.x()) {
+            if(action->text() == "X") {
+                painter.fillRect(onHoverRect, QColor(233, 75, 60));
+                painter.setPen(Qt::white);
+            }
+            else {
+                painter.fillRect(onHoverRect, QColor(35, 43, 62));
+                painter.setPen(Qt::gray);
+            }
+        }
+        else {
+            painter.setPen(Qt::gray);
+        }
 
         --n;
-        QRect textRect(WIDTH - 30 - (n * GAP), 10, event->rect().width(), event->rect().height());
+        QRect textRect(WIDTH - 33 - n * GAP, 10, event->rect().width(), event->rect().height());
         painter.drawText(textRect, action->text());
     }
 }
 
 void PaintedWidget::mouseMoveEvent(QMouseEvent *event)
 {
-    if (event->y() <= GAP) {
-        int n = actionList.size();
-        if (event->x() >= WIDTH - n * 50 && event->x() <= WIDTH) {
-            onHover = true;
-            for (auto value : onHoverMap.values()) {
-                if (event->x() >= onHoverMap.key(value).first && event->x() <= onHoverMap.key(value).second) {
-                    onHoverRec = value;
-                    break;
-                }
-            }
+    for (int i = 0; i < onHoverVec.size(); ++i) {
+        if (onHoverVec[i].second.contains(QPoint(event->x(), event->y()))) {
+            onHoverVec[i].first = true;
+        }
+        else {
+            onHoverVec[i].first = false;
         }
     }
-    else {
-        onHover = false;
-    }
+
+    qDebug() << onHoverVec;
 
     update();
 }
@@ -97,6 +90,18 @@ void PaintedWidget::mousePressEvent(QMouseEvent *event)
     }
 
     update();
+}
+
+bool PaintedWidget::hoveredOnIcon()
+{
+    for (int i = 0; i < onHoverVec.size(); ++i) {
+        if (onHoverVec[i].first == true) {
+            onHoverRect = onHoverVec[i].second;
+            return true;
+        }
+    }
+
+    return false;
 }
 
 

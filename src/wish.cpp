@@ -4,7 +4,7 @@ Wish::Wish(PaintedWidget *parent) : PaintedWidget(parent)
 {
     addAction("—");
     addAction("X");
-    setOnHoverMap();
+    setOnHoverVec();
     setWidth(600);
     setFixedSize(600, 300);
     setStyleSheet("background-color: #414B66");
