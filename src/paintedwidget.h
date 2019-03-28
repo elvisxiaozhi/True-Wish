@@ -28,6 +28,9 @@ private:
     void mouseMoveEvent(QMouseEvent *);
     void mousePressEvent(QMouseEvent *);
     bool hoveredOnIcon();
+
+signals:
+    void actionChanged(int);
 };
 
 #endif // PAINTEDWIDGET_H

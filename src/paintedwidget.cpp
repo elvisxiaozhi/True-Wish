@@ -65,14 +65,17 @@ void PaintedWidget::mouseMoveEvent(QMouseEvent *event)
 {
     for (int i = 0; i < onHoverVec.size(); ++i) {
         if (onHoverVec[i].second.contains(QPoint(event->x(), event->y()))) {
-            onHoverVec[i].first = true;
+            if (event->y() >= 5 && event->x() <= WIDTH - 5) { //this if statement here is to prevent the hover effect stay issue
+                onHoverVec[i].first = true;
+            }
+            else {
+                onHoverVec[i].first = false;
+            }
         }
         else {
             onHoverVec[i].first = false;
         }
     }
-
-    qDebug() << onHoverVec;
 
     update();
 }
@@ -87,6 +90,14 @@ void PaintedWidget::mousePressEvent(QMouseEvent *event)
         ::GetCursorPos(&pt);
         ::ReleaseCapture();
         ::SendMessage(hWnd, WM_NCLBUTTONDOWN, HTCAPTION, POINTTOPOINTS(pt));
+    }
+
+    int n = onHoverVec.size();
+    for (int i = 0; i < n; ++i) {
+        if (onHoverVec[i].second.contains(QPoint(event->x(), event->y()))) {
+            int index = n - (WIDTH - onHoverVec[i].second.x()) / GAP;
+            emit actionChanged(index);
+        }
     }
 
     update();
