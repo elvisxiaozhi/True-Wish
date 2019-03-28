@@ -7,8 +7,11 @@ class Wish : public PaintedWidget
 {
     Q_OBJECT
 public:
-    explicit Wish(PaintedWidget *parent = nullptr);
+    explicit Wish(PaintedWidget *parent = nullptr, int width = 600);
     ~Wish();
+
+//private:
+//    void paintEvent(QPaintEvent *);
 };
 
 #endif // WISH_H

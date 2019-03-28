@@ -4,17 +4,11 @@
 #include <windows.h>
 #include <QWindow>
 
-PaintedWidget::PaintedWidget(QWidget *parent)
-    : QWidget(parent)
+PaintedWidget::PaintedWidget(QWidget *parent, const int width)
+    : QWidget(parent), WIDTH(width)
 {
     setMouseTracking(true);
     setWindowFlags(Qt::FramelessWindowHint);
-}
-
-void PaintedWidget::setWidth(const int width)
-{
-    int *ptr = const_cast<int *>(&WIDTH);
-    *ptr = width;
 }
 
 QAction *PaintedWidget::addAction(const QString &text)
@@ -76,6 +70,8 @@ void PaintedWidget::mouseMoveEvent(QMouseEvent *event)
             onHoverVec[i].first = false;
         }
     }
+
+    qDebug() << WIDTH;
 
     update();
 }

@@ -11,16 +11,14 @@ class PaintedWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit PaintedWidget(QWidget *parent = nullptr);
+    explicit PaintedWidget(QWidget *parent = nullptr, const int width = 600);
 
 protected:
-    void setWidth(const int width);
-
     QAction *addAction(const QString &);
     void setOnHoverVec();
 
 private:
-    const int WIDTH = 600, GAP = 50;
+    const int WIDTH, GAP = 50;
     QList<QAction *> actionList;
     QVector<pair<bool, QRect> > onHoverVec;
     QRect onHoverRect;
