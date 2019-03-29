@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QAction>
 #include <QDebug>
+#include <QPainter>
+#include <QPaintEvent>
 
 using std::pair;
 
@@ -17,6 +19,7 @@ protected:
     QAction *addAction(const QString &);
     void setOnHoverVec();
     void commonPaintFun();
+    void changeStyle();
 
 private:
     const int WIDTH, GAP = 50;

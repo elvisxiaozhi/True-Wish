@@ -1,8 +1,7 @@
 #include "paintedwidget.h"
-#include <QPainter>
-#include <QPaintEvent>
 #include <windows.h>
 #include <QWindow>
+#include <QStyleOption>
 
 PaintedWidget::PaintedWidget(QWidget *parent, const int width)
     : QWidget(parent), WIDTH(width)
@@ -31,6 +30,12 @@ void PaintedWidget::setOnHoverVec()
 void PaintedWidget::commonPaintFun()
 {
     QPainter painter(this);
+
+    //make custom widget able to set style sheet(change widget background color mainly)
+    QStyleOption opt;
+    opt.init(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
+
     painter.setFont(QFont("Times", 13));
 
     int n = actionList.size();
@@ -96,6 +101,7 @@ void PaintedWidget::mousePressEvent(QMouseEvent *event)
         if (onHoverVec[i].second.contains(QPoint(event->x(), event->y()))) {
             int index = n - (WIDTH - onHoverVec[i].second.x()) / GAP;
             emit actionChanged(index);
+            qDebug() << index;
         }
     }
 

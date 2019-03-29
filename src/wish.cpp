@@ -1,6 +1,4 @@
 #include "wish.h"
-#include <QPainter>
-#include <QPaintEvent>
 
 Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width)
 {
@@ -9,11 +7,6 @@ Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width)
     setOnHoverVec();
     setFixedSize(1200, 50);
     setStyleSheet("background-color: #414B66");
-}
-
-Wish::~Wish()
-{
-
 }
 
 void Wish::paintEvent(QPaintEvent *event)

@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    titleBar = new TitleBar(this);
+    titleBar = new TitleBar();
     sidebar = new Sidebar(this);
     database = new Database(this);
     content = new MainContent(this);

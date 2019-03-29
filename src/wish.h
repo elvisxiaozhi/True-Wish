@@ -8,7 +8,6 @@ class Wish : public PaintedWidget
     Q_OBJECT
 public:
     explicit Wish(PaintedWidget *parent = nullptr, int width = 1200);
-    ~Wish();
 
 private:
     void paintEvent(QPaintEvent *) override;
