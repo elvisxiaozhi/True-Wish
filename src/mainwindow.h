@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include "sidebar.h"
 #include "titlebar.h"
-#include "database.h"
+#include "core/database.h"
 #include "maincontent.h"
 
 namespace Ui {

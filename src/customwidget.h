@@ -3,7 +3,7 @@
 
 #include "paintedwidget.h"
 #include "customlineedit.h"
-#include "database.h"
+#include "core/database.h"
 #include "customlabel.h"
 #include <QDate>
 

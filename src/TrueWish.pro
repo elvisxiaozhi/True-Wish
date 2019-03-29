@@ -25,38 +25,44 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-        main.cpp \
-        mainwindow.cpp \
+    customlabel.cpp \
+    customlineedit.cpp \
+    customwidget.cpp \
+    expenditure.cpp \
+    income.cpp \
+    main.cpp \
+    maincontent.cpp \
+    mainwindow.cpp \
+    paintedwidget.cpp \
     sidebar.cpp \
     titlebar.cpp \
-    maincontent.cpp \
-    customlineedit.cpp \
-    database.cpp \
-    customlabel.cpp \
-    income.cpp \
-    expenditure.cpp \
-    customwidget.cpp \
     wish.cpp \
-    paintedwidget.cpp
+    core/database.cpp
 
 HEADERS += \
-        mainwindow.h \
+    customlabel.h \
+    customlineedit.h \
+    customwidget.h \
+    expenditure.h \
+    income.h \
+    maincontent.h \
+    mainwindow.h \
+    paintedwidget.h \
     sidebar.h \
     titlebar.h \
-    maincontent.h \
-    customlineedit.h \
-    database.h \
-    customlabel.h \
-    income.h \
-    expenditure.h \
-    customwidget.h \
     wish.h \
-    paintedwidget.h
+    core/database.h
 
 FORMS += \
         mainwindow.ui \
     maincontent.ui \
-    inandex.ui
+    inandex.ui \
 
 RESOURCES += \
     ../icons/icons.qrc
+
+SUBDIRS += \
+    TrueWish.pro
+
+DISTFILES += \
+    TrueWish.pro.user
