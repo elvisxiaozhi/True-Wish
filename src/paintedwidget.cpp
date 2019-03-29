@@ -112,25 +112,6 @@ void PaintedWidget::mouseMoveEvent(QMouseEvent *event)
 
 void PaintedWidget::mousePressEvent(QMouseEvent *event)
 {
-//    //use native windows api to move window
-//    if (event->buttons().testFlag(Qt::LeftButton))
-//    {
-//        HWND hWnd = ::GetAncestor((HWND)(window()->windowHandle()->winId()), GA_ROOT);
-//        POINT pt;
-//        ::GetCursorPos(&pt);
-//        ::ReleaseCapture();
-//        ::SendMessage(hWnd, WM_NCLBUTTONDOWN, HTCAPTION, POINTTOPOINTS(pt));
-//    }
-
-//    int n = onHoverVec.size();
-//    for (int i = 0; i < n; ++i) {
-//        if (onHoverVec[i].second.contains(QPoint(event->x(), event->y()))) {
-//            int index = n - (WIDTH - onHoverVec[i].second.x()) / GAP;
-//            emit actionChanged(index);
-//        }
-//    }
-
-//    update();
     commonPressEvent(event);
 }
 
