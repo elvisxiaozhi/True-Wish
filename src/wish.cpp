@@ -18,6 +18,8 @@ Wish::~Wish()
 
 void Wish::paintEvent(QPaintEvent *event)
 {
+    commonPaintFun();
+
     QPainter painter(this);
 
     //paint icon

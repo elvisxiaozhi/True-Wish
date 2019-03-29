@@ -16,13 +16,14 @@ public:
 protected:
     QAction *addAction(const QString &);
     void setOnHoverVec();
+    void commonPaintFun();
 
 private:
     const int WIDTH, GAP = 50;
     QList<QAction *> actionList;
     QVector<pair<bool, QRect> > onHoverVec;
     QRect onHoverRect;
-    void paintEvent(QPaintEvent *);
+    virtual void paintEvent(QPaintEvent *);
     void mouseMoveEvent(QMouseEvent *);
     void mousePressEvent(QMouseEvent *);
     bool hoveredOnIcon();

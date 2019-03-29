@@ -28,7 +28,7 @@ void PaintedWidget::setOnHoverVec()
     }
 }
 
-void PaintedWidget::paintEvent(QPaintEvent *event)
+void PaintedWidget::commonPaintFun()
 {
     QPainter painter(this);
     painter.setFont(QFont("Times", 13));
@@ -50,9 +50,14 @@ void PaintedWidget::paintEvent(QPaintEvent *event)
         }
 
         --n;
-        QRect textRect(WIDTH - 33 - n * GAP, 10, event->rect().width(), event->rect().height());
+        QRect textRect(WIDTH - 33 - n * GAP, 10, GAP, GAP);
         painter.drawText(textRect, action->text());
     }
+}
+
+void PaintedWidget::paintEvent(QPaintEvent *)
+{
+    commonPaintFun();
 }
 
 void PaintedWidget::mouseMoveEvent(QMouseEvent *event)
@@ -70,8 +75,6 @@ void PaintedWidget::mouseMoveEvent(QMouseEvent *event)
             onHoverVec[i].first = false;
         }
     }
-
-    qDebug() << WIDTH;
 
     update();
 }
