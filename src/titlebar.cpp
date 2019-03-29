@@ -11,7 +11,7 @@ TitleBar::TitleBar(PaintedWidget *parent, int width) : PaintedWidget(parent, wid
 
 void TitleBar::paintEvent(QPaintEvent *event)
 {
-    commonPaintFun();
+    commonPaintEvent(true);
 
     QPainter painter(this);
     //paint icon

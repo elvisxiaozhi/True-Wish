@@ -27,22 +27,25 @@ void PaintedWidget::setOnHoverVec()
     }
 }
 
-void PaintedWidget::commonPaintFun()
+void PaintedWidget::commonPaintEvent(bool redBgColor)
 {
     QPainter painter(this);
-
-    //make custom widget able to set style sheet(change widget background color mainly)
-    QStyleOption opt;
-    opt.init(this);
-    style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
-
     painter.setFont(QFont("Times", 13));
+
+    if (redBgColor) {
+        //make custom widget able to set style sheet(change widget background color mainly)
+        QStyleOption opt;
+        opt.init(this);
+        style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
+    }
 
     int n = actionList.size();
     for (auto action : actionList) {
         if (hoveredOnIcon() && WIDTH - n * GAP == onHoverRect.x()) {
             if(action->text() == "X") {
-                painter.fillRect(onHoverRect, QColor(233, 75, 60));
+                if (redBgColor) {
+                    painter.fillRect(onHoverRect, QColor(233, 75, 60));
+                }
                 painter.setPen(Qt::white);
             }
             else {
@@ -60,9 +63,32 @@ void PaintedWidget::commonPaintFun()
     }
 }
 
+void PaintedWidget::commonPressEvent(QMouseEvent *event)
+{
+    //use native windows api to move window
+    if (event->buttons().testFlag(Qt::LeftButton))
+    {
+        HWND hWnd = ::GetAncestor((HWND)(window()->windowHandle()->winId()), GA_ROOT);
+        POINT pt;
+        ::GetCursorPos(&pt);
+        ::ReleaseCapture();
+        ::SendMessage(hWnd, WM_NCLBUTTONDOWN, HTCAPTION, POINTTOPOINTS(pt));
+    }
+
+    int n = onHoverVec.size();
+    for (int i = 0; i < n; ++i) {
+        if (onHoverVec[i].second.contains(QPoint(event->x(), event->y()))) {
+            int index = n - (WIDTH - onHoverVec[i].second.x()) / GAP;
+            emit actionChanged(index);
+        }
+    }
+
+    update();
+}
+
 void PaintedWidget::paintEvent(QPaintEvent *)
 {
-    commonPaintFun();
+    commonPaintEvent();
 }
 
 void PaintedWidget::mouseMoveEvent(QMouseEvent *event)
@@ -86,26 +112,26 @@ void PaintedWidget::mouseMoveEvent(QMouseEvent *event)
 
 void PaintedWidget::mousePressEvent(QMouseEvent *event)
 {
-    //use native windows api to move window
-    if (event->buttons().testFlag(Qt::LeftButton))
-    {
-        HWND hWnd = ::GetAncestor((HWND)(window()->windowHandle()->winId()), GA_ROOT);
-        POINT pt;
-        ::GetCursorPos(&pt);
-        ::ReleaseCapture();
-        ::SendMessage(hWnd, WM_NCLBUTTONDOWN, HTCAPTION, POINTTOPOINTS(pt));
-    }
+//    //use native windows api to move window
+//    if (event->buttons().testFlag(Qt::LeftButton))
+//    {
+//        HWND hWnd = ::GetAncestor((HWND)(window()->windowHandle()->winId()), GA_ROOT);
+//        POINT pt;
+//        ::GetCursorPos(&pt);
+//        ::ReleaseCapture();
+//        ::SendMessage(hWnd, WM_NCLBUTTONDOWN, HTCAPTION, POINTTOPOINTS(pt));
+//    }
 
-    int n = onHoverVec.size();
-    for (int i = 0; i < n; ++i) {
-        if (onHoverVec[i].second.contains(QPoint(event->x(), event->y()))) {
-            int index = n - (WIDTH - onHoverVec[i].second.x()) / GAP;
-            emit actionChanged(index);
-            qDebug() << index;
-        }
-    }
+//    int n = onHoverVec.size();
+//    for (int i = 0; i < n; ++i) {
+//        if (onHoverVec[i].second.contains(QPoint(event->x(), event->y()))) {
+//            int index = n - (WIDTH - onHoverVec[i].second.x()) / GAP;
+//            emit actionChanged(index);
+//        }
+//    }
 
-    update();
+//    update();
+    commonPressEvent(event);
 }
 
 bool PaintedWidget::hoveredOnIcon()

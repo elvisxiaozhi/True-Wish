@@ -18,7 +18,8 @@ public:
 protected:
     QAction *addAction(const QString &);
     void setOnHoverVec();
-    void commonPaintFun();
+    void commonPaintEvent(bool redBgColor = false);
+    void commonPressEvent(QMouseEvent *);
     void changeStyle();
 
 private:
@@ -28,7 +29,7 @@ private:
     QRect onHoverRect;
     virtual void paintEvent(QPaintEvent *);
     void mouseMoveEvent(QMouseEvent *);
-    void mousePressEvent(QMouseEvent *);
+    virtual void mousePressEvent(QMouseEvent *);
     bool hoveredOnIcon();
 
 signals:

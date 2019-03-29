@@ -1,52 +1,29 @@
 #include "customwidget.h"
 #include "ui_inandex.h"
-#include <QPainter>
-#include <QPaintEvent>
-#include <QWindow>
-#include <windows.h>
 #include <QBitmap>
 
-CustomWidget::CustomWidget(QWidget *parent) : QWidget(parent),
+CustomWidget::CustomWidget(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
     ui(new Ui::InAndEx)
 {
     ui->setupUi(this);
 
-    setMouseTracking(this);
-    setWindowFlags(Qt::FramelessWindowHint);
+    addAction("X");
+    setOnHoverVec();
     setFixedSize(600, 250);
     setStyleSheet("QWidget { background-color: #414B66 }"
                   "#addIncome, #modifyIncome, #addEx, #modifyEx { background-color: #11B850; border: 0px; padding: 11px 20px; font: 20px; color: white; border-radius: 3px; }"
                   "#addIncome:hover, #modifyIncome:hover, #addEx:hover, #modifyEx:hover { background-color: #0A863D; }"
                   "#addIncome:pressed, #modifyIncome:pressed, #addEx:pressed, #modifyEx:pressed { background-color: #0A863D; }");
 
-    closeAction = addAction("X");
-
     createLineEdit();
     createLine();
+
+    connect(this, &CustomWidget::actionChanged, [this](){ hide(); });
 }
 
 CustomWidget::~CustomWidget()
 {
     delete ui;
-}
-
-QAction *CustomWidget::addAction(const QString &text)
-{
-    QAction *action = new QAction(text, this);
-    action->setCheckable(true);
-
-    return action;
-}
-
-QAction *CustomWidget::actionAt(const QPoint &point)
-{
-    int posX = 570;
-    QRect rec(posX, 10, 35, 35);
-
-    if (rec.contains(point))
-        return closeAction;
-
-    return nullptr;
 }
 
 void CustomWidget::createLineEdit()
@@ -69,6 +46,14 @@ void CustomWidget::createLine()
     });
 }
 
+void CustomWidget::mousePressEvent(QMouseEvent *event)
+{
+    commonPressEvent(event);
+
+    lineEdit->clearFocus();
+    emit lineEdit->isFocused(false); //emit signal here, so in CustomLineEdit class, it doesn't need focusOutEvent
+}
+
 QPixmap CustomWidget::returnBinLabelPixmap(QColor color)
 {
     QPixmap px(":/icons/recycle bin.png");
@@ -77,57 +62,6 @@ QPixmap CustomWidget::returnBinLabelPixmap(QColor color)
     pixmap.setMask(px.createMaskFromColor(Qt::transparent));
 
     return pixmap;
-}
-
-void CustomWidget::paintEvent(QPaintEvent *event)
-{
-    QPainter painter(this);
-    painter.setFont(QFont("Times", 13));
-
-    QPen pen;
-    if (onHover) {
-        pen.setBrush(Qt::white);
-    }
-    else {
-        pen.setBrush(QColor(152, 160, 179));
-    }
-
-    QRect textRect(570, 10, event->rect().width(), event->rect().height());
-    painter.setPen(pen);
-    painter.drawText(textRect, closeAction->text());
-}
-
-void CustomWidget::mouseMoveEvent(QMouseEvent *event)
-{
-    if (actionAt(event->pos()) == closeAction) {
-        onHover = true;
-    }
-    else {
-        onHover = false;
-    }
-
-    update();
-}
-
-void CustomWidget::mousePressEvent(QMouseEvent *event)
-{
-    //use native windows api to move window
-    if (event->buttons().testFlag(Qt::LeftButton))
-    {
-        HWND hWnd = ::GetAncestor((HWND)(window()->windowHandle()->winId()), GA_ROOT);
-        POINT pt;
-        ::GetCursorPos(&pt);
-        ::ReleaseCapture();
-        ::SendMessage(hWnd, WM_NCLBUTTONDOWN, HTCAPTION, POINTTOPOINTS(pt));
-    }
-
-    lineEdit->clearFocus();
-    emit lineEdit->isFocused(false); //emit signal here, so in CustomLineEdit class, it doesn't need focusOutEvent
-
-    if (actionAt(event->pos()) == closeAction)
-        hide();
-
-    update();
 }
 
 CustomLabel *CustomWidget::createBinLabel()

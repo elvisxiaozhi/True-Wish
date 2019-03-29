@@ -11,7 +11,7 @@ Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width)
 
 void Wish::paintEvent(QPaintEvent *event)
 {
-    commonPaintFun();
+//    commonPaintFun();
 
     QPainter painter(this);
 

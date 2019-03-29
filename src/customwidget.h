@@ -1,8 +1,7 @@
 #ifndef CUSTOMWIDGET_H
 #define CUSTOMWIDGET_H
 
-#include <QWidget>
-#include <QAction>
+#include "paintedwidget.h"
 #include "customlineedit.h"
 #include "database.h"
 #include "customlabel.h"
@@ -12,25 +11,18 @@ namespace Ui {
 class InAndEx;
 }
 
-class CustomWidget : public QWidget
+class CustomWidget : public PaintedWidget
 {
     Q_OBJECT
 
 public:
-    explicit CustomWidget(QWidget *parent = nullptr);
+    explicit CustomWidget(PaintedWidget *parent = nullptr, int width = 600);
     ~CustomWidget();
 
 private:
-    QAction *closeAction;
-    bool onHover;
-
-    QAction *addAction(const QString &);
-    QAction *actionAt(const QPoint &);
     void createLineEdit();
     void createLine();
-    void paintEvent(QPaintEvent *);
-    void mouseMoveEvent(QMouseEvent *);
-    void mousePressEvent(QMouseEvent *);
+    void mousePressEvent(QMouseEvent *) override;
 
 protected:
     Ui::InAndEx *ui;
