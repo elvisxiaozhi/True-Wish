@@ -4,5 +4,6 @@
         <file>recycle bin.png</file>
         <file>right arrow.png</file>
         <file>down arrow.png</file>
+        <file>add.png</file>
     </qresource>
 </RCC>

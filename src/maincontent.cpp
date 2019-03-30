@@ -16,7 +16,7 @@ MainContent::MainContent(QWidget *parent) :
     setComboBox();
     createIncomeWindow();
     createExpenditureWindow();
-//    createWishWindow();
+    createWishWindow();
 
     QString month = Database::months.value(QDate::currentDate().toString("yyyy-MM-dd").split("-")[1]);
     for (int i = 0; i < ui->comboBox->count(); ++i) {
@@ -58,6 +58,7 @@ void MainContent::createExpenditureWindow()
 void MainContent::createWishWindow()
 {
     wish = new Wish();
+    wish->hide();
 }
 
 void MainContent::createYearEdit()

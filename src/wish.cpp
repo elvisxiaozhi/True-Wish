@@ -1,28 +1,27 @@
 #include "wish.h"
+#include "ui_wish.h"
 
-Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width)
+Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
+    ui(new Ui::Wish)
 {
-    addAction("—");
+    ui->setupUi(this);
+
     addAction("X");
     setOnHoverVec();
-    setFixedSize(1200, 50);
     setStyleSheet("background-color: #414B66");
+
+    createWishLabel();
 }
 
-void Wish::paintEvent(QPaintEvent *event)
+Wish::~Wish()
 {
-//    commonPaintFun();
+    delete ui;
+}
 
-    QPainter painter(this);
+void Wish::createWishLabel()
+{
+    wishLabel = new CustomLabel(this);
+    wishLabel->setPixmap(QPixmap(":/icons/add.png"));
 
-    //paint icon
-    QIcon icon(":/icons/star.png");
-    QRect iconRect(20, 5, 40, 40);
-    icon.paint(&painter, iconRect);
-
-    //paint name
-    QRect textRect(65, 10, event->rect().width(), event->rect().height());
-    painter.setPen(QPen(Qt::white));
-    painter.setFont(QFont("times", 11));
-    painter.drawText(textRect, "True Wish");
+    ui->newWishLayout->insertWidget(1, wishLabel);
 }

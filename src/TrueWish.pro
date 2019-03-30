@@ -57,12 +57,10 @@ FORMS += \
         mainwindow.ui \
     maincontent.ui \
     inandex.ui \
+    wish.ui
 
 RESOURCES += \
     ../icons/icons.qrc
 
 SUBDIRS += \
     TrueWish.pro
-
-DISTFILES += \
-    TrueWish.pro.user
