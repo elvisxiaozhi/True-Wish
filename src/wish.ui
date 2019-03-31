@@ -56,7 +56,7 @@ font: 20px;</string>
     </layout>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout"/>
+    <layout class="QVBoxLayout" name="wishListLayout"/>
    </item>
    <item>
     <layout class="QHBoxLayout" name="newWishLayout">

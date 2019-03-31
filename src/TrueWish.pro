@@ -37,7 +37,8 @@ SOURCES += \
     sidebar.cpp \
     titlebar.cpp \
     wish.cpp \
-    core/database.cpp
+    core/database.cpp \
+    wishlist.cpp
 
 HEADERS += \
     customlabel.h \
@@ -51,13 +52,15 @@ HEADERS += \
     sidebar.h \
     titlebar.h \
     wish.h \
-    core/database.h
+    core/database.h \
+    wishlist.h
 
 FORMS += \
         mainwindow.ui \
     maincontent.ui \
     inandex.ui \
-    wish.ui
+    wish.ui \
+    wishlist.ui
 
 RESOURCES += \
     ../icons/icons.qrc
