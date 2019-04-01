@@ -26,6 +26,7 @@ private:
 
     void createWishList();
     void createWishLabel();
+    void mousePressEvent(QMouseEvent *);
 };
 
 #endif // WISH_H

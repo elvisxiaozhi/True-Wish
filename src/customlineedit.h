@@ -13,7 +13,9 @@ public:
 
     void setCustomPlaceholderText(const QString &);
     void setCustomPlaceholderColor(const QColor &);
+    void changeFocuseEffect(QWidget *);
     void setInAndExAttr();
+    void setWishAttr(QString);
 
 private:
     QString mText;

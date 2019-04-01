@@ -10,8 +10,8 @@ CustomLineEdit::CustomLineEdit(QWidget *parent, int distance)
 {
     paintDistance = distance;
     color = QColor(199, 205, 221);
-    setValidator(new QIntValidator(0, INT_MAX, this));
     setFrame(false);
+    setStyleSheet("background-color: #414B66; padding: 0px 19px; font: 20px; border: none; color: white;");
 
     connect(this, &CustomLineEdit::isFocused, this, &CustomLineEdit::onFocus);
 }
@@ -30,11 +30,27 @@ void CustomLineEdit::setCustomPlaceholderColor(const QColor &color)
     this->color = color;
 }
 
+void CustomLineEdit::changeFocuseEffect(QWidget *widget)
+{
+    connect(this, &CustomLineEdit::isFocused, [this, widget](bool isFocused) {
+        if (isFocused)
+            widget->setStyleSheet("background-color: white;");
+        else
+            widget->setStyleSheet("background-color: #BFC6D6;");
+    });
+}
+
 void CustomLineEdit::setInAndExAttr()
 {
+    setValidator(new QIntValidator(0, INT_MAX, this));
     setFixedSize(525, 30);
     setCustomPlaceholderText("How much money did you make this month?");
-    setStyleSheet("background-color: #414B66; padding: 0px 19px; font: 20px; border: none; color: white;");
+}
+
+void CustomLineEdit::setWishAttr(QString text)
+{
+    setCustomPlaceholderText(text);
+    setFixedSize(300, 30);
 }
 
 void CustomLineEdit::focusInEvent(QFocusEvent *event)

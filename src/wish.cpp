@@ -31,6 +31,11 @@ void Wish::createWishLabel()
     ui->newWishLayout->insertWidget(1, wishLabel);
 }
 
+void Wish::mousePressEvent(QMouseEvent *)
+{
+    wishList->clearFocus();
+}
+
 void Wish::on_closeButton_clicked()
 {
     hide();

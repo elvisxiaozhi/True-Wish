@@ -8,6 +8,8 @@ WishList::WishList(QWidget *parent) :
     ui->setupUi(this);
 
     createWishEdit();
+    createGoalEdit();
+    setFixedHeight(70);
     setStyleSheet("background: #414B66;");
 }
 
@@ -19,20 +21,30 @@ WishList::~WishList()
 void WishList::createWishEdit()
 {
     wishEdit = new CustomLineEdit(this);
-    wishEdit->setCustomPlaceholderText("What are you wishing for?");
+    wishEdit->setWishAttr("What are you wishing for?");
 
     ui->wishLayout->insertWidget(0, wishEdit);
-    ui->wishLine->setFixedSize(200, 1);
+    ui->wishLine->setFixedSize(250, 1);
 
-    connect(wishEdit, &CustomLineEdit::isFocused, [this](bool isFocused){
-        if (isFocused)
-            ui->wishLine->setStyleSheet("background-color: white;");
-        else
-            ui->wishLine->setStyleSheet("background-color: #BFC6D6;");
-    });
+    wishEdit->changeFocuseEffect(ui->wishLine);
 }
 
-void WishList::mousePressEvent(QMouseEvent *)
+void WishList::createGoalEdit()
+{
+    goalEdit = new CustomLineEdit(this);
+    goalEdit->setWishAttr("What is your financial goal?");
+
+    ui->goalLayout->insertWidget(0, goalEdit);
+    ui->goalLine->setFixedSize(250, 1);
+
+    goalEdit->changeFocuseEffect(ui->goalLine);
+}
+
+void WishList::clearFocus()
 {
     wishEdit->clearFocus();
+    goalEdit->clearFocus();
+
+    emit wishEdit->isFocused(false);
+    emit goalEdit->isFocused(false);
 }

@@ -37,13 +37,7 @@ void CustomWidget::createLineEdit()
 void CustomWidget::createLine()
 {
     ui->lineWidget->setFixedSize(540, 1);
-
-    connect(lineEdit, &CustomLineEdit::isFocused, [this](bool isFocused){
-        if (isFocused)
-            ui->lineWidget->setStyleSheet("background-color: white;");
-        else
-            ui->lineWidget->setStyleSheet("background-color: #BFC6D6;");
-    });
+    lineEdit->changeFocuseEffect(ui->lineWidget);
 }
 
 void CustomWidget::mousePressEvent(QMouseEvent *event)

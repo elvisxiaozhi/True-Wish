@@ -16,12 +16,14 @@ public:
     explicit WishList(QWidget *parent = 0);
     ~WishList();
 
+    void clearFocus();
+
 private:
     Ui::WishList *ui;
-    CustomLineEdit *wishEdit;
+    CustomLineEdit *wishEdit, *goalEdit;
 
     void createWishEdit();
-    void mousePressEvent(QMouseEvent *);
+    void createGoalEdit();
 };
 
 #endif // WISHLIST_H
