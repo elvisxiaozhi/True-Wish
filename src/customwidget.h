@@ -29,7 +29,6 @@ protected:
     CustomLineEdit *lineEdit;
 
     CustomLabel *createBinLabel();
-    QPixmap returnBinLabelPixmap(QColor);
 
 private slots:
     void on_closeButton_clicked();

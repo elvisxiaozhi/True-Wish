@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <QWindow>
 #include <QStyleOption>
+#include <QBitmap>
 
 PaintedWidget::PaintedWidget(QWidget *parent, const int width)
     : QWidget(parent), WIDTH(width)
@@ -125,6 +126,15 @@ bool PaintedWidget::hoveredOnIcon()
     }
 
     return false;
+}
+
+QPixmap PaintedWidget::returnBinLabelPixmap(const QColor color, const QPixmap px)
+{
+    QPixmap pixmap(px.size());
+    pixmap.fill(color);
+    pixmap.setMask(px.createMaskFromColor(Qt::transparent));
+
+    return pixmap;
 }
 
 

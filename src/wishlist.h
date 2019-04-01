@@ -20,10 +20,11 @@ public:
 
 private:
     Ui::WishList *ui;
-    CustomLineEdit *wishEdit, *goalEdit;
+    CustomLineEdit *wishEdit, *goalEdit, *timeEdit;
 
     void createWishEdit();
     void createGoalEdit();
+    void createTimeEdit();
 };
 
 #endif // WISHLIST_H

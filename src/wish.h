@@ -13,7 +13,7 @@ class Wish : public PaintedWidget
 {
     Q_OBJECT
 public:
-    explicit Wish(PaintedWidget *parent = nullptr, int width = 800);
+    explicit Wish(PaintedWidget *parent = nullptr, int width = 870);
     ~Wish();
 
 private slots:

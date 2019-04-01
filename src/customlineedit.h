@@ -9,11 +9,10 @@ class CustomLineEdit : public QLineEdit
     Q_OBJECT
 public:
     CustomLineEdit(QWidget *parent = nullptr, int distance = 20);
-    ~CustomLineEdit();
-
     void setCustomPlaceholderText(const QString &);
     void setCustomPlaceholderColor(const QColor &);
     void changeFocuseEffect(QWidget *);
+    void focusLeft();
     void setInAndExAttr();
     void setWishAttr(QString);
 
@@ -26,13 +25,14 @@ private:
 protected:
     void focusInEvent(QFocusEvent *);
     void paintEvent(QPaintEvent *);
-    void enterEvent(QEvent *) override;
-    void leaveEvent(QEvent *) override;
+    void enterEvent(QEvent *);
+    void leaveEvent(QEvent *);
 
 signals:
     void isFocused(bool);
     void entered();
     void left();
+    void focusIn();
 
 private slots:
     void onFocus(bool);

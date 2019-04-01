@@ -8,8 +8,8 @@ Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
 
     addAction("X");
     setOnHoverVec();
-    setFixedWidth(800);
-    setMinimumHeight(600);
+    setFixedWidth(870);
+    setMinimumHeight(900);
     setStyleSheet("background-color: #414B66");
 
     createWishList();
@@ -29,10 +29,15 @@ void Wish::createWishLabel()
     wishLabel->setPixmap(QPixmap(":/icons/add.png"));
 
     ui->newWishLayout->insertWidget(1, wishLabel);
+
+    connect(wishLabel, &CustomLabel::entered, [this](){ wishLabel->setPixmap(returnBinLabelPixmap(QColor(255, 255, 255), QPixmap(":/icons/add.png"))); });
+    connect(wishLabel, &CustomLabel::left, [this](){ wishLabel->setPixmap(QPixmap(":/icons/add.png"));  });
 }
 
-void Wish::mousePressEvent(QMouseEvent *)
+void Wish::mousePressEvent(QMouseEvent *event)
 {
+    commonPressEvent(event);
+
     wishList->clearFocus();
 }
 

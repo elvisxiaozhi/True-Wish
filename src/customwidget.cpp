@@ -1,6 +1,5 @@
 #include "customwidget.h"
 #include "ui_inandex.h"
-#include <QBitmap>
 
 CustomWidget::CustomWidget(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
     ui(new Ui::InAndEx)
@@ -48,16 +47,6 @@ void CustomWidget::mousePressEvent(QMouseEvent *event)
     emit lineEdit->isFocused(false); //emit signal here, so in CustomLineEdit class, it doesn't need focusOutEvent
 }
 
-QPixmap CustomWidget::returnBinLabelPixmap(QColor color)
-{
-    QPixmap px(":/icons/recycle bin.png");
-    QPixmap pixmap(px.size());
-    pixmap.fill(color);
-    pixmap.setMask(px.createMaskFromColor(Qt::transparent));
-
-    return pixmap;
-}
-
 CustomLabel *CustomWidget::createBinLabel()
 {
     CustomLabel *binLabel = new CustomLabel(this);
@@ -65,9 +54,9 @@ CustomLabel *CustomWidget::createBinLabel()
 
     ui->lineEditLayout->insertWidget(1, binLabel);
 
-    connect(lineEdit, &CustomLineEdit::entered, [this, binLabel](){ binLabel->setPixmap(returnBinLabelPixmap(QColor(206, 216, 226))); });
+    connect(lineEdit, &CustomLineEdit::entered, [this, binLabel](){ binLabel->setPixmap(returnBinLabelPixmap(QColor(206, 216, 226), QPixmap(":/icons/recycle bin.png"))); });
     connect(lineEdit, &CustomLineEdit::left, [this, binLabel](){ binLabel->setPixmap(QPixmap()); });
-    connect(binLabel, &CustomLabel::entered, [this, binLabel](){ binLabel->setPixmap(returnBinLabelPixmap(QColor(255, 255, 255))); });
+    connect(binLabel, &CustomLabel::entered, [this, binLabel](){ binLabel->setPixmap(returnBinLabelPixmap(QColor(255, 255, 255), QPixmap(":/icons/recycle bin.png"))); });
     connect(binLabel, &CustomLabel::left, [this, binLabel](){ binLabel->setPixmap(QPixmap()); });
 
     return binLabel;

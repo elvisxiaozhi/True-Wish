@@ -16,10 +16,6 @@ CustomLineEdit::CustomLineEdit(QWidget *parent, int distance)
     connect(this, &CustomLineEdit::isFocused, this, &CustomLineEdit::onFocus);
 }
 
-CustomLineEdit::~CustomLineEdit()
-{
-}
-
 void CustomLineEdit::setCustomPlaceholderText(const QString &text)
 {
     mText = text;
@@ -33,10 +29,19 @@ void CustomLineEdit::setCustomPlaceholderColor(const QColor &color)
 void CustomLineEdit::changeFocuseEffect(QWidget *widget)
 {
     connect(this, &CustomLineEdit::isFocused, [this, widget](bool isFocused) {
-        if (isFocused)
+        if (isFocused) {
             widget->setStyleSheet("background-color: white;");
+            emit focusIn();
+        }
         else
             widget->setStyleSheet("background-color: #BFC6D6;");
+    });
+}
+
+void CustomLineEdit::focusLeft()
+{
+    connect(this, &CustomLineEdit::left, [this](){
+        emit isFocused(false);
     });
 }
 

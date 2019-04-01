@@ -9,6 +9,7 @@ WishList::WishList(QWidget *parent) :
 
     createWishEdit();
     createGoalEdit();
+    createTimeEdit();
     setFixedHeight(70);
     setStyleSheet("background: #414B66;");
 }
@@ -27,6 +28,7 @@ void WishList::createWishEdit()
     ui->wishLine->setFixedSize(250, 1);
 
     wishEdit->changeFocuseEffect(ui->wishLine);
+    connect(wishEdit, &CustomLineEdit::focusIn, [this](){ emit goalEdit->isFocused(false);  emit timeEdit->isFocused(false); });
 }
 
 void WishList::createGoalEdit()
@@ -38,13 +40,28 @@ void WishList::createGoalEdit()
     ui->goalLine->setFixedSize(250, 1);
 
     goalEdit->changeFocuseEffect(ui->goalLine);
+    connect(goalEdit, &CustomLineEdit::focusIn, [this](){ emit wishEdit->isFocused(false);  emit timeEdit->isFocused(false); });
+}
+
+void WishList::createTimeEdit()
+{
+    timeEdit = new CustomLineEdit(this);
+    timeEdit->setWishAttr("How long will it take?");
+
+    ui->timeLayout->insertWidget(0, timeEdit);
+    ui->timeLine->setFixedSize(250, 1);
+
+    timeEdit->changeFocuseEffect(ui->timeLine);
+    connect(timeEdit, &CustomLineEdit::focusIn, [this](){ emit wishEdit->isFocused(false);  emit goalEdit->isFocused(false); });
 }
 
 void WishList::clearFocus()
 {
     wishEdit->clearFocus();
     goalEdit->clearFocus();
+    timeEdit->clearFocus();
 
     emit wishEdit->isFocused(false);
     emit goalEdit->isFocused(false);
+    emit timeEdit->isFocused(false);
 }

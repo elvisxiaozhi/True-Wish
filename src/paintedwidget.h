@@ -20,7 +20,7 @@ protected:
     void setOnHoverVec();
     void commonPaintEvent(bool redBgColor = false);
     void commonPressEvent(QMouseEvent *);
-    void changeStyle();
+    QPixmap returnBinLabelPixmap(const QColor, const QPixmap);
 
 private:
     const int WIDTH, GAP = 50;
