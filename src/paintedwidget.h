@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QPainter>
 #include <QPaintEvent>
+#include "customlabel.h"
 
 using std::pair;
 
@@ -21,6 +22,7 @@ protected:
     void commonPaintEvent(bool redBgColor = false);
     void commonPressEvent(QMouseEvent *);
     QPixmap returnBinLabelPixmap(const QColor, const QPixmap);
+    CustomLabel *createBinLabel();
 
 private:
     const int WIDTH, GAP = 50;

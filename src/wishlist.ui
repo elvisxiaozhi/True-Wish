@@ -155,6 +155,9 @@
      </item>
     </layout>
    </item>
+   <item>
+    <layout class="QVBoxLayout" name="binLayout"/>
+   </item>
   </layout>
  </widget>
  <resources/>

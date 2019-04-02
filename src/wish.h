@@ -21,10 +21,10 @@ private slots:
 
 private:
     Ui::Wish *ui;
-    WishList *wishList;
+    QVector<WishList *> wishVec;
     CustomLabel *wishLabel;
 
-    void createWishList();
+    void createWishVec();
     void createWishLabel();
     void mousePressEvent(QMouseEvent *);
 };

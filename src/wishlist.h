@@ -1,19 +1,20 @@
 #ifndef WISHLIST_H
 #define WISHLIST_H
 
-#include <QWidget>
+#include "paintedwidget.h"
 #include "customlineedit.h"
+#include "customlabel.h"
 
 namespace Ui {
 class WishList;
 }
 
-class WishList : public QWidget
+class WishList : public PaintedWidget
 {
     Q_OBJECT
 
 public:
-    explicit WishList(QWidget *parent = 0);
+    explicit WishList(PaintedWidget *parent = 0);
     ~WishList();
 
     void clearFocus();
@@ -21,6 +22,7 @@ public:
 private:
     Ui::WishList *ui;
     CustomLineEdit *wishEdit, *goalEdit, *timeEdit;
+    CustomLabel *binLabel;
 
     void createWishEdit();
     void createGoalEdit();

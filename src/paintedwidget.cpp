@@ -137,6 +137,17 @@ QPixmap PaintedWidget::returnBinLabelPixmap(const QColor color, const QPixmap px
     return pixmap;
 }
 
+CustomLabel *PaintedWidget::createBinLabel()
+{
+    CustomLabel *binLabel = new CustomLabel(this);
+    binLabel->setFixedSize(30, 30);
+
+    connect(binLabel, &CustomLabel::entered, [this, binLabel](){ binLabel->setPixmap(returnBinLabelPixmap(QColor(255, 255, 255), QPixmap(":/icons/recycle bin.png"))); });
+    connect(binLabel, &CustomLabel::left, [this, binLabel](){ binLabel->setPixmap(QPixmap()); });
+
+    return binLabel;
+}
+
 
 
 

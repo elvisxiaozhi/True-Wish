@@ -4,7 +4,6 @@
 #include "paintedwidget.h"
 #include "customlineedit.h"
 #include "core/database.h"
-#include "customlabel.h"
 #include <QDate>
 
 namespace Ui {
@@ -18,6 +17,9 @@ class CustomWidget : public PaintedWidget
 public:
     explicit CustomWidget(PaintedWidget *parent = nullptr, int width = 600);
     ~CustomWidget();
+    CustomLineEdit *lineEdit;
+
+    void setBinLabelAttr(CustomLabel *);
 
 private:
     void createLineEdit();
@@ -26,9 +28,6 @@ private:
 
 protected:
     Ui::InAndEx *ui;
-    CustomLineEdit *lineEdit;
-
-    CustomLabel *createBinLabel();
 
 private slots:
     void on_closeButton_clicked();

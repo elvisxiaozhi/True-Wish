@@ -1,17 +1,23 @@
 #include "wishlist.h"
 #include "ui_wishlist.h"
 
-WishList::WishList(QWidget *parent) :
-    QWidget(parent),
+WishList::WishList(PaintedWidget *parent) :
+    PaintedWidget(parent),
     ui(new Ui::WishList)
 {
     ui->setupUi(this);
+
+    binLabel = createBinLabel();
+    binLabel->setPixmap(QPixmap(":/icons/recycle bin.png"));
+    binLabel->show();
+//    binLabel->setMinimumSize(20, 20);
+    ui->binLayout->addWidget(binLabel);
 
     createWishEdit();
     createGoalEdit();
     createTimeEdit();
     setFixedHeight(70);
-    setStyleSheet("background: #414B66;");
+    setStyleSheet("background: #414B66; border: 1px solid gray");
 }
 
 WishList::~WishList()

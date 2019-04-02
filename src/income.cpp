@@ -8,6 +8,7 @@ Income::Income(CustomWidget *parent) :
     CustomWidget(parent)
 {
     binLabel = createBinLabel();
+    setBinLabelAttr(binLabel);
     connect(binLabel, &CustomLabel::clicked, this, &Income::deleteIncome);
 
     connect(ui->addIncome, &QPushButton::clicked, this, &Income::addIncome);

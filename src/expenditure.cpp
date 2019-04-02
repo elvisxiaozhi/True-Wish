@@ -7,6 +7,7 @@ QString Expenditure::expenditureAddedDate;
 Expenditure::Expenditure(CustomWidget *parent) : CustomWidget(parent)
 {
     binLabel = createBinLabel();
+    setBinLabelAttr(binLabel);
     connect(binLabel, &CustomLabel::clicked, this, &Expenditure::deleteExpenditure);
 
     connect(ui->addEx, &QPushButton::clicked, this, &Expenditure::addExpenditure);

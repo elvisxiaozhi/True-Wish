@@ -12,7 +12,7 @@ Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
     setMinimumHeight(900);
     setStyleSheet("background-color: #414B66");
 
-    createWishList();
+    createWishVec();
     createWishLabel();
 
     connect(this, &Wish::actionChanged, [this](){ hide(); });
@@ -38,7 +38,10 @@ void Wish::mousePressEvent(QMouseEvent *event)
 {
     commonPressEvent(event);
 
-    wishList->clearFocus();
+    int n = wishVec.size();
+    for (int i = 0; i < n; ++i) {
+        wishVec[i]->clearFocus();
+    }
 }
 
 void Wish::on_closeButton_clicked()
@@ -46,8 +49,11 @@ void Wish::on_closeButton_clicked()
     hide();
 }
 
-void Wish::createWishList()
+void Wish::createWishVec()
 {
-    wishList = new WishList(this);
-    ui->wishListLayout->addWidget(wishList);
+    for (int i = 0; i < 3; ++i) {
+        WishList *wishList = new WishList(this);
+        ui->wishListLayout->addWidget(wishList);
+        wishVec.push_back(wishList);
+    }
 }
