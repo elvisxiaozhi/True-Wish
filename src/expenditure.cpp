@@ -4,7 +4,7 @@
 int Expenditure::expenditure;
 QString Expenditure::expenditureAddedDate;
 
-Expenditure::Expenditure(CustomWidget *parent) : CustomWidget(parent)
+Expenditure::Expenditure(InAndExWidget *parent) : InAndExWidget(parent)
 {
     binLabel = createBinLabel();
     setBinLabelAttr(binLabel);

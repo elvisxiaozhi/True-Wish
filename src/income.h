@@ -1,14 +1,14 @@
 #ifndef INCOME_H
 #define INCOME_H
 
-#include "customwidget.h"
+#include "inandexwidget.h"
 
-class Income : public CustomWidget
+class Income : public InAndExWidget
 {
     Q_OBJECT
 
 public:
-    explicit Income(CustomWidget *parent = 0);
+    explicit Income(InAndExWidget *parent = 0);
     ~Income();
 
     void setAddIncomeWindow(const QString);

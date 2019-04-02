@@ -1,7 +1,7 @@
-#include "customwidget.h"
+#include "inandexwidget.h"
 #include "ui_inandex.h"
 
-CustomWidget::CustomWidget(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
+InAndExWidget::InAndExWidget(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
     ui(new Ui::InAndEx)
 {
     ui->setupUi(this);
@@ -17,22 +17,22 @@ CustomWidget::CustomWidget(PaintedWidget *parent, int width) : PaintedWidget(par
     createLineEdit();
     createLine();
 
-    connect(this, &CustomWidget::actionChanged, [this](){ hide(); });
+    connect(this, &InAndExWidget::actionChanged, [this](){ hide(); });
 }
 
-CustomWidget::~CustomWidget()
+InAndExWidget::~InAndExWidget()
 {
     delete ui;
 }
 
-void CustomWidget::setBinLabelAttr(CustomLabel *binLabel)
+void InAndExWidget::setBinLabelAttr(CustomLabel *binLabel)
 {
     ui->lineEditLayout->insertWidget(1, binLabel);
     connect(lineEdit, &CustomLineEdit::entered, [this, binLabel](){ binLabel->setPixmap(returnBinLabelPixmap(QColor(206, 216, 226), QPixmap(":/icons/recycle bin.png"))); });
     connect(lineEdit, &CustomLineEdit::left, [this, binLabel](){ binLabel->setPixmap(QPixmap()); });
 }
 
-void CustomWidget::createLineEdit()
+void InAndExWidget::createLineEdit()
 {
     lineEdit = new CustomLineEdit(this);
     lineEdit->setInAndExAttr();
@@ -40,13 +40,13 @@ void CustomWidget::createLineEdit()
     ui->lineEditLayout->insertWidget(0, lineEdit);
 }
 
-void CustomWidget::createLine()
+void InAndExWidget::createLine()
 {
     ui->lineWidget->setFixedSize(540, 1);
     lineEdit->changeFocuseEffect(ui->lineWidget);
 }
 
-void CustomWidget::mousePressEvent(QMouseEvent *event)
+void InAndExWidget::mousePressEvent(QMouseEvent *event)
 {
     commonPressEvent(event);
 
@@ -54,7 +54,7 @@ void CustomWidget::mousePressEvent(QMouseEvent *event)
     emit lineEdit->isFocused(false); //emit signal here, so in CustomLineEdit class, it doesn't need focusOutEvent
 }
 
-void CustomWidget::on_closeButton_clicked()
+void InAndExWidget::on_closeButton_clicked()
 {
     hide();
 }

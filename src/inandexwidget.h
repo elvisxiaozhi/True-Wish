@@ -1,5 +1,5 @@
-#ifndef CUSTOMWIDGET_H
-#define CUSTOMWIDGET_H
+#ifndef INANDEXWIDGET_H
+#define INANDEXWIDGET_H
 
 #include "paintedwidget.h"
 #include "customlineedit.h"
@@ -10,13 +10,13 @@ namespace Ui {
 class InAndEx;
 }
 
-class CustomWidget : public PaintedWidget
+class InAndExWidget : public PaintedWidget
 {
     Q_OBJECT
 
 public:
-    explicit CustomWidget(PaintedWidget *parent = nullptr, int width = 600);
-    ~CustomWidget();
+    explicit InAndExWidget(PaintedWidget *parent = nullptr, int width = 600);
+    ~InAndExWidget();
     CustomLineEdit *lineEdit;
 
     void setBinLabelAttr(CustomLabel *);
@@ -33,4 +33,4 @@ private slots:
     void on_closeButton_clicked();
 };
 
-#endif // CUSTOMWIDGET_H
+#endif

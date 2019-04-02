@@ -27,7 +27,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     customlabel.cpp \
     customlineedit.cpp \
-    customwidget.cpp \
     expenditure.cpp \
     income.cpp \
     main.cpp \
@@ -38,12 +37,12 @@ SOURCES += \
     titlebar.cpp \
     wish.cpp \
     core/database.cpp \
-    wishlist.cpp
+    wishlist.cpp \
+    inandexwidget.cpp
 
 HEADERS += \
     customlabel.h \
     customlineedit.h \
-    customwidget.h \
     expenditure.h \
     income.h \
     maincontent.h \
@@ -53,7 +52,8 @@ HEADERS += \
     titlebar.h \
     wish.h \
     core/database.h \
-    wishlist.h
+    wishlist.h \
+    inandexwidget.h
 
 FORMS += \
         mainwindow.ui \

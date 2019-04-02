@@ -1,13 +1,13 @@
 #ifndef EXPENDITURE_H
 #define EXPENDITURE_H
 
-#include "customwidget.h"
+#include "inandexwidget.h"
 
-class Expenditure : public CustomWidget
+class Expenditure : public InAndExWidget
 {
     Q_OBJECT
 public:
-    explicit Expenditure(CustomWidget *parent = nullptr);
+    explicit Expenditure(InAndExWidget *parent = nullptr);
     ~Expenditure();
 
     void setAddExpenditureWindow(const QString);

@@ -4,8 +4,8 @@
 int Income::income;
 QString Income::incomeAddedDate;
 
-Income::Income(CustomWidget *parent) :
-    CustomWidget(parent)
+Income::Income(InAndExWidget *parent) :
+    InAndExWidget(parent)
 {
     binLabel = createBinLabel();
     setBinLabelAttr(binLabel);

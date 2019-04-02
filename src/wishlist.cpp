@@ -10,7 +10,6 @@ WishList::WishList(PaintedWidget *parent) :
     binLabel = createBinLabel();
     binLabel->setPixmap(QPixmap(":/icons/recycle bin.png"));
     binLabel->show();
-//    binLabel->setMinimumSize(20, 20);
     ui->binLayout->addWidget(binLabel);
 
     createWishEdit();
