@@ -22,7 +22,6 @@ public:
 private:
     Ui::WishList *ui;
     CustomLineEdit *wishEdit, *goalEdit, *timeEdit;
-    CustomLabel *binLabel;
 
     void createWishEdit();
     void createGoalEdit();

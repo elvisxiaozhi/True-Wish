@@ -7,11 +7,6 @@ WishList::WishList(PaintedWidget *parent) :
 {
     ui->setupUi(this);
 
-    binLabel = createBinLabel();
-    binLabel->setPixmap(QPixmap(":/icons/recycle bin.png"));
-    binLabel->show();
-    ui->binLayout->addWidget(binLabel);
-
     createWishEdit();
     createGoalEdit();
     createTimeEdit();
