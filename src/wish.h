@@ -27,6 +27,10 @@ private:
     void createWishVec();
     void createWishLabel();
     void mousePressEvent(QMouseEvent *);
+    void connectWishEdit();
+
+private slots:
+    void focusIn(CustomLineEdit *);
 };
 
 #endif // WISH_H

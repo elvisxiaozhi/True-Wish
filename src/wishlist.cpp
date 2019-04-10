@@ -10,6 +10,9 @@ WishList::WishList(PaintedWidget *parent) :
     createWishEdit();
     createGoalEdit();
     createTimeEdit();
+
+    editVec = {wishEdit, goalEdit, timeEdit};
+
     setFixedHeight(70);
     setStyleSheet("background: #414B66; border: 1px solid gray");
 }
@@ -28,7 +31,6 @@ void WishList::createWishEdit()
     ui->wishLine->setFixedSize(250, 1);
 
     wishEdit->changeFocuseEffect(ui->wishLine);
-    connect(wishEdit, &CustomLineEdit::focusIn, [this](){ emit goalEdit->isFocused(false);  emit timeEdit->isFocused(false); });
 }
 
 void WishList::createGoalEdit()
@@ -40,7 +42,6 @@ void WishList::createGoalEdit()
     ui->goalLine->setFixedSize(250, 1);
 
     goalEdit->changeFocuseEffect(ui->goalLine);
-    connect(goalEdit, &CustomLineEdit::focusIn, [this](){ emit wishEdit->isFocused(false);  emit timeEdit->isFocused(false); });
 }
 
 void WishList::createTimeEdit()
@@ -52,16 +53,12 @@ void WishList::createTimeEdit()
     ui->timeLine->setFixedSize(250, 1);
 
     timeEdit->changeFocuseEffect(ui->timeLine);
-    connect(timeEdit, &CustomLineEdit::focusIn, [this](){ emit wishEdit->isFocused(false);  emit goalEdit->isFocused(false); });
 }
 
 void WishList::clearFocus()
 {
-    wishEdit->clearFocus();
-    goalEdit->clearFocus();
-    timeEdit->clearFocus();
-
-    emit wishEdit->isFocused(false);
-    emit goalEdit->isFocused(false);
-    emit timeEdit->isFocused(false);
+    for (auto e : editVec) {
+        e->clearFocus();
+        emit e->isFocused(false);
+    }
 }

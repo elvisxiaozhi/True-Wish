@@ -44,6 +44,27 @@ void Wish::mousePressEvent(QMouseEvent *event)
     }
 }
 
+void Wish::connectWishEdit()
+{
+    int n = wishVec.size();
+    for (int i = 0; i < n; ++i) {
+        for (auto e : wishVec[i]->editVec) {
+            connect(e, &CustomLineEdit::focusIn, [this, e](){ focusIn(e); });
+        }
+    }
+}
+
+void Wish::focusIn(CustomLineEdit *edit)
+{
+    int n = wishVec.size();
+    for (int i = 0; i < n; ++i) {
+        for (auto e : wishVec[i]->editVec) {
+            if (e != edit)
+                emit e->isFocused(false);
+        }
+    }
+}
+
 void Wish::on_closeButton_clicked()
 {
     hide();
@@ -56,4 +77,6 @@ void Wish::createWishVec()
         ui->wishListLayout->addWidget(wishList);
         wishVec.push_back(wishList);
     }
+
+    connectWishEdit();
 }

@@ -18,6 +18,7 @@ public:
     ~WishList();
 
     void clearFocus();
+    QVector<CustomLineEdit *> editVec;
 
 private:
     Ui::WishList *ui;
