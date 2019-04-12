@@ -9,8 +9,11 @@ Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
     addAction("X");
     setOnHoverVec();
     setFixedWidth(870);
-    setMinimumHeight(900);
-    setStyleSheet("background-color: #414B66");
+    setMinimumHeight(500);
+    setStyleSheet("QWidget { background-color: #414B66 }"
+                  "#addWishes { background-color: #11B850; border: 0px; padding: 11px 20px; font: 20px; color: white; border-radius: 3px; }"
+                  "#addWishes:hover { background-color: #0A863D; }"
+                  "#addWishes:pressed { background-color: #0A863D; }");
 
     createWishVec();
     createWishLabel();
@@ -27,6 +30,7 @@ void Wish::createWishLabel()
 {
     wishLabel = new CustomLabel(this);
     wishLabel->setPixmap(QPixmap(":/icons/add.png"));
+    wishLabel->setFixedSize(70, 70);
 
     ui->newWishLayout->insertWidget(1, wishLabel);
 
