@@ -153,6 +153,8 @@ void MainContent::setComboBox()
     createYearLabel();
 
     QStringList list = Database::returnStoredMonth(yearLabel->text());
+    QString currentMonth = QDate::currentDate().toString("yyyy-MM-dd").split("-")[1];
+    list.push_back(currentMonth);
     sortQStringList(list);
     ui->comboBox->addItems(list);
 
