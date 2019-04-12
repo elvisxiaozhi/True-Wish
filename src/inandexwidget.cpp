@@ -15,7 +15,6 @@ InAndExWidget::InAndExWidget(PaintedWidget *parent, int width) : PaintedWidget(p
                   "#addIncome:pressed, #modifyIncome:pressed, #addEx:pressed, #modifyEx:pressed { background-color: #0A863D; }");
 
     createLineEdit();
-    createLine();
 
     connect(this, &InAndExWidget::actionChanged, [this](){ hide(); });
 }
@@ -37,13 +36,7 @@ void InAndExWidget::createLineEdit()
     lineEdit = new CustomLineEdit(this);
     lineEdit->setInAndExAttr();
 
-    ui->lineEditLayout->insertWidget(0, lineEdit);
-}
-
-void InAndExWidget::createLine()
-{
-    ui->lineWidget->setFixedSize(540, 1);
-    lineEdit->changeFocuseEffect(ui->lineWidget);
+    ui->lineEditLayout->insertWidget(1, lineEdit);
 }
 
 void InAndExWidget::mousePressEvent(QMouseEvent *event)

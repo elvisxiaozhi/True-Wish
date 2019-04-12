@@ -8,10 +8,9 @@ class CustomLineEdit : public QLineEdit
 {
     Q_OBJECT
 public:
-    CustomLineEdit(QWidget *parent = nullptr, int distance = 20);
+    CustomLineEdit(QWidget *parent = nullptr, int distance = 4);
     void setCustomPlaceholderText(const QString &);
     void setCustomPlaceholderColor(const QColor &);
-    void changeFocuseEffect(QWidget *);
     void focusLeft();
     void setInAndExAttr();
     void setWishAttr(QString);
@@ -21,6 +20,7 @@ private:
     QColor color;
     bool focused;
     int paintDistance;
+    static QString styleString;
 
 protected:
     void focusInEvent(QFocusEvent *);

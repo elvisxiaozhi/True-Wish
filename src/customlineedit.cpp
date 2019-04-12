@@ -5,13 +5,16 @@
 #include <QDebug>
 #include <QIntValidator>
 
+QString CustomLineEdit::styleString = QString("background-color: #414B66; padding: 10px 2px; font: 20px; color: white;"
+                                              "border-style: solid; border-color: #414B66 #414B66 %1 #414B66; border-width: 1px;");
+
 CustomLineEdit::CustomLineEdit(QWidget *parent, int distance)
     : QLineEdit(parent)
 {
-    paintDistance = distance;
+    paintDistance = distance; //use distance to make placeholder slightly move to the right
     color = QColor(199, 205, 221);
     setFrame(false);
-    setStyleSheet("background-color: #414B66; padding: 0px 19px; font: 20px; border: none; color: white;");
+    setStyleSheet(styleString.arg("#BFC6D6"));
 
     connect(this, &CustomLineEdit::isFocused, this, &CustomLineEdit::onFocus);
 }
@@ -26,18 +29,6 @@ void CustomLineEdit::setCustomPlaceholderColor(const QColor &color)
     this->color = color;
 }
 
-void CustomLineEdit::changeFocuseEffect(QWidget *widget)
-{
-    connect(this, &CustomLineEdit::isFocused, [this, widget](bool isFocused) {
-        if (isFocused) {
-            widget->setStyleSheet("background-color: white;");
-            emit focusIn();
-        }
-        else
-            widget->setStyleSheet("background-color: #BFC6D6;");
-    });
-}
-
 void CustomLineEdit::focusLeft()
 {
     connect(this, &CustomLineEdit::left, [this](){
@@ -48,14 +39,14 @@ void CustomLineEdit::focusLeft()
 void CustomLineEdit::setInAndExAttr()
 {
     setValidator(new QIntValidator(0, INT_MAX, this));
-    setFixedSize(525, 30);
+    setFixedWidth(525);
     setCustomPlaceholderText("How much money did you make this month?");
 }
 
 void CustomLineEdit::setWishAttr(QString text)
 {
     setCustomPlaceholderText(text);
-    setFixedSize(300, 30);
+    setFixedWidth(250);
 }
 
 void CustomLineEdit::focusInEvent(QFocusEvent *event)
@@ -64,6 +55,7 @@ void CustomLineEdit::focusInEvent(QFocusEvent *event)
     emit isFocused(true);
 }
 
+//this function is used for hover effects on placeholder text
 void CustomLineEdit::paintEvent(QPaintEvent *event)
 {
     QLineEdit::paintEvent(event);
@@ -101,8 +93,11 @@ void CustomLineEdit::onFocus(bool isFocused)
 
     if (isFocused) {
         color = QColor(255, 255, 255);
+        setStyleSheet(styleString.arg("white"));
+        emit focusIn(); //focusIn signal is used to make sure that only one placeholder text can be hightlighted
     }
     else {
         color = QColor(199, 205, 221);
+        setStyleSheet(styleString.arg("#BFC6D6"));
     }
 }

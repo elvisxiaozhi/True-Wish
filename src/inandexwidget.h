@@ -23,7 +23,6 @@ public:
 
 private:
     void createLineEdit();
-    void createLine();
     void mousePressEvent(QMouseEvent *) override;
 
 protected:

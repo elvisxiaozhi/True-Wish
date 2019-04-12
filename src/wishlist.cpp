@@ -14,7 +14,7 @@ WishList::WishList(PaintedWidget *parent) :
     editVec = {wishEdit, goalEdit, timeEdit};
 
     setFixedHeight(70);
-    setStyleSheet("background: #414B66; border: 1px solid gray");
+    setStyleSheet("QWidget { background: #414B66; border: 1px solid gray; }");
 }
 
 WishList::~WishList()
@@ -28,9 +28,6 @@ void WishList::createWishEdit()
     wishEdit->setWishAttr("What are you wishing for?");
 
     ui->wishLayout->insertWidget(0, wishEdit);
-    ui->wishLine->setFixedSize(250, 1);
-
-    wishEdit->changeFocuseEffect(ui->wishLine);
 }
 
 void WishList::createGoalEdit()
@@ -39,9 +36,6 @@ void WishList::createGoalEdit()
     goalEdit->setWishAttr("What is your financial goal?");
 
     ui->goalLayout->insertWidget(0, goalEdit);
-    ui->goalLine->setFixedSize(250, 1);
-
-    goalEdit->changeFocuseEffect(ui->goalLine);
 }
 
 void WishList::createTimeEdit()
@@ -50,9 +44,6 @@ void WishList::createTimeEdit()
     timeEdit->setWishAttr("How long will it take?");
 
     ui->timeLayout->insertWidget(0, timeEdit);
-    ui->timeLine->setFixedSize(250, 1);
-
-    timeEdit->changeFocuseEffect(ui->timeLine);
 }
 
 void WishList::clearFocus()
