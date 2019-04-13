@@ -21,10 +21,6 @@ WishList::WishList(PaintedWidget *parent) :
 WishList::~WishList()
 {
     delete ui;
-    for (int i = 0; i < editVec.size(); ++i) {
-        editVec[i]->deleteLater();
-    }
-    editVec.clear();
 }
 
 void WishList::createWishEdit()
