@@ -30,6 +30,9 @@ private:
     void createGoalEdit();
     void createTimeEdit();
     void setBinLable();
+
+signals:
+    void deleteWishList();
 };
 
 #endif // WISHLIST_H

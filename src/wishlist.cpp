@@ -21,6 +21,10 @@ WishList::WishList(PaintedWidget *parent) :
 WishList::~WishList()
 {
     delete ui;
+    for (int i = 0; i < editVec.size(); ++i) {
+        editVec[i]->deleteLater();
+    }
+    editVec.clear();
 }
 
 void WishList::createWishEdit()
@@ -52,6 +56,8 @@ void WishList::setBinLable()
     ui->binWidget->setFixedSize(30, 30);
     binLabel = createBinLabel();
     ui->binLayout->addWidget(binLabel);
+
+    connect(binLabel, &CustomLabel::clicked, [this](){ emit deleteWishList(); });
 }
 
 void WishList::clearFocus()

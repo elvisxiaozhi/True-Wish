@@ -24,6 +24,7 @@ private:
     QVector<WishList *> wishVec;
     CustomLabel *wishLabel;
     const int DEFAULT_WISH_LIST = 3;
+    static int WISH_VEC_SIZE;
 
     void createNewWishVec();
     void createWishLabel();
@@ -31,6 +32,7 @@ private:
 
 private slots:
     void focusIn(CustomLineEdit *);
+    void deleteWishList();
 };
 
 #endif // WISH_H

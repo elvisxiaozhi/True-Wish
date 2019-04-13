@@ -1,6 +1,8 @@
 #include "wish.h"
 #include "ui_wish.h"
 
+int Wish::WISH_VEC_SIZE = 0;
+
 Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
     ui(new Ui::Wish)
 {
@@ -9,7 +11,6 @@ Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
     addAction("X");
     setOnHoverVec();
     setFixedWidth(870);
-    setMinimumHeight(500);
     setStyleSheet("QWidget { background-color: #414B66 }"
                   "#addWishes { background-color: #11B850; border: 0px; padding: 11px 20px; font: 20px; color: white; border-radius: 3px; }"
                   "#addWishes:hover { background-color: #0A863D; }"
@@ -46,8 +47,9 @@ void Wish::mousePressEvent(QMouseEvent *event)
 {
     commonPressEvent(event);
 
-    int n = wishVec.size();
-    for (int i = 0; i < n; ++i) {
+    //use WISH_VEC_SIZE instead of wishVec.size() to prevent the program from crashing
+    int i;
+    for (i = 0; i < WISH_VEC_SIZE; ++i) {
         wishVec[i]->clearFocus();
     }
 }
@@ -55,11 +57,26 @@ void Wish::mousePressEvent(QMouseEvent *event)
 
 void Wish::focusIn(CustomLineEdit *edit)
 {
-    int n = wishVec.size();
-    for (int i = 0; i < n; ++i) {
+    int i;
+    for (i = 0; i < WISH_VEC_SIZE; ++i) {
         for (auto e : wishVec[i]->editVec) {
             if (e != edit)
                 emit e->isFocused(false);
+        }
+    }
+}
+
+void Wish::deleteWishList()
+{
+    QObject *wishList = sender();
+    int i;
+    for (i = 0; i < WISH_VEC_SIZE; ++i) {
+        if (wishList == wishVec[i]) {
+            qDebug() << i;
+            wishVec[i]->deleteLater();
+//            delete wishVec[i];
+            --WISH_VEC_SIZE;
+            break;
         }
     }
 }
@@ -73,9 +90,13 @@ void Wish::createNewWishVec()
 {
     WishList *wishList = new WishList(this);
     ui->wishListLayout->addWidget(wishList);
+
+    ++WISH_VEC_SIZE;
+
     for (auto e : wishList->editVec) {
         connect(e, &CustomLineEdit::focusIn, [this, e](){ focusIn(e); });
     }
+    connect(wishList, &WishList::deleteWishList, this, &Wish::deleteWishList);
 
     wishVec.push_back(wishList);
 }
