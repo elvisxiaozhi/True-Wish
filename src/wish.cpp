@@ -15,7 +15,7 @@ Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
                   "#addWishes:hover { background-color: #0A863D; }"
                   "#addWishes:pressed { background-color: #0A863D; }");
 
-    createWishVec();
+    createDefaultWishVec();
     createWishLabel();
 
     connect(this, &Wish::actionChanged, [this](){ hide(); });
@@ -36,6 +36,7 @@ void Wish::createWishLabel()
 
     connect(wishLabel, &CustomLabel::entered, [this](){ wishLabel->setPixmap(returnBinLabelPixmap(QColor(255, 255, 255), QPixmap(":/icons/add.png"))); });
     connect(wishLabel, &CustomLabel::left, [this](){ wishLabel->setPixmap(QPixmap(":/icons/add.png"));  });
+    connect(wishLabel, &CustomLabel::clicked, [this](){ qDebug() << "Clicked"; });
 }
 
 void Wish::mousePressEvent(QMouseEvent *event)
@@ -48,15 +49,6 @@ void Wish::mousePressEvent(QMouseEvent *event)
     }
 }
 
-void Wish::connectWishEdit()
-{
-    int n = wishVec.size();
-    for (int i = 0; i < n; ++i) {
-        for (auto e : wishVec[i]->editVec) {
-            connect(e, &CustomLineEdit::focusIn, [this, e](){ focusIn(e); });
-        }
-    }
-}
 
 void Wish::focusIn(CustomLineEdit *edit)
 {
@@ -74,13 +66,15 @@ void Wish::on_closeButton_clicked()
     hide();
 }
 
-void Wish::createWishVec()
+void Wish::createDefaultWishVec()
 {
-    for (int i = 0; i < 3; ++i) {
+    for (int i = 0; i < DEFAULT_WISH_LIST; ++i) {
         WishList *wishList = new WishList(this);
         ui->wishListLayout->addWidget(wishList);
+        for (auto e : wishList->editVec) {
+            connect(e, &CustomLineEdit::focusIn, [this, e](){ focusIn(e); });
+        }
+
         wishVec.push_back(wishList);
     }
-
-    connectWishEdit();
 }

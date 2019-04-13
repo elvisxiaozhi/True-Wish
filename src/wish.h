@@ -23,11 +23,11 @@ private:
     Ui::Wish *ui;
     QVector<WishList *> wishVec;
     CustomLabel *wishLabel;
+    const int DEFAULT_WISH_LIST = 3;
 
-    void createWishVec();
+    void createDefaultWishVec();
     void createWishLabel();
     void mousePressEvent(QMouseEvent *);
-    void connectWishEdit();
 
 private slots:
     void focusIn(CustomLineEdit *);
