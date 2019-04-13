@@ -25,7 +25,7 @@ private:
     CustomLabel *wishLabel;
     const int DEFAULT_WISH_LIST = 3;
 
-    void createDefaultWishVec();
+    void createNewWishVec();
     void createWishLabel();
     void mousePressEvent(QMouseEvent *);
 
