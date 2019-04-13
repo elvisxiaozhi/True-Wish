@@ -10,6 +10,7 @@ WishList::WishList(PaintedWidget *parent) :
     createWishEdit();
     createGoalEdit();
     createTimeEdit();
+    setBinLable();
 
     editVec = {wishEdit, goalEdit, timeEdit};
 
@@ -46,10 +47,22 @@ void WishList::createTimeEdit()
     ui->timeLayout->insertWidget(0, timeEdit);
 }
 
+void WishList::setBinLable()
+{
+    ui->binWidget->setFixedSize(30, 30);
+    binLabel = createBinLabel();
+    ui->binLayout->addWidget(binLabel);
+}
+
 void WishList::clearFocus()
 {
     for (auto e : editVec) {
         e->clearFocus();
         emit e->isFocused(false);
     }
+}
+
+void WishList::hideBinLabel()
+{
+    binLabel->hide();
 }

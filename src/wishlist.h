@@ -19,14 +19,17 @@ public:
 
     void clearFocus();
     QVector<CustomLineEdit *> editVec;
+    void hideBinLabel();
 
 private:
     Ui::WishList *ui;
     CustomLineEdit *wishEdit, *goalEdit, *timeEdit;
+    CustomLabel *binLabel;
 
     void createWishEdit();
     void createGoalEdit();
     void createTimeEdit();
+    void setBinLable();
 };
 
 #endif // WISHLIST_H
