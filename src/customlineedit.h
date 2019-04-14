@@ -14,13 +14,13 @@ public:
     void focusLeft();
     void setInAndExAttr();
     void setWishAttr(QString);
+    static QString styleString;
 
 private:
     QString mText;
     QColor color;
     bool focused;
     int paintDistance;
-    static QString styleString;
 
 protected:
     void focusInEvent(QFocusEvent *);
@@ -33,6 +33,7 @@ signals:
     void entered();
     void left();
     void focusIn();
+    void changeUnderLineToRed();
 
 private slots:
     void onFocus(bool);

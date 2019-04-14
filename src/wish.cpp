@@ -21,6 +21,8 @@ Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
     createWishLabel();
 
     connect(this, &Wish::actionChanged, [this](){ hide(); });
+
+    setFixedHeight(MIN_HEIGHT + WISH_HEIGHT * wishVec.size());
 }
 
 Wish::~Wish()
@@ -38,7 +40,7 @@ void Wish::createWishLabel()
 
     connect(wishLabel, &CustomLabel::entered, [this](){ wishLabel->setPixmap(returnBinLabelPixmap(QColor(255, 255, 255), QPixmap(":/icons/add.png"))); });
     connect(wishLabel, &CustomLabel::left, [this](){ wishLabel->setPixmap(QPixmap(":/icons/add.png"));  });
-    connect(wishLabel, &CustomLabel::clicked, [this](){ createNewWishVec(); });
+    connect(wishLabel, &CustomLabel::clicked, [this](){ createNewWishVec(); setFixedHeight(MIN_HEIGHT + WISH_HEIGHT * wishVec.size()); });
 }
 
 void Wish::mousePressEvent(QMouseEvent *event)
@@ -46,12 +48,36 @@ void Wish::mousePressEvent(QMouseEvent *event)
     commonPressEvent(event);
 
     int i, n = wishVec.size();
-    qDebug() << n;
     for (i = 0; i < n; ++i) {
         wishVec[i]->clearFocus();
     }
 }
 
+bool Wish::allFilled()
+{
+    int i;
+    for (i = 0; i < DEFAULT_WISH_LIST; ++i) {
+        for (auto e : wishVec[i]->editVec) {
+            if (e->text().isEmpty()) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+void Wish::changeUnderLineToRed()
+{
+    int i;
+    for (i = 0; i < DEFAULT_WISH_LIST; ++i) {
+        for (auto e : wishVec[i]->editVec) {
+            if (e->text().isEmpty()) {
+                emit e->changeUnderLineToRed();
+            }
+        }
+    }
+}
 
 void Wish::focusIn(CustomLineEdit *edit)
 {
@@ -66,6 +92,8 @@ void Wish::focusIn(CustomLineEdit *edit)
 
 void Wish::deleteWishList()
 {
+    setFixedHeight(MIN_HEIGHT + WISH_HEIGHT * wishVec.size());
+
     QObject *wishList = sender();
     int i, n = wishVec.size();
     for (i = 0; i < n; ++i) {
@@ -93,4 +121,11 @@ void Wish::createNewWishVec()
     connect(wishList, &WishList::deleteWishList, this, &Wish::deleteWishList);
 
     wishVec.push_back(wishList);
+}
+
+void Wish::on_addWishes_clicked()
+{
+    if (!allFilled()) {
+        changeUnderLineToRed();
+    }
 }

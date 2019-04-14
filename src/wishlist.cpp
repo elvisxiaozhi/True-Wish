@@ -13,6 +13,9 @@ WishList::WishList(PaintedWidget *parent) :
     setBinLable();
 
     editVec = {wishEdit, goalEdit, timeEdit};
+    for (auto e : editVec) {
+        connect(e, &CustomLineEdit::changeUnderLineToRed, this, &WishList::changeUnderLineToRed);
+    }
 
     setFixedHeight(70);
     setStyleSheet("QWidget { background: #414B66; border: 1px solid gray; }");
@@ -54,6 +57,16 @@ void WishList::setBinLable()
     ui->binLayout->addWidget(binLabel);
 
     connect(binLabel, &CustomLabel::clicked, [this](){ emit deleteWishList(); });
+}
+
+void WishList::changeUnderLineToRed()
+{
+    QObject *lineEdit = sender();
+    for (auto e : editVec) {
+        if (e == lineEdit) {
+            e->setStyleSheet(CustomLineEdit::styleString.arg("red"));
+        }
+    }
 }
 
 void WishList::clearFocus()

@@ -23,15 +23,18 @@ private:
     Ui::Wish *ui;
     QVector<WishList *> wishVec;
     CustomLabel *wishLabel;
-    const int DEFAULT_WISH_LIST = 3;
+    const int DEFAULT_WISH_LIST = 3, MIN_HEIGHT = 330, WISH_HEIGHT = 50;
 
     void createNewWishVec();
     void createWishLabel();
     void mousePressEvent(QMouseEvent *);
+    bool allFilled();
+    void changeUnderLineToRed();
 
 private slots:
     void focusIn(CustomLineEdit *);
     void deleteWishList();
+    void on_addWishes_clicked();
 };
 
 #endif // WISH_H

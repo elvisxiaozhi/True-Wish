@@ -21,8 +21,6 @@ public:
     QVector<CustomLineEdit *> editVec;
     void hideBinLabel();
 
-//    CustomLineEdit *wishEdit, *goalEdit, *timeEdit; //delete later
-
 private:
     Ui::WishList *ui;
     CustomLineEdit *wishEdit, *goalEdit, *timeEdit;
@@ -35,6 +33,9 @@ private:
 
 signals:
     void deleteWishList();
+
+private slots:
+    void changeUnderLineToRed();
 };
 
 #endif // WISHLIST_H
