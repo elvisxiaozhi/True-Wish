@@ -1,8 +1,6 @@
 #include "wish.h"
 #include "ui_wish.h"
 
-int Wish::WISH_VEC_SIZE = 0;
-
 Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
     ui(new Ui::Wish)
 {
@@ -47,9 +45,9 @@ void Wish::mousePressEvent(QMouseEvent *event)
 {
     commonPressEvent(event);
 
-    //use WISH_VEC_SIZE instead of wishVec.size() to prevent the program from crashing
-    int i;
-    for (i = 0; i < WISH_VEC_SIZE; ++i) {
+    int i, n = wishVec.size();
+    qDebug() << n;
+    for (i = 0; i < n; ++i) {
         wishVec[i]->clearFocus();
     }
 }
@@ -57,8 +55,8 @@ void Wish::mousePressEvent(QMouseEvent *event)
 
 void Wish::focusIn(CustomLineEdit *edit)
 {
-    int i;
-    for (i = 0; i < WISH_VEC_SIZE; ++i) {
+    int i, n = wishVec.size();
+    for (i = 0; i < n; ++i) {
         for (auto e : wishVec[i]->editVec) {
             if (e != edit)
                 emit e->isFocused(false);
@@ -69,13 +67,11 @@ void Wish::focusIn(CustomLineEdit *edit)
 void Wish::deleteWishList()
 {
     QObject *wishList = sender();
-    int i;
-    for (i = 0; i < WISH_VEC_SIZE; ++i) {
+    int i, n = wishVec.size();
+    for (i = 0; i < n; ++i) {
         if (wishList == wishVec[i]) {
-            qDebug() << i;
-            wishVec[i]->deleteLater();
-//            delete wishVec[i];
-            --WISH_VEC_SIZE;
+            delete wishVec[i]; //delete first
+            wishVec.erase(wishVec.begin() + i); //then erase index from vector to prevent out of index issue in MousePressEvent()
             break;
         }
     }
@@ -90,8 +86,6 @@ void Wish::createNewWishVec()
 {
     WishList *wishList = new WishList(this);
     ui->wishListLayout->addWidget(wishList);
-
-    ++WISH_VEC_SIZE;
 
     for (auto e : wishList->editVec) {
         connect(e, &CustomLineEdit::focusIn, [this, e](){ focusIn(e); });
