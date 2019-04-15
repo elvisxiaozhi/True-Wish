@@ -1,5 +1,6 @@
 #include "wishlist.h"
 #include "ui_wishlist.h"
+#include <QDate>
 
 WishList::WishList(PaintedWidget *parent) :
     PaintedWidget(parent),
@@ -19,6 +20,8 @@ WishList::WishList(PaintedWidget *parent) :
 
     setFixedHeight(70);
     setStyleSheet("QWidget { background: #414B66; border: 1px solid gray; }");
+
+//    qDebug() << QDate::currentDate().addYears(1);
 }
 
 WishList::~WishList()
@@ -29,7 +32,7 @@ WishList::~WishList()
 void WishList::createWishEdit()
 {
     wishEdit = new CustomLineEdit(this);
-    wishEdit->setWishAttr("What are you wishing for?");
+    wishEdit->setWishAttr("What are you wishing for?", false);
 
     ui->wishLayout->insertWidget(0, wishEdit);
 }
@@ -45,7 +48,7 @@ void WishList::createGoalEdit()
 void WishList::createTimeEdit()
 {
     timeEdit = new CustomLineEdit(this);
-    timeEdit->setWishAttr("How long will it take?");
+    timeEdit->setWishAttr("How long will it take (months)?");
 
     ui->timeLayout->insertWidget(0, timeEdit);
 }

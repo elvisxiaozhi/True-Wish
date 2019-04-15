@@ -26,7 +26,8 @@ InAndExWidget::~InAndExWidget()
 
 void InAndExWidget::setBinLabelAttr(CustomLabel *binLabel)
 {
-    ui->lineEditLayout->insertWidget(1, binLabel);
+    ui->lineEditLayout->insertWidget(2, binLabel);
+    binLabel->setFixedSize(30, 30);
     connect(lineEdit, &CustomLineEdit::entered, [this, binLabel](){ binLabel->setPixmap(returnBinLabelPixmap(QColor(206, 216, 226), QPixmap(":/icons/recycle bin.png"))); });
     connect(lineEdit, &CustomLineEdit::left, [this, binLabel](){ binLabel->setPixmap(QPixmap()); });
 }

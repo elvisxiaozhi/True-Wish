@@ -8,7 +8,7 @@ Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
 
     addAction("X");
     setOnHoverVec();
-    setFixedWidth(870);
+    setFixedWidth(900);
     setStyleSheet("QWidget { background-color: #414B66 }"
                   "#addWishes { background-color: #11B850; border: 0px; padding: 11px 20px; font: 20px; color: white; border-radius: 3px; }"
                   "#addWishes:hover { background-color: #0A863D; }"

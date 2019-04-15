@@ -39,14 +39,17 @@ void CustomLineEdit::focusLeft()
 void CustomLineEdit::setInAndExAttr()
 {
     setValidator(new QIntValidator(0, INT_MAX, this));
-    setFixedWidth(525);
+    setFixedWidth(480);
     setCustomPlaceholderText("How much money did you make this month?");
 }
 
-void CustomLineEdit::setWishAttr(QString text)
+void CustomLineEdit::setWishAttr(QString text, bool hasValidator)
 {
     setCustomPlaceholderText(text);
     setFixedWidth(250);
+
+    if (hasValidator)
+        setValidator(new QIntValidator(0, INT_MAX, this));
 }
 
 void CustomLineEdit::focusInEvent(QFocusEvent *event)

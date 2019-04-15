@@ -13,7 +13,7 @@ public:
     void setCustomPlaceholderColor(const QColor &);
     void focusLeft();
     void setInAndExAttr();
-    void setWishAttr(QString);
+    void setWishAttr(QString, bool hasValidator = true);
     static QString styleString;
 
 private:
