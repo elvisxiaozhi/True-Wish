@@ -1,5 +1,7 @@
 #include "wish.h"
 #include "ui_wish.h"
+#include <QVBoxLayout>
+#include <QFrame>
 
 Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
     ui(new Ui::Wish)
@@ -112,8 +114,16 @@ void Wish::on_closeButton_clicked()
 
 void Wish::createNewWishVec()
 {
+    QFrame *frame = new QFrame(this);
+    frame->setFrameStyle(QFrame::Box);
+    frame->setLineWidth(2);
+    frame->setStyleSheet("border: 1px solid rbg(46, 41, 41); border-radius: 5px;");
+    ui->wishListLayout->addWidget(frame);
+
     WishList *wishList = new WishList(this);
-    ui->wishListLayout->addWidget(wishList);
+    QVBoxLayout *vLayout = new QVBoxLayout(frame); //set parent to QFrame
+    vLayout->setMargin(0);
+    vLayout->addWidget(wishList);
 
     for (auto e : wishList->editVec) {
         connect(e, &CustomLineEdit::focusIn, [this, e](){ focusIn(e); });
