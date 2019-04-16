@@ -10,7 +10,8 @@ Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
 
     addAction("X");
     setOnHoverVec();
-    setFixedWidth(900);
+    setFixedWidth(600);
+
     setStyleSheet("QWidget { background-color: #414B66 }"
                   "#addWishes { background-color: #11B850; border: 0px; padding: 11px 20px; font: 20px; color: white; border-radius: 3px; }"
                   "#addWishes:hover { background-color: #0A863D; }"
@@ -18,7 +19,7 @@ Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
 
     for (int i = 0; i < DEFAULT_WISH_LIST; ++i) {
         createNewWishVec();
-        wishVec[i]->hideBinLabel(); //default wish vec can not be deleted
+//        wishVec[i]->hideBinLabel(); //default wish vec can not be deleted
     }
     createWishLabel();
 
@@ -94,14 +95,17 @@ void Wish::focusIn(CustomLineEdit *edit)
 
 void Wish::deleteWishList()
 {
-    setFixedHeight(MIN_HEIGHT + WISH_HEIGHT * wishVec.size());
-
     QObject *wishList = sender();
     int i, n = wishVec.size();
     for (i = 0; i < n; ++i) {
         if (wishList == wishVec[i]) {
             delete wishVec[i]; //delete first
             wishVec.erase(wishVec.begin() + i); //then erase index from vector to prevent out of index issue in MousePressEvent()
+            delete frameVec[i];
+            frameVec.erase(frameVec.begin() + i);
+
+            setFixedHeight(MIN_HEIGHT + WISH_HEIGHT * wishVec.size()); //delete first, then set fixed height because it needs to use wishVec.size()
+
             break;
         }
     }
@@ -115,10 +119,13 @@ void Wish::on_closeButton_clicked()
 void Wish::createNewWishVec()
 {
     QFrame *frame = new QFrame(this);
+    frame->setFixedHeight(WISH_HEIGHT);
     frame->setFrameStyle(QFrame::Box);
     frame->setLineWidth(2);
     frame->setStyleSheet("border: 1px solid rbg(46, 41, 41); border-radius: 5px;");
     ui->wishListLayout->addWidget(frame);
+
+    frameVec.push_back(frame);
 
     WishList *wishList = new WishList(this);
     QVBoxLayout *vLayout = new QVBoxLayout(frame); //set parent to QFrame

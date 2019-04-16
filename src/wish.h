@@ -22,8 +22,9 @@ private slots:
 private:
     Ui::Wish *ui;
     QVector<WishList *> wishVec;
+    QVector<QFrame *> frameVec;
     CustomLabel *wishLabel;
-    const int DEFAULT_WISH_LIST = 3, MIN_HEIGHT = 330, WISH_HEIGHT = 50;
+    const int DEFAULT_WISH_LIST = 1, MIN_HEIGHT = 260, WISH_HEIGHT = 200;
 
     void createNewWishVec();
     void createWishLabel();

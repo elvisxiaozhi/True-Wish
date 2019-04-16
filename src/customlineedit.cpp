@@ -46,7 +46,7 @@ void CustomLineEdit::setInAndExAttr()
 void CustomLineEdit::setWishAttr(QString text, bool hasValidator)
 {
     setCustomPlaceholderText(text);
-    setFixedWidth(250);
+    setFixedWidth(350);
 
     if (hasValidator)
         setValidator(new QIntValidator(0, INT_MAX, this));

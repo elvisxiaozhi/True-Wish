@@ -18,8 +18,9 @@ WishList::WishList(PaintedWidget *parent) :
         connect(e, &CustomLineEdit::changeUnderLineToRed, this, &WishList::changeUnderLineToRed);
     }
 
-    setFixedHeight(70);
     setStyleSheet("QWidget { background: #414B66; border: 1px solid gray; }");
+
+    /*It's not necessary to set fixed height in this class, just set fixed height for QFrame widget in Wish class*/
 
 //    qDebug() << QDate::currentDate().addYears(1);
 }
@@ -55,8 +56,8 @@ void WishList::createTimeEdit()
 
 void WishList::setBinLable()
 {
-    ui->binWidget->setFixedSize(30, 30);
     binLabel = createBinLabel();
+    binLabel->setStyleSheet("border: none;");
     ui->binLayout->addWidget(binLabel);
 
     connect(binLabel, &CustomLabel::clicked, [this](){ emit deleteWishList(); });

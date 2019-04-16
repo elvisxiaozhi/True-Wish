@@ -14,55 +14,25 @@
    <string>Form</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
-   <property name="spacing">
-    <number>7</number>
-   </property>
-   <property name="leftMargin">
-    <number>41</number>
-   </property>
-   <property name="rightMargin">
-    <number>11</number>
-   </property>
    <item>
-    <layout class="QHBoxLayout" name="wishLayout"/>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QHBoxLayout" name="wishLayout"/>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="goalLayout"/>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="timeLayout"/>
+     </item>
+    </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="goalLayout"/>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="timeLayout"/>
-   </item>
-   <item>
-    <widget class="QWidget" name="binWidget" native="true">
-     <property name="styleSheet">
-      <string notr="true">background: #414B66; 
-border: none;</string>
+    <layout class="QVBoxLayout" name="binLayout">
+     <property name="spacing">
+      <number>0</number>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <item>
-       <layout class="QVBoxLayout" name="binLayout">
-        <property name="spacing">
-         <number>0</number>
-        </property>
-       </layout>
-      </item>
-     </layout>
-    </widget>
+    </layout>
    </item>
   </layout>
  </widget>
