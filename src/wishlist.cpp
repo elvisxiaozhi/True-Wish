@@ -8,12 +8,13 @@ WishList::WishList(PaintedWidget *parent) :
 {
     ui->setupUi(this);
 
-    createWishEdit();
-    createGoalEdit();
+    createNewWishEdit("What are you wishing for?", ui->wishLayout);
+    createNewWishEdit("What is your financial goal?", ui->goalLayout);
     createTimeEdit();
     setBinLable();
 
-    editVec = {wishEdit, goalEdit, timeEdit};
+    editVec[0]->setValidator(nullptr);
+
     for (auto e : editVec) {
         connect(e, &CustomLineEdit::changeUnderLineToRed, this, &WishList::changeUnderLineToRed);
     }
@@ -30,34 +31,29 @@ WishList::~WishList()
     delete ui;
 }
 
-void WishList::createWishEdit()
-{
-    wishEdit = new CustomLineEdit(this);
-    wishEdit->setWishAttr("What are you wishing for?", false);
-
-    ui->wishLayout->insertWidget(0, wishEdit);
-}
-
-void WishList::createGoalEdit()
-{
-    goalEdit = new CustomLineEdit(this);
-    goalEdit->setWishAttr("What is your financial goal?");
-
-    ui->goalLayout->insertWidget(0, goalEdit);
-}
-
 void WishList::createTimeEdit()
 {
-    timeEdit = new CustomLineEdit(this);
-    timeEdit->setWishAttr("How long will it take (months)?");
+    QLabel *timeLabel = new QLabel(this);
+    timeLabel->setText("How long will it take to achieve your financial goal?");
+    timeLabel->setStyleSheet("font: 20px; color: #BFC6D6; border: none; padding: 0px 0px 0px 1px;");
 
-    ui->timeLayout->insertWidget(0, timeEdit);
+    QHBoxLayout *hLayout = new QHBoxLayout;
+    createNewWishEdit("Year(s)", hLayout, 160);
+    createNewWishEdit("Month(s)", hLayout, 160);
+    createNewWishEdit("Day(s)", hLayout, 160);
+
+    QVBoxLayout *vLayout = new QVBoxLayout;
+    vLayout->addWidget(timeLabel);
+    vLayout->addLayout(hLayout);
+
+    ui->timeLayout->addLayout(vLayout);
 }
 
 void WishList::setBinLable()
 {
     binLabel = createBinLabel();
-    binLabel->setStyleSheet("border: none;");
+
+    ui->binWidget->setFixedSize(30, 30);
     ui->binLayout->addWidget(binLabel);
 
     connect(binLabel, &CustomLabel::clicked, [this](){ emit deleteWishList(); });
@@ -84,4 +80,13 @@ void WishList::clearFocus()
 void WishList::hideBinLabel()
 {
     binLabel->hide();
+}
+
+void WishList::createNewWishEdit(QString text, QLayout *layout, int width)
+{
+    CustomLineEdit *lineEdit = new CustomLineEdit(this);
+    lineEdit->setWishAttr(text, width);
+    layout->addWidget(lineEdit);
+
+    editVec.push_back(lineEdit);
 }

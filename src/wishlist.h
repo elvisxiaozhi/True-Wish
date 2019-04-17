@@ -23,11 +23,9 @@ public:
 
 private:
     Ui::WishList *ui;
-    CustomLineEdit *wishEdit, *goalEdit, *timeEdit;
     CustomLabel *binLabel;
 
-    void createWishEdit();
-    void createGoalEdit();
+    void createNewWishEdit(QString, QLayout *, int width = 480);
     void createTimeEdit();
     void setBinLable();
 

@@ -17,10 +17,8 @@ Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
                   "#addWishes:hover { background-color: #0A863D; }"
                   "#addWishes:pressed { background-color: #0A863D; }");
 
-    for (int i = 0; i < DEFAULT_WISH_LIST; ++i) {
-        createNewWishVec();
-//        wishVec[i]->hideBinLabel(); //default wish vec can not be deleted
-    }
+    createNewWishVec();
+    wishVec.first()->hideBinLabel(); //default wish vec can not be deleted
     createWishLabel();
 
     connect(this, &Wish::actionChanged, [this](){ hide(); });
@@ -58,12 +56,9 @@ void Wish::mousePressEvent(QMouseEvent *event)
 
 bool Wish::allFilled()
 {
-    int i;
-    for (i = 0; i < DEFAULT_WISH_LIST; ++i) {
-        for (auto e : wishVec[i]->editVec) {
-            if (e->text().isEmpty()) {
-                return false;
-            }
+    for (auto e : wishVec.first()->editVec) {
+        if (e->text().isEmpty()) {
+            return false;
         }
     }
 
@@ -72,12 +67,9 @@ bool Wish::allFilled()
 
 void Wish::changeUnderLineToRed()
 {
-    int i;
-    for (i = 0; i < DEFAULT_WISH_LIST; ++i) {
-        for (auto e : wishVec[i]->editVec) {
-            if (e->text().isEmpty()) {
-                emit e->changeUnderLineToRed();
-            }
+    for (auto e : wishVec.first()->editVec) {
+        if (e->text().isEmpty()) {
+            emit e->changeUnderLineToRed();
         }
     }
 }
@@ -122,7 +114,7 @@ void Wish::createNewWishVec()
     frame->setFixedHeight(WISH_HEIGHT);
     frame->setFrameStyle(QFrame::Box);
     frame->setLineWidth(2);
-    frame->setStyleSheet("border: 1px solid rbg(46, 41, 41); border-radius: 5px;");
+    frame->setStyleSheet("QFrame {border: 1px solid rbg(46, 41, 41); border-radius: 5px; }"); //set border-radius in QFrame, or all child widgets will be applyed
     ui->wishListLayout->addWidget(frame);
 
     frameVec.push_back(frame);

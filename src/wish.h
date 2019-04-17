@@ -13,7 +13,7 @@ class Wish : public PaintedWidget
 {
     Q_OBJECT
 public:
-    explicit Wish(PaintedWidget *parent = nullptr, int width = 870);
+    explicit Wish(PaintedWidget *parent = nullptr, int width = 600);
     ~Wish();
 
 private slots:
@@ -24,7 +24,7 @@ private:
     QVector<WishList *> wishVec;
     QVector<QFrame *> frameVec;
     CustomLabel *wishLabel;
-    const int DEFAULT_WISH_LIST = 1, MIN_HEIGHT = 260, WISH_HEIGHT = 200;
+    const int MIN_HEIGHT = 260, WISH_HEIGHT = 200;
 
     void createNewWishVec();
     void createWishLabel();

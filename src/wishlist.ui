@@ -15,6 +15,22 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>30</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <layout class="QHBoxLayout" name="wishLayout"/>
@@ -28,11 +44,28 @@
     </layout>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="binLayout">
-     <property name="spacing">
-      <number>0</number>
+    <widget class="QWidget" name="binWidget" native="true">
+     <property name="styleSheet">
+      <string notr="true">border: none;</string>
      </property>
-    </layout>
+     <layout class="QVBoxLayout" name="binLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+     </layout>
+    </widget>
    </item>
   </layout>
  </widget>
