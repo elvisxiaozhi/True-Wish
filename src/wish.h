@@ -24,13 +24,14 @@ private:
     QVector<WishList *> wishVec;
     QVector<QFrame *> frameVec;
     CustomLabel *wishLabel;
-    const int MIN_HEIGHT = 260, WISH_HEIGHT = 200;
+    const int MIN_HEIGHT = 260, WISH_HEIGHT = 210;
 
     void createNewWishVec();
     void createWishLabel();
     void mousePressEvent(QMouseEvent *);
     bool allFilled();
     void changeUnderLineToRed();
+    void resetLineEdits();
 
 private slots:
     void focusIn(CustomLineEdit *);

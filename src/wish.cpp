@@ -2,6 +2,8 @@
 #include "ui_wish.h"
 #include <QVBoxLayout>
 #include <QFrame>
+#include <QDate>
+#include "core/database.h"
 
 Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
     ui(new Ui::Wish)
@@ -56,9 +58,17 @@ void Wish::mousePressEvent(QMouseEvent *event)
 
 bool Wish::allFilled()
 {
-    for (auto e : wishVec.first()->editVec) {
-        if (e->text().isEmpty()) {
+    for (auto wish : wishVec) {
+        //make sure that years, months and days line edit has at least one being filled with text
+        if (wish->editVec[2]->text().isEmpty() && wish->editVec[3]->text().isEmpty() && wish->editVec[4]->text().isEmpty()) {
             return false;
+        }
+        else {
+            int i;
+            for (i = 0; i < 2; ++i) {
+                if (wish->editVec[i]->text().isEmpty())
+                    return false;
+            }
         }
     }
 
@@ -67,9 +77,21 @@ bool Wish::allFilled()
 
 void Wish::changeUnderLineToRed()
 {
-    for (auto e : wishVec.first()->editVec) {
-        if (e->text().isEmpty()) {
-            emit e->changeUnderLineToRed();
+    for (auto wish : wishVec) {
+        for (auto e : wish->editVec) {
+            if (e->text().isEmpty()) {
+                emit e->changeUnderLineToRed();
+            }
+        }
+    }
+}
+
+void Wish::resetLineEdits()
+{
+    for (auto wish : wishVec) {
+        for (auto e : wish->editVec) {
+            e->clear();
+            emit e->isFocused(false);
         }
     }
 }
@@ -136,5 +158,20 @@ void Wish::on_addWishes_clicked()
 {
     if (!allFilled()) {
         changeUnderLineToRed();
+    }
+    else {
+        for (auto e : wishVec) {
+            QString wish = e->editVec[0]->text();
+            int goal = e->editVec[1]->text().toInt();
+            int years = e->editVec[2]->text().toInt();
+            int months = e->editVec[3]->text().toInt();
+            int days = e->editVec[4]->text().toInt();
+            QString date = QDate::currentDate().addYears(years).addMonths(months).addDays(days).toString("yyyy-MM-dd");
+            qDebug() << wish << goal << date;
+//            Database::addWish(wish, goal, date);
+
+            resetLineEdits();
+            close();
+        }
     }
 }

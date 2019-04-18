@@ -20,6 +20,7 @@ public:
     static const QMap<QString, QString> months;
     static void addIncome(QString, int);
     static void addExpenditure(QString, int);
+    static void addWish(QString, int, QString);
     static void changeIncome(QString, int);
     static void changeExpenditure(QString, int);
     static tuple<QString, int> returnIncomeInfo(QString);

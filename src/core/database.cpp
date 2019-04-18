@@ -50,6 +50,19 @@ void Database::addExpenditure(QString date, int expenditure)
     query.exec();
 }
 
+void Database::addWish(QString wish, int goal, QString date)
+{
+    QSqlQuery query;
+    query.prepare("INSERT INTO wishes"
+                  "(wish, fin_goal, end_date)"
+                  "VALUES"
+                  "(:wish, :fin_goal, :end_date)");
+    query.bindValue(":wish", wish);
+    query.bindValue(":fin_goal", goal);
+    query.bindValue(":end_date", date);
+    query.exec();
+}
+
 void Database::changeIncome(QString date, int income)
 {
     QSqlQuery query;

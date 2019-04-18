@@ -1,6 +1,5 @@
 #include "wishlist.h"
 #include "ui_wishlist.h"
-#include <QDate>
 
 WishList::WishList(PaintedWidget *parent) :
     PaintedWidget(parent),
@@ -22,8 +21,6 @@ WishList::WishList(PaintedWidget *parent) :
     setStyleSheet("QWidget { background: #414B66; border: 1px solid gray; }");
 
     /*It's not necessary to set fixed height in this class, just set fixed height for QFrame widget in Wish class*/
-
-//    qDebug() << QDate::currentDate().addYears(1);
 }
 
 WishList::~WishList()
