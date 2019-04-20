@@ -268,7 +268,7 @@ font: 20px;</string>
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <layout class="QHBoxLayout" name="wishesLayout">
        <item>
         <spacer name="horizontalSpacer_5">
          <property name="orientation">

@@ -58,7 +58,9 @@ void MainContent::createExpenditureWindow()
 void MainContent::createWishWindow()
 {
     wish = new Wish();
-    wish->hide();
+
+    createWishDetailWidget();
+    setWishWindowInfo();
 }
 
 void MainContent::createYearEdit()
@@ -107,6 +109,12 @@ void MainContent::createExpenditureLabel()
     ui->expenditureLayout->insertWidget(2, expenditureLabel);
 }
 
+void MainContent::createWishDetailWidget()
+{
+    wishDetail = new WishDetail(this);
+    ui->wishesLayout->insertWidget(2, wishDetail);
+}
+
 void MainContent::setIncomeWindowInfo()
 {
     QString date = returnSelectedDate();
@@ -145,6 +153,26 @@ void MainContent::setExpenditureWindowInfo()
     }
 
     this->expenditure->setChangeExpenditureWindow(date);
+}
+
+void MainContent::setWishWindowInfo()
+{
+    QVector<tuple<QString, int, QString> > wishes = Database::returnWishInfo();
+    QString wish, date;
+    int goal = 0;
+    tie(wish, goal, date) = wishes.first();
+
+    if (goal == 0) {
+        ui->wishInfo->setText("What are you wishing for?");
+        wishDetail->hide();
+        ui->wishButton->show();
+    }
+    else {
+        ui->wishInfo->setText("Those are your wishes?");
+        ui->wishButton->hide();
+        wishDetail->show();
+        wishDetail->setWishLableText(wish, date);
+    }
 }
 
 void MainContent::setComboBox()
@@ -268,6 +296,11 @@ void MainContent::changeExpenditure()
 {
     setExpenditureWindowInfo();
     setWindowToTop(expenditure);
+}
+
+void MainContent::changeWish()
+{
+    qDebug() << "Change wish";
 }
 
 void MainContent::on_expenditureBtn_clicked()

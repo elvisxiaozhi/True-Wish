@@ -107,6 +107,22 @@ tuple<QString, int> Database::returnExpenditureInfo(QString date)
     return make_tuple("", 0);
 }
 
+QVector<tuple<QString, int, QString> > Database::returnWishInfo()
+{
+    QVector<tuple<QString, int, QString> > res;
+
+    QSqlQuery query;
+    query.prepare("SELECT * FROM wishes");
+    query.exec();
+
+    if (query.next())
+        res.push_back(make_tuple(query.value(1).toString(), query.value(2).toInt(), query.value(3).toString()));
+
+    qDebug() << get<0>(res[0]);
+
+    return res;
+}
+
 void Database::deleteIncome(QString date)
 {
     QSqlQuery query;

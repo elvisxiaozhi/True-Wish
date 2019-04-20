@@ -7,6 +7,7 @@
 #include "expenditure.h"
 #include "customlabel.h"
 #include "wish.h"
+#include "wishdetail.h"
 
 namespace Ui {
 class MainContent;
@@ -26,6 +27,7 @@ private:
     Income *income;
     Expenditure *expenditure;
     Wish *wish;
+    WishDetail *wishDetail;
     CustomLabel *yearLabel, *incomeLabel, *expenditureLabel;
     CustomLineEdit *yearEdit;
 
@@ -36,8 +38,10 @@ private:
     void createYearLabel();
     void createIncomeLabel();
     void createExpenditureLabel();
+    void createWishDetailWidget();
     void setIncomeWindowInfo();
     void setExpenditureWindowInfo();
+    void setWishWindowInfo();
     void setComboBox();
     void createCompleter();
     void setWindowToTop(QWidget *);
@@ -51,6 +55,7 @@ private slots:
     void on_incomeButton_clicked();
     void changeIncome();
     void changeExpenditure();
+    void changeWish();
     void on_expenditureBtn_clicked();
     void enterPressedOnYearEdit();
     void enterPressedOnComboEdit();

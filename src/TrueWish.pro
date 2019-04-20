@@ -38,7 +38,9 @@ SOURCES += \
     wish.cpp \
     core/database.cpp \
     wishlist.cpp \
-    inandexwidget.cpp
+    inandexwidget.cpp \
+    wishdetail.cpp \
+    customprogressbar.cpp
 
 HEADERS += \
     customlabel.h \
@@ -53,7 +55,9 @@ HEADERS += \
     wish.h \
     core/database.h \
     wishlist.h \
-    inandexwidget.h
+    inandexwidget.h \
+    wishdetail.h \
+    customprogressbar.h
 
 FORMS += \
         mainwindow.ui \
