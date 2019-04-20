@@ -157,10 +157,10 @@ void MainContent::setExpenditureWindowInfo()
 
 void MainContent::setWishWindowInfo()
 {
-    QVector<tuple<QString, int, QString> > wishes = Database::returnWishInfo();
-    QString wish, date;
-    int goal = 0;
-    tie(wish, goal, date) = wishes.first();
+    QVector<tuple<QString, int, int, int, int> > wishes = Database::returnWishInfo();
+    QString wish;
+    int goal = 0, years, months, days;
+    tie(wish, goal, years, months, days) = wishes.first();
 
     if (goal == 0) {
         ui->wishInfo->setText("What are you wishing for?");
@@ -171,7 +171,7 @@ void MainContent::setWishWindowInfo()
         ui->wishInfo->setText("Those are your wishes?");
         ui->wishButton->hide();
         wishDetail->show();
-        wishDetail->setWishLableText(wish, date);
+        wishDetail->setWishLableText(wish);
     }
 }
 

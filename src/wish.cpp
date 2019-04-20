@@ -166,9 +166,7 @@ void Wish::on_addWishes_clicked()
             int years = e->editVec[2]->text().toInt();
             int months = e->editVec[3]->text().toInt();
             int days = e->editVec[4]->text().toInt();
-            QString date = QDate::currentDate().addYears(years).addMonths(months).addDays(days).toString("yyyy-MM-dd");
-            qDebug() << wish << goal << date;
-//            Database::addWish(wish, goal, date);
+            Database::addWish(wish, goal, years, months, days);
 
             resetLineEdits();
             close();

@@ -14,10 +14,9 @@ WishDetail::WishDetail(QWidget *parent) :
     vLayout->addWidget(progressBar);
 }
 
-void WishDetail::setWishLableText(QString wish, QString date)
+void WishDetail::setWishLableText(QString wish)
 {
-    labelText = QString("%1 <br><i>in</i><br> %2").arg(wish).arg(date);
-    label->setText(labelText);
+    label->setText(wish);
 }
 
 void WishDetail::createWishLabel()
