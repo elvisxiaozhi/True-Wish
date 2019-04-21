@@ -50,13 +50,14 @@ void Database::addExpenditure(QString date, int expenditure)
     query.exec();
 }
 
-void Database::addWish(QString wish, int goal, int years, int months, int days)
+void Database::addWish(QString date, QString wish, int goal, int years, int months, int days)
 {
     QSqlQuery query;
     query.prepare("INSERT INTO wishes"
-                  "(wish, fin_goal, years, months, days)"
+                  "(created_date, wish, fin_goal, years, months, days)"
                   "VALUES"
-                  "(:wish, :fin_goal, :years, :months, :days)");
+                  "(:date, :wish, :fin_goal, :years, :months, :days)");
+    query.bindValue(":date", date);
     query.bindValue(":wish", wish);
     query.bindValue(":fin_goal", goal);
     query.bindValue(":years", years);
@@ -109,19 +110,18 @@ tuple<QString, int> Database::returnExpenditureInfo(QString date)
     return make_tuple("", 0);
 }
 
-QVector<tuple<QString, int, int, int, int> > Database::returnWishInfo()
+QVector<tuple<QString, QString, int, int, int, int> > Database::returnWishInfo()
 {
-    QVector<tuple<QString, int, int, int, int> > res;
+    QVector<tuple<QString, QString, int, int, int, int> > res;
 
     QSqlQuery query;
     query.prepare("SELECT * FROM wishes");
     query.exec();
 
     if (query.next())
-        res.push_back(make_tuple(query.value(1).toString(), query.value(2).toInt(),
-                                 query.value(3).toInt(), query.value(4).toInt(), query.value(5).toInt()));
-
-//    qDebug() << get<0>(res[0]);
+        res.push_back(make_tuple(query.value(1).toString(), query.value(2).toString(),
+                                 query.value(3).toInt(), query.value(4).toInt(),
+                                 query.value(5).toInt(), query.value(6).toInt()));
 
     return res;
 }

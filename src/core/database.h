@@ -20,12 +20,12 @@ public:
     static const QMap<QString, QString> months;
     static void addIncome(QString, int);
     static void addExpenditure(QString, int);
-    static void addWish(QString, int, int, int, int);
+    static void addWish(QString, QString, int, int, int, int);
     static void changeIncome(QString, int);
     static void changeExpenditure(QString, int);
     static tuple<QString, int> returnIncomeInfo(QString);
     static tuple<QString, int> returnExpenditureInfo(QString);
-    static QVector<tuple<QString, int, int, int, int> > returnWishInfo();
+    static QVector<tuple<QString, QString, int, int, int, int> > returnWishInfo();
     static void deleteIncome(QString);
     static void deleteExpendture(QString);
     static QStringList returnStoredMonth(QString);

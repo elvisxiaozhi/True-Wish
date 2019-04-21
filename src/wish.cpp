@@ -4,6 +4,7 @@
 #include <QFrame>
 #include <QDate>
 #include "core/database.h"
+#include <QDate>
 
 Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
     ui(new Ui::Wish)
@@ -166,7 +167,7 @@ void Wish::on_addWishes_clicked()
             int years = e->editVec[2]->text().toInt();
             int months = e->editVec[3]->text().toInt();
             int days = e->editVec[4]->text().toInt();
-            Database::addWish(wish, goal, years, months, days);
+            Database::addWish(QDate::currentDate().toString("yyyy-MM-dd"), wish, goal, years, months, days);
 
             resetLineEdits();
             close();
