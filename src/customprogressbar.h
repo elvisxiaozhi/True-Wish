@@ -9,10 +9,14 @@ class CustomProgressBar : public QProgressBar
 public:
     explicit CustomProgressBar(QWidget *parent = nullptr);
     void setBarValues(int, int);
+    QString toolTip;
 
 private:
     void mouseMoveEvent(QMouseEvent *);
     static QString styleSheet;
+
+signals:
+    void updateToolTip();
 };
 
 #endif // CUSTOMPROGRESSBAR_H

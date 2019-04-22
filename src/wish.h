@@ -16,8 +16,8 @@ public:
     explicit Wish(PaintedWidget *parent = nullptr, int width = 600);
     ~Wish();
 
-private slots:
-    void on_closeButton_clicked();
+public:
+    void setWishWindow(QString, int, int, int, int);
 
 private:
     Ui::Wish *ui;
@@ -34,6 +34,7 @@ private:
     void resetLineEdits();
 
 private slots:
+    void on_closeButton_clicked();
     void focusIn(CustomLineEdit *);
     void deleteWishList();
     void on_addWishes_clicked();

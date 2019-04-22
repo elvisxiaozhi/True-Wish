@@ -34,6 +34,16 @@ Wish::~Wish()
     delete ui;
 }
 
+void Wish::setWishWindow(QString wish, int goal, int years, int months, int days)
+{
+    WishList *w = wishVec.first();
+    w->editVec[0]->setText(wish);
+    w->editVec[1]->setText(QString::number(goal));
+    w->editVec[2]->setText(QString::number(years));
+    w->editVec[3]->setText(QString::number(months));
+    w->editVec[4]->setText(QString::number(days));
+}
+
 void Wish::createWishLabel()
 {
     wishLabel = new CustomLabel(this);

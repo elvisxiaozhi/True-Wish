@@ -17,8 +17,15 @@ public:
 private:
     CustomLabel *label;
     CustomProgressBar *goalBar, *dateBar;
+    int daysLeft;
 
     void createWishLabel();
+
+signals:
+    void changeWish();
+
+private slots:
+    void setDateToolTip();
 };
 
 #endif // WISHDETAIL_H

@@ -26,7 +26,9 @@ void CustomProgressBar::setBarValues(int value, int max)
 
 void CustomProgressBar::mouseMoveEvent(QMouseEvent *event)
 {
-    QToolTip::showText(mapToGlobal(event->pos()), "Tool tip");
+    emit updateToolTip();
+
+    QToolTip::showText(mapToGlobal(event->pos()), toolTip);
 
     update();
 }

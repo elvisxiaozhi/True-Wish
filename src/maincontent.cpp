@@ -173,6 +173,11 @@ void MainContent::setWishWindowInfo()
         wishDetail->show();
         wishDetail->setWishLableText(wish);
         wishDetail->setDateBar(addedDate, years, months, days);
+
+        connect(wishDetail, &WishDetail::changeWish, [this, wish, goal, years, months, days](){
+            this->wish->setWishWindow(wish, goal, years, months, days);
+            setWindowToTop(this->wish);
+        });
     }
 }
 
