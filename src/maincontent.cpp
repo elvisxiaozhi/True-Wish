@@ -156,7 +156,7 @@ void MainContent::setExpenditureWindowInfo()
 }
 
 void MainContent::setWishWindowInfo()
-{
+{    
     QVector<tuple<QString, QString, int, int, int, int> > wishes = Database::returnWishInfo();
     QString addedDate, wish;
     int goal = 0, years, months, days;
@@ -176,6 +176,7 @@ void MainContent::setWishWindowInfo()
 
         connect(wishDetail, &WishDetail::changeWish, [this, wish, goal, years, months, days](){
             this->wish->setWishInfo(wish, goal, years, months, days);
+            this->wish->setChangeWishWindow(); //call this funtion again, or the window won't change when label is clicked
             setWindowToTop(this->wish);
         });
     }

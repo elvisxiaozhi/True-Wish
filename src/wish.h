@@ -35,6 +35,8 @@ private:
     bool allFilled();
     void changeUnderLineToRed();
     void resetLineEdits();
+    bool isWishListEmpty(WishList *);
+    void removeEmptyWishList();
 
 private slots:
     void on_closeButton_clicked();
@@ -42,6 +44,7 @@ private slots:
     void deleteWishList();
     void on_addWishes_clicked();
     void on_modifyButton_clicked();
+    void wishLabelClicked();
 };
 
 #endif // WISH_H

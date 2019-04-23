@@ -74,12 +74,17 @@ void WishList::clearFocus()
     }
 }
 
-void WishList::isBinLabelShown(bool state)
+void WishList::isBinLabelHidden(bool state)
 {
     if (state)
         binLabel->show();
     else
         binLabel->hide();
+}
+
+void WishList::emitBinLabelClickedSignal()
+{
+    emit binLabel->clicked();
 }
 
 void WishList::createNewWishEdit(QString text, QLayout *layout, int width)

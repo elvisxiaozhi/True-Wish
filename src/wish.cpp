@@ -21,10 +21,10 @@ Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
                   "#addWishes:pressed, #modifyButton:pressed { background-color: #0A863D; }");
 
     createNewWishVec();
-    wishVec.first()->isBinLabelShown(false); //default wish vec can not be deleted
+    wishVec.first()->isBinLabelHidden(false); //default wish vec can not be deleted
     createWishLabel();
 
-    connect(this, &Wish::actionChanged, [this](){ hide(); });
+    connect(this, &Wish::actionChanged, [this](){ hide(); removeEmptyWishList(); });
 
     setFixedHeight(MIN_HEIGHT + WISH_HEIGHT * wishVec.size());
 }
@@ -51,8 +51,9 @@ void Wish::setAddWishWindow()
 {
     ui->title->setText("Add Wishes");
     ui->addWishes->show();
+    ui->addWishes->setText("ADD WISHES");
     ui->modifyButton->hide();
-    wishVec.first()->isBinLabelShown(false);
+    wishVec.first()->isBinLabelHidden(false);
 }
 
 void Wish::setChangeWishWindow()
@@ -60,7 +61,7 @@ void Wish::setChangeWishWindow()
     ui->title->setText("Change Wishes");
     ui->modifyButton->show();
     ui->addWishes->hide();
-    wishVec.first()->isBinLabelShown(true);
+    wishVec.first()->isBinLabelHidden(true);
 }
 
 void Wish::createWishLabel()
@@ -73,7 +74,7 @@ void Wish::createWishLabel()
 
     connect(wishLabel, &CustomLabel::entered, [this](){ wishLabel->setPixmap(returnBinLabelPixmap(QColor(255, 255, 255), QPixmap(":/icons/add.png"))); });
     connect(wishLabel, &CustomLabel::left, [this](){ wishLabel->setPixmap(QPixmap(":/icons/add.png"));  });
-    connect(wishLabel, &CustomLabel::clicked, [this](){ createNewWishVec(); setFixedHeight(MIN_HEIGHT + WISH_HEIGHT * wishVec.size()); });
+    connect(wishLabel, &CustomLabel::clicked, this, &Wish::wishLabelClicked);
 }
 
 void Wish::mousePressEvent(QMouseEvent *event)
@@ -126,6 +127,26 @@ void Wish::resetLineEdits()
     }
 }
 
+bool Wish::isWishListEmpty(WishList *wishList)
+{
+    for (auto e : wishList->editVec) {
+        if (!e->text().isEmpty()) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+void Wish::removeEmptyWishList()
+{
+    for (auto wishList : wishVec) {
+        if (isWishListEmpty(wishList)) {
+            wishList->emitBinLabelClickedSignal();
+        }
+    }
+}
+
 void Wish::focusIn(CustomLineEdit *edit)
 {
     int i, n = wishVec.size();
@@ -157,7 +178,8 @@ void Wish::deleteWishList()
 
 void Wish::on_closeButton_clicked()
 {
-    hide();
+    removeEmptyWishList();
+    close();
 }
 
 void Wish::createNewWishVec()
@@ -217,4 +239,16 @@ void Wish::on_modifyButton_clicked()
 //    Database::changeWish(wish, goal, years, months, days, origWish, origGoal);
     Database::changeWish("Buy an iPhone 11", 10000, 1, 3, 0, "Buy an iPhone", 10000);
     close();
+}
+
+void Wish::wishLabelClicked()
+{
+     createNewWishVec();
+     setFixedHeight(MIN_HEIGHT + WISH_HEIGHT * wishVec.size());
+
+     if (ui->modifyButton->isHidden() == false) {
+         ui->modifyButton->hide();
+         ui->addWishes->show();
+         ui->addWishes->setText("SAVE");
+     }
 }
