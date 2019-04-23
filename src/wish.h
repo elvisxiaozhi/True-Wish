@@ -17,7 +17,9 @@ public:
     ~Wish();
 
 public:
-    void setWishWindow(QString, int, int, int, int);
+    void setWishInfo(QString, int, int, int, int);
+    void setAddWishWindow();
+    void setChangeWishWindow();
 
 private:
     Ui::Wish *ui;
@@ -25,6 +27,7 @@ private:
     QVector<QFrame *> frameVec;
     CustomLabel *wishLabel;
     const int MIN_HEIGHT = 260, WISH_HEIGHT = 210;
+    QString origWish, origGoal;
 
     void createNewWishVec();
     void createWishLabel();
@@ -38,6 +41,7 @@ private slots:
     void focusIn(CustomLineEdit *);
     void deleteWishList();
     void on_addWishes_clicked();
+    void on_modifyButton_clicked();
 };
 
 #endif // WISH_H

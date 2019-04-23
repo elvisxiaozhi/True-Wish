@@ -16,12 +16,12 @@ Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
     setFixedWidth(600);
 
     setStyleSheet("QWidget { background-color: #414B66 }"
-                  "#addWishes { background-color: #11B850; border: 0px; padding: 11px 20px; font: 20px; color: white; border-radius: 3px; }"
-                  "#addWishes:hover { background-color: #0A863D; }"
-                  "#addWishes:pressed { background-color: #0A863D; }");
+                  "#addWishes, #modifyButton { background-color: #11B850; border: 0px; padding: 11px 20px; font: 20px; color: white; border-radius: 3px; }"
+                  "#addWishes:hover, #modifyButton:hover { background-color: #0A863D; }"
+                  "#addWishes:pressed, #modifyButton:pressed { background-color: #0A863D; }");
 
     createNewWishVec();
-    wishVec.first()->hideBinLabel(); //default wish vec can not be deleted
+    wishVec.first()->isBinLabelShown(false); //default wish vec can not be deleted
     createWishLabel();
 
     connect(this, &Wish::actionChanged, [this](){ hide(); });
@@ -34,7 +34,7 @@ Wish::~Wish()
     delete ui;
 }
 
-void Wish::setWishWindow(QString wish, int goal, int years, int months, int days)
+void Wish::setWishInfo(QString wish, int goal, int years, int months, int days)
 {
     WishList *w = wishVec.first();
     w->editVec[0]->setText(wish);
@@ -42,6 +42,25 @@ void Wish::setWishWindow(QString wish, int goal, int years, int months, int days
     w->editVec[2]->setText(QString::number(years));
     w->editVec[3]->setText(QString::number(months));
     w->editVec[4]->setText(QString::number(days));
+
+    origWish = wish;
+    origGoal = goal;
+}
+
+void Wish::setAddWishWindow()
+{
+    ui->title->setText("Add Wishes");
+    ui->addWishes->show();
+    ui->modifyButton->hide();
+    wishVec.first()->isBinLabelShown(false);
+}
+
+void Wish::setChangeWishWindow()
+{
+    ui->title->setText("Change Wishes");
+    ui->modifyButton->show();
+    ui->addWishes->hide();
+    wishVec.first()->isBinLabelShown(true);
 }
 
 void Wish::createWishLabel()
@@ -183,4 +202,19 @@ void Wish::on_addWishes_clicked()
             close();
         }
     }
+}
+
+void Wish::on_modifyButton_clicked()
+{
+//    WishList *e = wishVec.first(); //mofify here later
+
+//    QString wish = e->editVec[0]->text();
+//    int goal = e->editVec[1]->text().toInt();
+//    int years = e->editVec[2]->text().toInt();
+//    int months = e->editVec[3]->text().toInt();
+//    int days = e->editVec[4]->text().toInt();
+
+//    Database::changeWish(wish, goal, years, months, days, origWish, origGoal);
+    Database::changeWish("Buy an iPhone 11", 10000, 1, 3, 0, "Buy an iPhone", 10000);
+    close();
 }

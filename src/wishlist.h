@@ -19,7 +19,8 @@ public:
 
     void clearFocus();
     QVector<CustomLineEdit *> editVec;
-    void hideBinLabel();
+    void isBinLabelShown(bool);
+
 
 private:
     Ui::WishList *ui;

@@ -175,10 +175,12 @@ void MainContent::setWishWindowInfo()
         wishDetail->setDateBar(addedDate, years, months, days);
 
         connect(wishDetail, &WishDetail::changeWish, [this, wish, goal, years, months, days](){
-            this->wish->setWishWindow(wish, goal, years, months, days);
+            this->wish->setWishInfo(wish, goal, years, months, days);
             setWindowToTop(this->wish);
         });
     }
+
+    this->wish->setChangeWishWindow();
 }
 
 void MainContent::setComboBox()
@@ -355,5 +357,6 @@ void MainContent::completerActivated(const QString &text)
 
 void MainContent::on_wishButton_clicked()
 {
-    wish->show();
+    setWindowToTop(wish);
+    wish->setAddWishWindow();
 }

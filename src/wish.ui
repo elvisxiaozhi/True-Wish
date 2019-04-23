@@ -143,6 +143,13 @@ font: 20px;</string>
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="modifyButton">
+       <property name="text">
+        <string>MODIFY</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="closeButton">
        <property name="styleSheet">
         <string notr="true">#closeButton {

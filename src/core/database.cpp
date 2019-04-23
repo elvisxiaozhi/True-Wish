@@ -82,6 +82,15 @@ void Database::changeExpenditure(QString date, int expenditure)
     query.exec();
 }
 
+void Database::changeWish(QString wish, int goal, int years, int months, int days, QString origWish, int origGoal)
+{
+    QSqlQuery query;
+    QString str = QString("UPDATE wishes SET wish = '%1', fin_goal = %2, years = %3, months = %4, days = %5"
+                          " WHERE wish = '%6' AND fin_goal = %7").arg(wish).arg(goal).arg(years).arg(months).arg(days).arg(origWish).arg(origGoal);
+    query.prepare(str);
+    query.exec();
+}
+
 tuple<QString, int> Database::returnIncomeInfo(QString date)
 {
     QString str = QString("SELECT * FROM income WHERE created_date BETWEEN DATE_SUB('%1', INTERVAL DAY('%1') - 1 DAY) AND LAST_DAY('%1')").arg(date);

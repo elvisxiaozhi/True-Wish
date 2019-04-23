@@ -23,6 +23,7 @@ public:
     static void addWish(QString, QString, int, int, int, int);
     static void changeIncome(QString, int);
     static void changeExpenditure(QString, int);
+    static void changeWish(QString, int, int, int, int, QString, int);
     static tuple<QString, int> returnIncomeInfo(QString);
     static tuple<QString, int> returnExpenditureInfo(QString);
     static QVector<tuple<QString, QString, int, int, int, int> > returnWishInfo();
