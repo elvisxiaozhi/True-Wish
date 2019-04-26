@@ -4,6 +4,7 @@
 #include "paintedwidget.h"
 #include "customlabel.h"
 #include "wishlist.h"
+#include <QVBoxLayout>
 
 namespace Ui {
 class Wish;
@@ -13,7 +14,7 @@ class Wish : public PaintedWidget
 {
     Q_OBJECT
 public:
-    explicit Wish(PaintedWidget *parent = nullptr, int width = 600);
+    explicit Wish(PaintedWidget *parent = nullptr, int width = 650);
     ~Wish();
 
 public:
@@ -26,8 +27,9 @@ private:
     QVector<WishList *> wishVec;
     QVector<QFrame *> frameVec;
     CustomLabel *wishLabel;
-    const int MIN_HEIGHT = 260, WISH_HEIGHT = 210;
+    const int MIN_HEIGHT = 300, WISH_HEIGHT = 210;
     QString origWish, origGoal;
+    QVBoxLayout *scrollVLayout;
 
     void createNewWishVec();
     void createWishLabel();
@@ -37,6 +39,7 @@ private:
     void resetLineEdits();
     bool isWishListEmpty(WishList *);
     void removeEmptyWishList();
+    void createScrollArea();
 
 private slots:
     void on_closeButton_clicked();

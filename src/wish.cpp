@@ -1,10 +1,10 @@
 #include "wish.h"
 #include "ui_wish.h"
-#include <QVBoxLayout>
 #include <QFrame>
 #include <QDate>
 #include "core/database.h"
 #include <QDate>
+#include <QScrollArea>
 
 Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
     ui(new Ui::Wish)
@@ -13,18 +13,23 @@ Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
 
     addAction("X");
     setOnHoverVec();
-    setFixedWidth(600);
+    setFixedWidth(650);
+
+    createScrollArea();
 
     setStyleSheet("QWidget { background-color: #414B66 }"
                   "#addWishes, #modifyButton { background-color: #11B850; border: 0px; padding: 11px 20px; font: 20px; color: white; border-radius: 3px; }"
                   "#addWishes:hover, #modifyButton:hover { background-color: #0A863D; }"
-                  "#addWishes:pressed, #modifyButton:pressed { background-color: #0A863D; }");
+                  "#addWishes:pressed, #modifyButton:pressed { background-color: #0A863D; }"
+                  "QScrollBar:vertical { width: 2px; background: #CED8E2; }"
+                  "QScrollBar::handle:vertical { background: #414B66; }"
+                  );
 
     createNewWishVec();
     wishVec.first()->isBinLabelHidden(false); //default wish vec can not be deleted
     createWishLabel();
 
-    connect(this, &Wish::actionChanged, [this](){ hide(); removeEmptyWishList(); });
+    connect(this, &Wish::actionChanged, [this](){ removeEmptyWishList(); close(); }); //remove first, then call close()
 
     setFixedHeight(MIN_HEIGHT + WISH_HEIGHT * wishVec.size());
 }
@@ -147,6 +152,25 @@ void Wish::removeEmptyWishList()
     }
 }
 
+void Wish::createScrollArea()
+{
+    QScrollArea *scrollArea = new QScrollArea(this);
+    scrollArea->setBackgroundRole(QPalette::Window);
+    scrollArea->setFrameShadow(QFrame::Plain);
+    scrollArea->setFrameShape(QFrame::NoFrame);
+    scrollArea->setWidgetResizable(true);
+    scrollArea->setMaximumHeight((WISH_HEIGHT + 15) * 2);
+
+    ui->wishListLayout->addWidget(scrollArea);
+
+    scrollVLayout = new QVBoxLayout;
+
+    QWidget *scrollWidget = new QWidget(this); //need scrollWidget to set handle
+    scrollWidget->setLayout(scrollVLayout);
+
+    scrollArea->setWidget(scrollWidget);
+}
+
 void Wish::focusIn(CustomLineEdit *edit)
 {
     int i, n = wishVec.size();
@@ -169,7 +193,7 @@ void Wish::deleteWishList()
             delete frameVec[i];
             frameVec.erase(frameVec.begin() + i);
 
-            setFixedHeight(MIN_HEIGHT + WISH_HEIGHT * wishVec.size()); //delete first, then set fixed height because it needs to use wishVec.size()
+            setFixedHeight(MIN_HEIGHT + WISH_HEIGHT * wishVec.size());
 
             break;
         }
@@ -189,7 +213,7 @@ void Wish::createNewWishVec()
     frame->setFrameStyle(QFrame::Box);
     frame->setLineWidth(2);
     frame->setStyleSheet("QFrame {border: 1px solid rbg(46, 41, 41); border-radius: 5px; }"); //set border-radius in QFrame, or all child widgets will be applyed
-    ui->wishListLayout->addWidget(frame);
+    scrollVLayout->addWidget(frame);
 
     frameVec.push_back(frame);
 
@@ -244,7 +268,10 @@ void Wish::on_modifyButton_clicked()
 void Wish::wishLabelClicked()
 {
      createNewWishVec();
-     setFixedHeight(MIN_HEIGHT + WISH_HEIGHT * wishVec.size());
+
+     if (wishVec.size() <= 2) {
+         setFixedHeight(MIN_HEIGHT + WISH_HEIGHT * wishVec.size());
+     }
 
      if (ui->modifyButton->isHidden() == false) {
          ui->modifyButton->hide();
