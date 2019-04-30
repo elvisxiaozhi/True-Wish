@@ -16,10 +16,11 @@ CustomProgressBar::CustomProgressBar(QWidget *parent) : QProgressBar(parent)
 
 void CustomProgressBar::setBarValues(int value, int max)
 {
+    /*Note it is REALLY important to setRange first, and then setValue*/
+    setRange(0, max);
     setValue(value);
-    setMaximum(max);
-    int percentage = (1 - (float)value / (float)max) * 100;
-    setFormat(QString::number(percentage) + "%");
+    float percentage = (1 - (float)value / (float)max) * 100;
+    setFormat(QString::number((int)percentage) + "%");
 
     setStyleSheet(styleSheet.arg("#11B850").arg("white")); //to make the bar look like in a backwards position
 }
