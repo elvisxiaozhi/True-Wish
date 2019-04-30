@@ -27,6 +27,7 @@ public:
     static tuple<QString, int> returnIncomeInfo(QString);
     static tuple<QString, int> returnExpenditureInfo(QString);
     static QVector<tuple<QString, QString, int, int, int, int> > returnWishInfo();
+    static int countSavedMoney(QString, QString);
     static void deleteIncome(QString);
     static void deleteExpendture(QString);
     static QStringList returnStoredMonth(QString);

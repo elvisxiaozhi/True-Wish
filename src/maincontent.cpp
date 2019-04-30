@@ -172,6 +172,7 @@ void MainContent::setWishWindowInfo()
         ui->wishButton->hide();
         wishDetail->show();
         wishDetail->setWishLableText(wish);
+        wishDetail->setGoalBar(addedDate, goal);
         wishDetail->setDateBar(addedDate, years, months, days);
 
         connect(wishDetail, &WishDetail::changeWish, [this, wish, goal, years, months, days](){

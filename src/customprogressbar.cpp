@@ -14,7 +14,7 @@ CustomProgressBar::CustomProgressBar(QWidget *parent) : QProgressBar(parent)
     setStyleSheet(styleSheet.arg("white").arg("#11B850"));
 }
 
-void CustomProgressBar::setBarValues(int value, int max)
+void CustomProgressBar::setBarValues(int value, int max, bool isBackwards)
 {
     /*Note it is REALLY important to setRange first, and then setValue*/
     setRange(0, max);
@@ -22,7 +22,8 @@ void CustomProgressBar::setBarValues(int value, int max)
     float percentage = (1 - (float)value / (float)max) * 100;
     setFormat(QString::number((int)percentage) + "%");
 
-    setStyleSheet(styleSheet.arg("#11B850").arg("white")); //to make the bar look like in a backwards position
+    if (isBackwards)
+        setStyleSheet(styleSheet.arg("#11B850").arg("white")); //to make the bar look like in a backwards position
 }
 
 void CustomProgressBar::mouseMoveEvent(QMouseEvent *event)

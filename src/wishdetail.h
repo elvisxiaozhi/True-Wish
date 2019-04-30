@@ -12,12 +12,13 @@ class WishDetail : public QWidget
 public:
     explicit WishDetail(QWidget *parent = 0);
     void setWishLableText(QString);
+    void setGoalBar(QString, int);
     void setDateBar(QString, int, int, int);
 
 private:
     CustomLabel *label;
     CustomProgressBar *goalBar, *dateBar;
-    int daysLeft;
+    int daysLeft, moneyNeeded;
 
     void createWishLabel();
 
@@ -25,7 +26,6 @@ signals:
     void changeWish();
 
 private slots:
-    void setDateToolTip();
 };
 
 #endif // WISHDETAIL_H

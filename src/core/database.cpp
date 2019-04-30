@@ -135,6 +135,29 @@ QVector<tuple<QString, QString, int, int, int, int> > Database::returnWishInfo()
     return res;
 }
 
+int Database::countSavedMoney(QString sDate, QString eDate)
+{
+    int saved, income = 0, expenditure = 0;
+    QString str = QString("SELECT * FROM %1 WHERE created_date BETWEEN DATE_SUB('%2', INTERVAL DAY('%2') - 1 DAY) AND LAST_DAY('%3')");
+
+    QSqlQuery query;
+    query.prepare(str.arg("income").arg(sDate).arg(eDate));
+    query.exec();
+    while (query.next()) {
+        income += query.value(2).toInt();
+    }
+
+    query.prepare(str.arg("expenditure").arg(sDate).arg(eDate));
+    query.exec();
+    while (query.next()) {
+        expenditure += query.value(2).toInt();
+    }
+
+    saved = income - expenditure;
+
+    return saved;
+}
+
 void Database::deleteIncome(QString date)
 {
     QSqlQuery query;

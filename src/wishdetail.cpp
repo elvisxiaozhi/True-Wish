@@ -2,6 +2,7 @@
 #include <QVBoxLayout>
 #include <QDebug>
 #include <QDate>
+#include "core/database.h"
 
 WishDetail::WishDetail(QWidget *parent) :
     QWidget(parent)
@@ -16,7 +17,8 @@ WishDetail::WishDetail(QWidget *parent) :
     vLayout->addWidget(goalBar);
     vLayout->addWidget(dateBar);
 
-    connect(dateBar, &CustomProgressBar::updateToolTip, this, &WishDetail::setDateToolTip);
+    connect(goalBar, &CustomProgressBar::updateToolTip, [this](){ goalBar->toolTip = QString::number(moneyNeeded) + " needed"; });
+    connect(dateBar, &CustomProgressBar::updateToolTip, [this](){ dateBar->toolTip = QString::number(daysLeft) + " days left"; });
 }
 
 void WishDetail::setWishLableText(QString wish)
@@ -24,6 +26,14 @@ void WishDetail::setWishLableText(QString wish)
     label->setText(wish);
 
     connect(label, &CustomLabel::doubleClicked, [this](){ emit changeWish(); });
+}
+
+void WishDetail::setGoalBar(QString date, int goal)
+{
+    int saved = Database::countSavedMoney(date, QDate::currentDate().toString("yyyy-MM-dd"));
+    moneyNeeded = goal - saved;
+
+    goalBar->setBarValues(saved, goal);
 }
 
 void WishDetail::setDateBar(QString date, int years, int months, int days)
@@ -34,7 +44,7 @@ void WishDetail::setDateBar(QString date, int years, int months, int days)
     int passedDays = startDate.daysTo(QDate::currentDate());
     daysLeft = daysInTotal - passedDays;
 
-    dateBar->setBarValues(passedDays, daysInTotal);
+    dateBar->setBarValues(passedDays, daysInTotal, true);
 }
 
 void WishDetail::createWishLabel()
@@ -42,9 +52,4 @@ void WishDetail::createWishLabel()
     label = new CustomLabel(this);
     label->setStyleSheet("background-color: #11B850; border: 0px; padding: 15px 20px; font: 20px; color: white; border-radius: 3px;");
     label->setTextFormat(Qt::RichText);
-}
-
-void WishDetail::setDateToolTip()
-{
-    dateBar->toolTip = QString::number(daysLeft) + " days left";
 }
