@@ -18,7 +18,7 @@ Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
     createScrollArea();
 
     setStyleSheet("QWidget { background-color: #414B66 }"
-                  "#addWishes, #modifyButton { background-color: #11B850; border: 0px; padding: 11px 20px; font: 20px; color: white; border-radius: 3px; }"
+                  "#addWishes, #modifyButton, #saveButton { background-color: #11B850; border: 0px; padding: 11px 20px; font: 20px; color: white; border-radius: 3px; }"
                   "#addWishes:hover, #modifyButton:hover { background-color: #0A863D; }"
                   "#addWishes:pressed, #modifyButton:pressed { background-color: #0A863D; }"
                   "QScrollBar:vertical { width: 2px; background: #CED8E2; }"
@@ -56,8 +56,8 @@ void Wish::setAddWishWindow()
 {
     ui->title->setText("Add Wishes");
     ui->addWishes->show();
-    ui->addWishes->setText("ADD WISHES");
     ui->modifyButton->hide();
+    ui->saveButton->hide();
     wishVec.first()->isBinLabelHidden(false);
 }
 
@@ -66,6 +66,7 @@ void Wish::setChangeWishWindow()
     ui->title->setText("Change Wishes");
     ui->modifyButton->show();
     ui->addWishes->hide();
+    ui->saveButton->hide();
     wishVec.first()->isBinLabelHidden(true);
 }
 
@@ -198,6 +199,12 @@ void Wish::deleteWishList()
             break;
         }
     }
+
+    if (wishVec.size() == 1) {
+        ui->modifyButton->show();
+        ui->addWishes->hide();
+        ui->saveButton->hide();
+    }
 }
 
 void Wish::on_closeButton_clicked()
@@ -273,9 +280,12 @@ void Wish::wishLabelClicked()
          setFixedHeight(MIN_HEIGHT + WISH_HEIGHT * wishVec.size());
      }
 
-     if (ui->modifyButton->isHidden() == false) {
-         ui->modifyButton->hide();
-         ui->addWishes->show();
-         ui->addWishes->setText("SAVE");
-     }
+     ui->modifyButton->hide();
+     ui->addWishes->hide();
+     ui->saveButton->show();
+}
+
+void Wish::on_saveButton_clicked()
+{
+    qDebug() << "Save clicked";
 }
