@@ -16,7 +16,10 @@ WishList::WishList(PaintedWidget *parent) :
 
     for (auto e : editVec) {
         connect(e, &CustomLineEdit::changeUnderLineToRed, this, &WishList::changeUnderLineToRed);
+        connect(e, &CustomLineEdit::textEdited, this, &WishList::emitLineEditedSignal);
     }
+
+    connect(this, &WishList::disconnectTextEditSignal, this, &WishList::disconnectLineEditSignal);
 
     setStyleSheet("QWidget { background: #414B66; border: 1px solid gray; }");
 
@@ -63,6 +66,19 @@ void WishList::changeUnderLineToRed()
         if (e == lineEdit) {
             e->setStyleSheet(CustomLineEdit::styleString.arg("red"));
         }
+    }
+}
+
+//need to use a function for disconnecting later
+void WishList::emitLineEditedSignal()
+{
+    emit lineEditTextEdited();
+}
+
+void WishList::disconnectLineEditSignal()
+{
+    for (auto e : editVec) {
+        disconnect(e, &CustomLineEdit::textEdited, this, &WishList::emitLineEditedSignal);
     }
 }
 

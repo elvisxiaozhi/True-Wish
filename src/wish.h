@@ -49,6 +49,7 @@ private slots:
     void on_modifyButton_clicked();
     void wishLabelClicked();
     void on_saveButton_clicked();
+    void saveToBeModifiedWishList();
 };
 
 #endif // WISH_H

@@ -200,7 +200,7 @@ void Wish::deleteWishList()
         }
     }
 
-    if (wishVec.size() == 1) {
+    if (wishVec.size() == 1) { //need to change 1 here later
         ui->modifyButton->show();
         ui->addWishes->hide();
         ui->saveButton->hide();
@@ -233,6 +233,7 @@ void Wish::createNewWishVec()
         connect(e, &CustomLineEdit::focusIn, [this, e](){ focusIn(e); });
     }
     connect(wishList, &WishList::deleteWishList, this, &Wish::deleteWishList);
+    connect(wishList, &WishList::lineEditTextEdited, this, &Wish::saveToBeModifiedWishList);
 
     wishVec.push_back(wishList);
 }
@@ -268,6 +269,7 @@ void Wish::on_modifyButton_clicked()
 //    int days = e->editVec[4]->text().toInt();
 
 //    Database::changeWish(wish, goal, years, months, days, origWish, origGoal);
+
     Database::changeWish("Buy an iPhone 11", 10000, 1, 3, 0, "Buy an iPhone", 10000);
     close();
 }
@@ -288,4 +290,21 @@ void Wish::wishLabelClicked()
 void Wish::on_saveButton_clicked()
 {
     qDebug() << "Save clicked";
+}
+
+void Wish::saveToBeModifiedWishList()
+{
+    QObject *wishList = sender();
+
+    //disconnect one signal;
+    int i, n = wishVec.size();
+    for (i = 0; i < n; ++i) {
+        if (wishList == wishVec[i]) {
+            emit wishVec[i]->disconnectTextEditSignal();
+
+            break;
+        }
+    }
+
+    qDebug() << "To be modified";
 }
