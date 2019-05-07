@@ -29,7 +29,7 @@ Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
     wishVec.first()->isBinLabelHidden(false); //default wish vec can not be deleted
     createWishLabel();
 
-    connect(this, &Wish::actionChanged, [this](){ removeEmptyWishList(); close(); }); //remove first, then call close()
+    connect(this, &Wish::actionChanged, [this](){ closeWindow(); });
 
     setFixedHeight(MIN_HEIGHT + WISH_HEIGHT * wishVec.size());
 }
@@ -86,7 +86,6 @@ void Wish::createWishLabel()
 void Wish::mousePressEvent(QMouseEvent *event)
 {
     commonPressEvent(event);
-    windowClosed();
 }
 
 bool Wish::allFilled()
@@ -160,7 +159,7 @@ void Wish::createScrollArea()
 }
 
 //after click "X" or close button, some changes need to be rest
-void Wish::windowClosed()
+void Wish::closeWindow()
 {
     for (auto wishList : wishVec) {
         wishList->clearFocus(); //clear focus
@@ -171,6 +170,8 @@ void Wish::windowClosed()
             wishList->emitBinLabelClickedSignal();
         }
     }
+
+    close(); //close must be called after wish list is removed
 }
 
 void Wish::focusIn(CustomLineEdit *edit)
@@ -210,8 +211,7 @@ void Wish::deleteWishList()
 
 void Wish::on_closeButton_clicked()
 {
-    windowClosed();
-    close();
+    closeWindow();
 }
 
 void Wish::createNewWishVec()

@@ -39,7 +39,7 @@ private:
     void resetLineEdits();
     bool isWishListEmpty(WishList *);
     void createScrollArea();
-    void windowClosed();
+    void closeWindow();
 
 private slots:
     void on_closeButton_clicked();
