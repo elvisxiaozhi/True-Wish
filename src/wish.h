@@ -38,8 +38,8 @@ private:
     void changeUnderLineToRed();
     void resetLineEdits();
     bool isWishListEmpty(WishList *);
-    void removeEmptyWishList();
     void createScrollArea();
+    void windowClosed();
 
 private slots:
     void on_closeButton_clicked();
@@ -49,7 +49,7 @@ private slots:
     void on_modifyButton_clicked();
     void wishLabelClicked();
     void on_saveButton_clicked();
-    void saveToBeModifiedWishList();
+    void saveToBeModifiedWishList(bool);
 };
 
 #endif // WISH_H

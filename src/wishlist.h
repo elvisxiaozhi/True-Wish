@@ -32,13 +32,12 @@ private:
 
 signals:
     void deleteWishList();
-    void lineEditTextEdited();
-    void disconnectTextEditSignal();
+    void lineEditTextEdited(bool);
 
 private slots:
     void changeUnderLineToRed();
     void emitLineEditedSignal();
-    void disconnectLineEditSignal();
+    void isLineEditSignalAvbl(bool);
 };
 
 #endif // WISHLIST_H

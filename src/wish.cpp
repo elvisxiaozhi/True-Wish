@@ -86,11 +86,7 @@ void Wish::createWishLabel()
 void Wish::mousePressEvent(QMouseEvent *event)
 {
     commonPressEvent(event);
-
-    int i, n = wishVec.size();
-    for (i = 0; i < n; ++i) {
-        wishVec[i]->clearFocus();
-    }
+    windowClosed();
 }
 
 bool Wish::allFilled()
@@ -144,15 +140,6 @@ bool Wish::isWishListEmpty(WishList *wishList)
     return true;
 }
 
-void Wish::removeEmptyWishList()
-{
-    for (auto wishList : wishVec) {
-        if (isWishListEmpty(wishList)) {
-            wishList->emitBinLabelClickedSignal();
-        }
-    }
-}
-
 void Wish::createScrollArea()
 {
     QScrollArea *scrollArea = new QScrollArea(this);
@@ -170,6 +157,20 @@ void Wish::createScrollArea()
     scrollWidget->setLayout(scrollVLayout);
 
     scrollArea->setWidget(scrollWidget);
+}
+
+//after click "X" or close button, some changes need to be rest
+void Wish::windowClosed()
+{
+    for (auto wishList : wishVec) {
+        wishList->clearFocus(); //clear focus
+        emit wishList->lineEditTextEdited(false); //reconnect wish list signal
+
+        //remove empty wish list
+        if (isWishListEmpty(wishList)) {
+            wishList->emitBinLabelClickedSignal();
+        }
+    }
 }
 
 void Wish::focusIn(CustomLineEdit *edit)
@@ -209,7 +210,7 @@ void Wish::deleteWishList()
 
 void Wish::on_closeButton_clicked()
 {
-    removeEmptyWishList();
+    windowClosed();
     close();
 }
 
@@ -292,19 +293,9 @@ void Wish::on_saveButton_clicked()
     qDebug() << "Save clicked";
 }
 
-void Wish::saveToBeModifiedWishList()
+void Wish::saveToBeModifiedWishList(bool isEdited)
 {
-    QObject *wishList = sender();
-
-    //disconnect one signal;
-    int i, n = wishVec.size();
-    for (i = 0; i < n; ++i) {
-        if (wishList == wishVec[i]) {
-            emit wishVec[i]->disconnectTextEditSignal();
-
-            break;
-        }
-    }
+    qDebug() << isEdited;
 
     qDebug() << "To be modified";
 }
