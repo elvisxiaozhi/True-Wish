@@ -10,6 +10,8 @@ namespace Ui {
 class Wish;
 }
 
+using std::tuple;
+
 class Wish : public PaintedWidget
 {
     Q_OBJECT
@@ -22,9 +24,13 @@ public:
     void setAddWishWindow();
     void setChangeWishWindow();
 
+    QVector<tuple<QString, int, int, int, int> > getGetWishes() const;
+    void setGetWishes(const QVector<tuple<QString, int, int, int, int> > &value);
+
 private:
     Ui::Wish *ui;
     QVector<WishList *> wishVec;
+    QVector<tuple<QString, int, int, int, int> > wishListValues;
     QVector<QFrame *> frameVec;
     CustomLabel *wishLabel;
     const int MIN_HEIGHT = 300, WISH_HEIGHT = 210;
@@ -40,6 +46,8 @@ private:
     bool isWishListEmpty(WishList *);
     void createScrollArea();
     void closeWindow();
+    QVector<tuple<QString, int, int, int, int> > getWishes();
+    void printVec(QVector<tuple<QString, int, int, int, int> >); //delete later
 
 private slots:
     void on_closeButton_clicked();

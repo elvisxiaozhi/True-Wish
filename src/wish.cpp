@@ -50,6 +50,8 @@ void Wish::setWishInfo(QString wish, int goal, int years, int months, int days)
 
     origWish = wish;
     origGoal = goal;
+
+    wishListValues.push_back(make_tuple(wish, goal, years, months, days));
 }
 
 void Wish::setAddWishWindow()
@@ -174,6 +176,28 @@ void Wish::closeWindow()
     close(); //close must be called after wish list is removed
 }
 
+QVector<tuple<QString, int, int, int, int> > Wish::getWishes()
+{
+    QVector<tuple<QString, int, int, int, int> > res;
+
+    int i, n = wishVec.size();
+    for (i = 0; i < n; ++i) {
+        res.push_back(make_tuple(wishVec[i]->editVec[0]->text(), wishVec[i]->editVec[1]->text().toInt(), wishVec[i]->editVec[2]->text().toInt(),
+                wishVec[i]->editVec[3]->text().toInt(), wishVec[i]->editVec[4]->text().toInt()));
+    }
+
+    return res;
+}
+
+void Wish::printVec(QVector<tuple<QString, int, int, int, int> > res)
+{
+    int i;
+    for (i = 0; i < res.size(); ++i) {
+        qDebug() << get<0>(res[i]) << get<1>(res[i])
+                 << get<2>(res[i]) << get<3>(res[i]) << get<4>(res[i]);
+    }
+}
+
 void Wish::focusIn(CustomLineEdit *edit)
 {
     int i, n = wishVec.size();
@@ -261,17 +285,15 @@ void Wish::on_addWishes_clicked()
 
 void Wish::on_modifyButton_clicked()
 {
-//    WishList *e = wishVec.first(); //mofify here later
+    QVector<tuple<QString, int, int, int, int> > newWishes = getWishes();
+    int i, n = wishListValues.size();
+    for (i = 0; i < n; ++i) {
+        if (wishListValues[i] != newWishes[i]) {
+            Database::changeWish(get<0>(newWishes[i]), get<1>(newWishes[i]), get<2>(newWishes[i]), get<3>(newWishes[i]), get<4>(newWishes[i]),
+                    get<0>(wishListValues[i]), get<1>(wishListValues[i]));
+        }
+    }
 
-//    QString wish = e->editVec[0]->text();
-//    int goal = e->editVec[1]->text().toInt();
-//    int years = e->editVec[2]->text().toInt();
-//    int months = e->editVec[3]->text().toInt();
-//    int days = e->editVec[4]->text().toInt();
-
-//    Database::changeWish(wish, goal, years, months, days, origWish, origGoal);
-
-    Database::changeWish("Buy an iPhone 11", 10000, 1, 3, 0, "Buy an iPhone", 10000);
     close();
 }
 
@@ -290,6 +312,7 @@ void Wish::wishLabelClicked()
 
 void Wish::on_saveButton_clicked()
 {
+    getWishes();
     qDebug() << "Save clicked";
 }
 
