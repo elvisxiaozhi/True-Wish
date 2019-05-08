@@ -171,6 +171,8 @@ void Wish::closeWindow()
         if (isWishListEmpty(wishList)) {
             wishList->emitBinLabelClickedSignal();
         }
+
+        wishListValues.clear(); //clear wishListValues, each time when window reopen, it will be set to new values
     }
 
     close(); //close must be called after wish list is removed
@@ -278,15 +280,20 @@ void Wish::on_addWishes_clicked()
             Database::addWish(QDate::currentDate().toString("yyyy-MM-dd"), wish, goal, years, months, days);
 
             resetLineEdits();
-            close();
+            closeWindow();
         }
     }
 }
 
 void Wish::on_modifyButton_clicked()
 {
+    printVec(wishListValues);
+
     QVector<tuple<QString, int, int, int, int> > newWishes = getWishes();
     int i, n = wishListValues.size();
+    if (n > newWishes.size()) {
+        n = newWishes.size();
+    }
     for (i = 0; i < n; ++i) {
         if (wishListValues[i] != newWishes[i]) {
             Database::changeWish(get<0>(newWishes[i]), get<1>(newWishes[i]), get<2>(newWishes[i]), get<3>(newWishes[i]), get<4>(newWishes[i]),
@@ -294,7 +301,7 @@ void Wish::on_modifyButton_clicked()
         }
     }
 
-    close();
+    closeWindow();
 }
 
 void Wish::wishLabelClicked()
