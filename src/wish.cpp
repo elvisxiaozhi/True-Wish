@@ -319,8 +319,29 @@ void Wish::wishLabelClicked()
 
 void Wish::on_saveButton_clicked()
 {
-    getWishes();
-    qDebug() << "Save clicked";
+    if (!allFilled()) {
+        changeUnderLineToRed();
+    }
+    else {
+        QVector<tuple<QString, int, int, int, int> > newWishes = getWishes();
+        printVec(newWishes);
+
+        int i, n = wishListValues.size();
+        for (i = 0; i < n; ++i) {
+            if (wishListValues[i] != newWishes[i]) {
+                Database::changeWish(get<0>(newWishes[i]), get<1>(newWishes[i]), get<2>(newWishes[i]), get<3>(newWishes[i]), get<4>(newWishes[i]),
+                        get<0>(wishListValues[i]), get<1>(wishListValues[i]));
+            }
+        }
+
+        int j = n;
+        n = newWishes.size();
+        for (i = j; i < n; ++i) {
+            Database::addWish(QDate::currentDate().toString("yyyy-MM-dd"), get<0>(newWishes[i]), get<1>(newWishes[i]), get<2>(newWishes[i]), get<3>(newWishes[i]), get<4>(newWishes[i]));
+        }
+
+        closeWindow();
+    }
 }
 
 void Wish::saveToBeModifiedWishList(bool isEdited)
