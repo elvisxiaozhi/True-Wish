@@ -127,10 +127,16 @@ QVector<tuple<QString, QString, int, int, int, int> > Database::returnWishInfo()
     query.prepare("SELECT * FROM wishes");
     query.exec();
 
-    if (query.next())
+    while (query.next())
         res.push_back(make_tuple(query.value(1).toString(), query.value(2).toString(),
                                  query.value(3).toInt(), query.value(4).toInt(),
                                  query.value(5).toInt(), query.value(6).toInt()));
+
+    int i;
+    for (i = 0; i < res.size(); ++i) {
+        qDebug() << get<0>(res[i]) << get<1>(res[i])
+                 << get<2>(res[i]) << get<3>(res[i]) << get<4>(res[i]);
+    }
 
     return res;
 }

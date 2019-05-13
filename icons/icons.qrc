@@ -5,5 +5,7 @@
         <file>right arrow.png</file>
         <file>down arrow.png</file>
         <file>add.png</file>
+        <file>right arrow 64px.png</file>
+        <file>left arrow 64px.png</file>
     </qresource>
 </RCC>

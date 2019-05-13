@@ -41,7 +41,7 @@ Wish::~Wish()
 
 void Wish::setWishInfo(QString wish, int goal, int years, int months, int days)
 {
-    WishList *w = wishVec.first();
+    WishList *w = wishVec.first(); //change this later
     w->editVec[0]->setText(wish);
     w->editVec[1]->setText(QString::number(goal));
     w->editVec[2]->setText(QString::number(years));

@@ -12,10 +12,20 @@ WishDetail::WishDetail(QWidget *parent) :
     goalBar = new CustomProgressBar(this);
     dateBar = new CustomProgressBar(this);
 
-    QVBoxLayout *vLayout = new QVBoxLayout(this);
+    QHBoxLayout *hLayout = new QHBoxLayout(this);
+    forwardLbl = new CustomLabel(this);
+    forwardLbl->setPixmap(QPixmap(":/icons/left arrow 64px.png"));
+    backwardLbl = new CustomLabel(this);
+    backwardLbl->setPixmap(QPixmap(":/icons/right arrow 64px.png"));
+
+    QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addWidget(label);
     vLayout->addWidget(goalBar);
     vLayout->addWidget(dateBar);
+
+    hLayout->addWidget(forwardLbl);
+    hLayout->addLayout(vLayout);
+    hLayout->addWidget(backwardLbl);
 
     connect(goalBar, &CustomProgressBar::updateToolTip, [this](){ goalBar->toolTip = QString::number(moneyNeeded) + " needed"; });
     connect(dateBar, &CustomProgressBar::updateToolTip, [this](){ dateBar->toolTip = QString::number(daysLeft) + " days left"; });

@@ -16,7 +16,7 @@ public:
     void setDateBar(QString, int, int, int);
 
 private:
-    CustomLabel *label;
+    CustomLabel *label, *forwardLbl, *backwardLbl;
     CustomProgressBar *goalBar, *dateBar;
     int daysLeft, moneyNeeded;
 
