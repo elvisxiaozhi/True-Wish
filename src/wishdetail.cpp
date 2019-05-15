@@ -12,17 +12,14 @@ WishDetail::WishDetail(QWidget *parent) :
     goalBar = new CustomProgressBar(this);
     dateBar = new CustomProgressBar(this);
 
-    QHBoxLayout *hLayout = new QHBoxLayout(this);
-    forwardLbl = new CustomLabel(this);
-    forwardLbl->setPixmap(QPixmap(":/icons/left arrow 64px.png"));
-    backwardLbl = new CustomLabel(this);
-    backwardLbl->setPixmap(QPixmap(":/icons/right arrow 64px.png"));
+    createChangeWishLabels();
 
     QVBoxLayout *vLayout = new QVBoxLayout;
-    vLayout->addWidget(label);
+    vLayout->addWidget(wishLbl);
     vLayout->addWidget(goalBar);
     vLayout->addWidget(dateBar);
 
+    QHBoxLayout *hLayout = new QHBoxLayout(this);
     hLayout->addWidget(forwardLbl);
     hLayout->addLayout(vLayout);
     hLayout->addWidget(backwardLbl);
@@ -33,9 +30,9 @@ WishDetail::WishDetail(QWidget *parent) :
 
 void WishDetail::setWishLableText(QString wish)
 {
-    label->setText(wish);
+    wishLbl->setText(wish);
 
-    connect(label, &CustomLabel::doubleClicked, [this](){ emit changeWish(); });
+    connect(wishLbl, &CustomLabel::doubleClicked, [this](){ emit changeWish(); });
 }
 
 void WishDetail::setGoalBar(QString date, int goal)
@@ -57,9 +54,31 @@ void WishDetail::setDateBar(QString date, int years, int months, int days)
     dateBar->setBarValues(passedDays, daysInTotal, true);
 }
 
+tuple<QString, QString, int, int, int, int> WishDetail::returnWishDetail()
+{
+//    tuple<QString, QString, int, int, int, int> res = make_tuple(wishLbl->text(), );
+
+
+}
+
 void WishDetail::createWishLabel()
 {
-    label = new CustomLabel(this);
-    label->setStyleSheet("background-color: #11B850; border: 0px; padding: 15px 20px; font: 20px; color: white; border-radius: 3px;");
-    label->setTextFormat(Qt::RichText);
+    wishLbl = new CustomLabel(this);
+    wishLbl->setStyleSheet("background-color: #11B850; border: 0px; padding: 15px 20px; font: 20px; color: white; border-radius: 3px;");
+    wishLbl->setTextFormat(Qt::RichText);
+}
+
+void WishDetail::createChangeWishLabels()
+{
+    forwardLbl = new CustomLabel(this);
+    forwardLbl->setPixmap(QPixmap(":/icons/left arrow 64px.png"));
+    backwardLbl = new CustomLabel(this);
+    backwardLbl->setPixmap(QPixmap(":/icons/right arrow 64px.png"));
+
+    connect(forwardLbl, &CustomLabel::entered, [this](){ forwardLbl->setStyleSheet("background:	#414B66"); });
+    connect(forwardLbl, &CustomLabel::left, [this](){ forwardLbl->setStyleSheet(""); });
+    connect(forwardLbl, &CustomLabel::clicked, [this](){ emit prevWish(); });
+    connect(backwardLbl, &CustomLabel::entered, [this](){ backwardLbl->setStyleSheet("background: #414B66"); });
+    connect(backwardLbl, &CustomLabel::left, [this](){ backwardLbl->setStyleSheet(""); });
+    connect(backwardLbl, &CustomLabel::clicked, [this](){ emit nextWish(); });
 }

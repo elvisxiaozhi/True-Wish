@@ -24,9 +24,6 @@ public:
     void setAddWishWindow();
     void setChangeWishWindow();
 
-    QVector<tuple<QString, int, int, int, int> > getGetWishes() const;
-    void setGetWishes(const QVector<tuple<QString, int, int, int, int> > &value);
-
 private:
     Ui::Wish *ui;
     QVector<WishList *> wishVec;

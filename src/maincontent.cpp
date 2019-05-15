@@ -113,6 +113,9 @@ void MainContent::createWishDetailWidget()
 {
     wishDetail = new WishDetail(this);
     ui->wishesLayout->insertWidget(2, wishDetail);
+
+    connect(wishDetail, &WishDetail::prevWish, [this](){ changeWishDetail(false); });
+    connect(wishDetail, &WishDetail::nextWish, [this](){ changeWishDetail(); });
 }
 
 void MainContent::setIncomeWindowInfo()
@@ -155,9 +158,16 @@ void MainContent::setExpenditureWindowInfo()
     this->expenditure->setChangeExpenditureWindow(date);
 }
 
+void MainContent::setWishDetail(QString wish, QString date, int goal, int years, int months, int days)
+{
+    wishDetail->setWishLableText(wish);
+    wishDetail->setGoalBar(date, goal);
+    wishDetail->setDateBar(date, years, months, days);
+}
+
 void MainContent::setWishWindowInfo()
 {    
-    QVector<tuple<QString, QString, int, int, int, int> > wishes = Database::returnWishInfo();
+    wishes = Database::returnWishInfo();
     QString addedDate, wish;
     int goal = 0, years, months, days;
     tie(addedDate, wish, goal, years, months, days) = wishes.first();
@@ -171,9 +181,7 @@ void MainContent::setWishWindowInfo()
         ui->wishInfo->setText("Those are your wishes");
         ui->wishButton->hide();
         wishDetail->show();
-        wishDetail->setWishLableText(wish);
-        wishDetail->setGoalBar(addedDate, goal);
-        wishDetail->setDateBar(addedDate, years, months, days);
+        setWishDetail(wish, addedDate, goal, years, months, days);
 
         connect(wishDetail, &WishDetail::changeWish, [this, wish, goal, years, months, days](){
             this->wish->setWishInfo(wish, goal, years, months, days);
@@ -361,4 +369,9 @@ void MainContent::on_wishButton_clicked()
 {
     setWindowToTop(wish);
     wish->setAddWishWindow();
+}
+
+void MainContent::changeWishDetail(bool isNextWish)
+{
+
 }

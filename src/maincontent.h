@@ -30,6 +30,7 @@ private:
     WishDetail *wishDetail;
     CustomLabel *yearLabel, *incomeLabel, *expenditureLabel;
     CustomLineEdit *yearEdit;
+    QVector<tuple<QString, QString, int, int, int, int> > wishes;
 
     void createIncomeWindow();
     void createExpenditureWindow();
@@ -41,6 +42,7 @@ private:
     void createWishDetailWidget();
     void setIncomeWindowInfo();
     void setExpenditureWindowInfo();
+    void setWishDetail(QString, QString, int, int, int, int);
     void setWishWindowInfo();
     void setComboBox();
     void createCompleter();
@@ -62,6 +64,7 @@ private slots:
     void changeContentData(int);
     void completerActivated(const QString &);
     void on_wishButton_clicked();
+    void changeWishDetail(bool isNextWish = true);
 };
 
 #endif // MAINCONTENT_H

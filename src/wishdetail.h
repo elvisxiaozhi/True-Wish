@@ -5,6 +5,8 @@
 #include "customprogressbar.h"
 #include "customlabel.h"
 
+using std::tuple;
+
 class WishDetail : public QWidget
 {
     Q_OBJECT
@@ -14,16 +16,20 @@ public:
     void setWishLableText(QString);
     void setGoalBar(QString, int);
     void setDateBar(QString, int, int, int);
+    tuple<QString, QString, int, int, int, int> returnWishDetail();
 
 private:
-    CustomLabel *label, *forwardLbl, *backwardLbl;
+    CustomLabel *wishLbl, *forwardLbl, *backwardLbl;
     CustomProgressBar *goalBar, *dateBar;
     int daysLeft, moneyNeeded;
 
     void createWishLabel();
+    void createChangeWishLabels();
 
 signals:
     void changeWish();
+    void prevWish();
+    void nextWish();
 
 private slots:
 };
