@@ -20,9 +20,9 @@ WishDetail::WishDetail(QWidget *parent) :
     vLayout->addWidget(dateBar);
 
     QHBoxLayout *hLayout = new QHBoxLayout(this);
-    hLayout->addWidget(forwardLbl);
+    hLayout->addWidget(prevLbl);
     hLayout->addLayout(vLayout);
-    hLayout->addWidget(backwardLbl);
+    hLayout->addWidget(nextLbl);
 
     connect(goalBar, &CustomProgressBar::updateToolTip, [this](){ goalBar->toolTip = QString::number(moneyNeeded) + " needed"; });
     connect(dateBar, &CustomProgressBar::updateToolTip, [this](){ dateBar->toolTip = QString::number(daysLeft) + " days left"; });
@@ -54,11 +54,23 @@ void WishDetail::setDateBar(QString date, int years, int months, int days)
     dateBar->setBarValues(passedDays, daysInTotal, true);
 }
 
-tuple<QString, QString, int, int, int, int> WishDetail::returnWishDetail()
+pair<QString, int> WishDetail::returnWishDetail()
 {
-//    tuple<QString, QString, int, int, int, int> res = make_tuple(wishLbl->text(), );
+    pair<QString, int> res = std::make_pair(wishLbl->text(), goalBar->maximum());
 
+    return res;
+}
 
+void WishDetail::setChangeWishLblVis(int index, int last)
+{
+    prevLbl->show();
+    nextLbl->show();
+    if (index == 0) {
+        prevLbl->hide();
+    }
+    else if (index == last) {
+        nextLbl->hide();
+    }
 }
 
 void WishDetail::createWishLabel()
@@ -70,15 +82,27 @@ void WishDetail::createWishLabel()
 
 void WishDetail::createChangeWishLabels()
 {
-    forwardLbl = new CustomLabel(this);
-    forwardLbl->setPixmap(QPixmap(":/icons/left arrow 64px.png"));
-    backwardLbl = new CustomLabel(this);
-    backwardLbl->setPixmap(QPixmap(":/icons/right arrow 64px.png"));
+    prevLbl = new CustomLabel(this);
+    prevLbl->setPixmap(QPixmap(":/icons/left arrow 64px.png"));
+    nextLbl = new CustomLabel(this);
+    nextLbl->setPixmap(QPixmap(":/icons/right arrow 64px.png"));
 
-    connect(forwardLbl, &CustomLabel::entered, [this](){ forwardLbl->setStyleSheet("background:	#414B66"); });
-    connect(forwardLbl, &CustomLabel::left, [this](){ forwardLbl->setStyleSheet(""); });
-    connect(forwardLbl, &CustomLabel::clicked, [this](){ emit prevWish(); });
-    connect(backwardLbl, &CustomLabel::entered, [this](){ backwardLbl->setStyleSheet("background: #414B66"); });
-    connect(backwardLbl, &CustomLabel::left, [this](){ backwardLbl->setStyleSheet(""); });
-    connect(backwardLbl, &CustomLabel::clicked, [this](){ emit nextWish(); });
+    connect(prevLbl, &CustomLabel::entered, [this](){ prevLbl->setStyleSheet("background:	#414B66"); });
+    connect(prevLbl, &CustomLabel::left, [this](){ prevLbl->setStyleSheet(""); });
+    connect(prevLbl, &CustomLabel::clicked, [this](){ emit prevWish(); });
+    connect(nextLbl, &CustomLabel::entered, [this](){ nextLbl->setStyleSheet("background: #414B66"); });
+    connect(nextLbl, &CustomLabel::left, [this](){ nextLbl->setStyleSheet(""); });
+    connect(nextLbl, &CustomLabel::clicked, [this](){ emit nextWish(); });
+    connect(this, &WishDetail::hidePrevLbl, [this](bool isHidden){
+        if (isHidden)
+            prevLbl->hide();
+        else
+            prevLbl->show();
+    });
+    connect(this, &WishDetail::hideNextLbl, [this](bool isHidden){
+        if (isHidden)
+            nextLbl->hide();
+        else
+            nextLbl->show();
+    });
 }

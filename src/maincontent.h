@@ -42,7 +42,7 @@ private:
     void createWishDetailWidget();
     void setIncomeWindowInfo();
     void setExpenditureWindowInfo();
-    void setWishDetail(QString, QString, int, int, int, int);
+    void setWishDetail(int);
     void setWishWindowInfo();
     void setComboBox();
     void createCompleter();

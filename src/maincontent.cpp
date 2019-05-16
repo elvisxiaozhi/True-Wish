@@ -158,11 +158,11 @@ void MainContent::setExpenditureWindowInfo()
     this->expenditure->setChangeExpenditureWindow(date);
 }
 
-void MainContent::setWishDetail(QString wish, QString date, int goal, int years, int months, int days)
+void MainContent::setWishDetail(int index)
 {
-    wishDetail->setWishLableText(wish);
-    wishDetail->setGoalBar(date, goal);
-    wishDetail->setDateBar(date, years, months, days);
+    wishDetail->setWishLableText(get<1>(wishes[index])); //wish
+    wishDetail->setGoalBar(get<0>(wishes[index]), get<2>(wishes[index])); //addedDate, goal
+    wishDetail->setDateBar(get<0>(wishes[index]), get<3>(wishes[index]), get<4>(wishes[index]), get<5>(wishes[index])); //addedDate, years, months, days
 }
 
 void MainContent::setWishWindowInfo()
@@ -181,7 +181,8 @@ void MainContent::setWishWindowInfo()
         ui->wishInfo->setText("Those are your wishes");
         ui->wishButton->hide();
         wishDetail->show();
-        setWishDetail(wish, addedDate, goal, years, months, days);
+        wishDetail->setChangeWishLblVis(0, wish.size() - 1);
+        setWishDetail(0);
 
         connect(wishDetail, &WishDetail::changeWish, [this, wish, goal, years, months, days](){
             this->wish->setWishInfo(wish, goal, years, months, days);
@@ -373,5 +374,20 @@ void MainContent::on_wishButton_clicked()
 
 void MainContent::changeWishDetail(bool isNextWish)
 {
+    pair<QString, int> curr = wishDetail->returnWishDetail();
+    int i, n = wishes.size();
+    for (i = 0; i < n; ++i) {
+        if (curr.first == get<1>(wishes[i]) && curr.second == get<2>(wishes[i])) {
+            break;
+        }
+    }
 
+    if (isNextWish) {
+        setWishDetail(++i);
+    }
+    else {
+        setWishDetail(--i);
+    }
+
+    wishDetail->setChangeWishLblVis(i, n - 1);
 }

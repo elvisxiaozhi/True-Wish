@@ -5,7 +5,7 @@
 #include "customprogressbar.h"
 #include "customlabel.h"
 
-using std::tuple;
+using std::pair;
 
 class WishDetail : public QWidget
 {
@@ -16,10 +16,11 @@ public:
     void setWishLableText(QString);
     void setGoalBar(QString, int);
     void setDateBar(QString, int, int, int);
-    tuple<QString, QString, int, int, int, int> returnWishDetail();
+    pair<QString, int> returnWishDetail();
+    void setChangeWishLblVis(int, int); //change prevLbl and nextLbl visibility
 
 private:
-    CustomLabel *wishLbl, *forwardLbl, *backwardLbl;
+    CustomLabel *wishLbl, *prevLbl, *nextLbl;
     CustomProgressBar *goalBar, *dateBar;
     int daysLeft, moneyNeeded;
 
@@ -30,8 +31,8 @@ signals:
     void changeWish();
     void prevWish();
     void nextWish();
-
-private slots:
+    void hidePrevLbl(bool isHidden = true);
+    void hideNextLbl(bool isHidden = true);
 };
 
 #endif // WISHDETAIL_H
