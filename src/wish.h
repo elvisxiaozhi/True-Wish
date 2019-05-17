@@ -20,7 +20,7 @@ public:
     ~Wish();
 
 public:
-    void setWishInfo(QString, int, int, int, int);
+    void setWishInfo(int, QString, int, int, int, int);
     void setAddWishWindow();
     void setChangeWishWindow();
 
@@ -45,6 +45,11 @@ private:
     void closeWindow();
     QVector<tuple<QString, int, int, int, int> > getWishes();
     void printVec(QVector<tuple<QString, int, int, int, int> >); //delete later
+
+signals:
+    void wishAdded();
+    void wishModified();
+    void newWishSaved();
 
 private slots:
     void on_closeButton_clicked();

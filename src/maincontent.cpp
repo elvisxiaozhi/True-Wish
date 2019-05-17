@@ -59,6 +59,10 @@ void MainContent::createWishWindow()
 {
     wish = new Wish();
 
+    connect(wish, &Wish::wishAdded, [this](){ setWishWindowInfo(); });
+    connect(wish, &Wish::wishModified, [this](){ setWishWindowInfo(); });
+    connect(wish, &Wish::newWishSaved, [this](){ setWishWindowInfo(); });
+
     createWishDetailWidget();
     setWishWindowInfo();
 }
@@ -185,7 +189,10 @@ void MainContent::setWishWindowInfo()
         setWishDetail(0);
 
         connect(wishDetail, &WishDetail::changeWish, [this, wish, goal, years, months, days](){
-            this->wish->setWishInfo(wish, goal, years, months, days);
+            int i = returnCurrWishIndex(), n = wishes.size(); //change it later
+//            for (i = 0; i < n; ++i) {
+                this->wish->setWishInfo(n, get<1>(wishes[i]), get<2>(wishes[i]), get<3>(wishes[i]), get<4>(wishes[i]), get<5>(wishes[i])); //wish, goal, years, months, days
+//            }
             this->wish->setChangeWishWindow(); //call this funtion again, or the window won't change when label is clicked
             setWindowToTop(this->wish);
         });
@@ -372,7 +379,7 @@ void MainContent::on_wishButton_clicked()
     wish->setAddWishWindow();
 }
 
-void MainContent::changeWishDetail(bool isNextWish)
+int MainContent::returnCurrWishIndex()
 {
     pair<QString, int> curr = wishDetail->returnWishDetail();
     int i, n = wishes.size();
@@ -382,6 +389,13 @@ void MainContent::changeWishDetail(bool isNextWish)
         }
     }
 
+    return i;
+}
+
+void MainContent::changeWishDetail(bool isNextWish)
+{
+    int i = returnCurrWishIndex();
+
     if (isNextWish) {
         setWishDetail(++i);
     }
@@ -389,5 +403,5 @@ void MainContent::changeWishDetail(bool isNextWish)
         setWishDetail(--i);
     }
 
-    wishDetail->setChangeWishLblVis(i, n - 1);
+    wishDetail->setChangeWishLblVis(i, wishes.size() - 1);
 }

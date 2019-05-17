@@ -39,17 +39,24 @@ Wish::~Wish()
     delete ui;
 }
 
-void Wish::setWishInfo(QString wish, int goal, int years, int months, int days)
+void Wish::setWishInfo(int num, QString wish, int goal, int years, int months, int days)
 {
-    WishList *w = wishVec.first(); //change this later
-    w->editVec[0]->setText(wish);
-    w->editVec[1]->setText(QString::number(goal));
-    w->editVec[2]->setText(QString::number(years));
-    w->editVec[3]->setText(QString::number(months));
-    w->editVec[4]->setText(QString::number(days));
+//    int i;
 
-    origWish = wish;
-    origGoal = goal;
+    qDebug() << num;
+
+//    for (i = 0; i < num; ++i) {
+        WishList *w = wishVec.first(); //change it later
+        w->editVec[0]->setText(wish);
+        w->editVec[1]->setText(QString::number(goal));
+        w->editVec[2]->setText(QString::number(years));
+        w->editVec[3]->setText(QString::number(months));
+        w->editVec[4]->setText(QString::number(days));
+
+//    }
+
+    origWish = wish; //change later
+    origGoal = goal; //change later
 
     wishListValues.push_back(make_tuple(wish, goal, years, months, days));
 }
@@ -281,6 +288,8 @@ void Wish::on_addWishes_clicked()
 
             resetLineEdits();
             closeWindow();
+
+            emit wishAdded();
         }
     }
 }
@@ -302,6 +311,8 @@ void Wish::on_modifyButton_clicked()
     }
 
     closeWindow();
+
+    emit wishModified();
 }
 
 void Wish::wishLabelClicked()
@@ -341,6 +352,8 @@ void Wish::on_saveButton_clicked()
         }
 
         closeWindow();
+
+        emit newWishSaved();
     }
 }
 
@@ -348,5 +361,5 @@ void Wish::saveToBeModifiedWishList(bool isEdited)
 {
     qDebug() << isEdited;
 
-    qDebug() << "To be modified";
+//    qDebug() << "To be modified";
 }

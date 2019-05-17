@@ -64,6 +64,7 @@ private slots:
     void changeContentData(int);
     void completerActivated(const QString &);
     void on_wishButton_clicked();
+    int returnCurrWishIndex();
     void changeWishDetail(bool isNextWish = true);
 };
 
