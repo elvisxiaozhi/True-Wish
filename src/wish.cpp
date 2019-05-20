@@ -231,10 +231,17 @@ void Wish::deleteWishList()
             Database::deleteWish(wishVec[i]->editVec[0]->text(), wishVec[i]->editVec[1]->text().toInt());
             emit wishDeleted();
 
-            delete wishVec[i]; //delete first
-            wishVec.erase(wishVec.begin() + i); //then erase index from vector to prevent out of index issue in MousePressEvent()
-            delete frameVec[i];
-            frameVec.erase(frameVec.begin() + i);
+            if (i != 0) {
+                delete wishVec[i]; //delete first
+                delete frameVec[i];
+                wishVec.erase(wishVec.begin() + i); //then erase index from vector to prevent out of index issue in MousePressEvent()
+                frameVec.erase(frameVec.begin() + i);
+            }
+            else {
+                //clear the first wish list all texts and reset the first wish list
+                wishVec[i]->clearText();
+                wishVec[i]->clearFocus();
+            }
 
             setFixedHeight(MIN_HEIGHT + WISH_HEIGHT * wishVec.size());
 

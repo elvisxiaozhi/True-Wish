@@ -18,6 +18,7 @@ public:
     ~WishList();
 
     void clearFocus();
+    void clearText();
     QVector<CustomLineEdit *> editVec;
     void isBinLabelHidden(bool);
     void emitBinLabelClickedSignal();

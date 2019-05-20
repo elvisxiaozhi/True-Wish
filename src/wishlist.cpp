@@ -95,6 +95,13 @@ void WishList::clearFocus()
     }
 }
 
+void WishList::clearText()
+{
+    for (auto e : editVec) {
+        e->clear();
+    }
+}
+
 void WishList::isBinLabelHidden(bool state)
 {
     if (state)
