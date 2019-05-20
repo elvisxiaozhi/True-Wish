@@ -62,6 +62,7 @@ void MainContent::createWishWindow()
     connect(wish, &Wish::wishAdded, [this](){ setWishWindowInfo(); });
     connect(wish, &Wish::wishModified, [this](){ setWishWindowInfo(); });
     connect(wish, &Wish::newWishSaved, [this](){ setWishWindowInfo(); });
+    connect(wish, &Wish::wishDeleted, [this](){ setWishWindowInfo(); });
 
     createWishDetailWidget();
     setWishWindowInfo();

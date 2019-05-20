@@ -30,6 +30,7 @@ public:
     static int countSavedMoney(QString, QString);
     static void deleteIncome(QString);
     static void deleteExpendture(QString);
+    static void deleteWish(QString, int);
     static QStringList returnStoredMonth(QString);
 
 private:

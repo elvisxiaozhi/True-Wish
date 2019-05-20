@@ -51,6 +51,7 @@ signals:
     void wishAdded();
     void wishModified();
     void newWishSaved();
+    void wishDeleted();
 
 private slots:
     void on_closeButton_clicked();

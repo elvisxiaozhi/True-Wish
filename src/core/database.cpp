@@ -175,6 +175,14 @@ void Database::deleteExpendture(QString date)
     query.exec();
 }
 
+void Database::deleteWish(QString wish, int goal)
+{
+    QSqlQuery query;
+    QString str = QString("DELETE FROM wishes WHERE wish = '%1' AND fin_goal = '%2'").arg(wish).arg(goal);
+    query.prepare(str);
+    query.exec();
+}
+
 QStringList Database::returnStoredMonth(QString date)
 {
     QString str = QString("SELECT created_date FROM income WHERE created_date BETWEEN '%1-01-01' AND '%1-12-31'"

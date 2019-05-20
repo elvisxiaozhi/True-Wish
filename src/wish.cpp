@@ -228,6 +228,9 @@ void Wish::deleteWishList()
     int i, n = wishVec.size();
     for (i = 0; i < n; ++i) {
         if (wishList == wishVec[i]) {
+            Database::deleteWish(wishVec[i]->editVec[0]->text(), wishVec[i]->editVec[1]->text().toInt());
+            emit wishDeleted();
+
             delete wishVec[i]; //delete first
             wishVec.erase(wishVec.begin() + i); //then erase index from vector to prevent out of index issue in MousePressEvent()
             delete frameVec[i];
