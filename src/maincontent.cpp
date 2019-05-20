@@ -174,7 +174,9 @@ void MainContent::setWishWindowInfo()
     wishes = Database::returnWishInfo();
     QString addedDate, wish;
     int goal = 0, years, months, days;
-    tie(addedDate, wish, goal, years, months, days) = wishes.first();
+    if (wishes.empty() == false) {
+        tie(addedDate, wish, goal, years, months, days) = wishes.first();
+    }
 
     if (goal == 0) {
         ui->wishInfo->setText("What are you wishing for?");

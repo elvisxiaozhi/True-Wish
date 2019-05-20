@@ -61,7 +61,9 @@ void Wish::setAddWishWindow()
     ui->addWishes->show();
     ui->modifyButton->hide();
     ui->saveButton->hide();
-    wishVec.first()->isBinLabelHidden(false);
+    if (wishVec.empty() == false) {
+        wishVec.first()->isBinLabelHidden(false);
+    }
 }
 
 void Wish::setChangeWishWindow()
@@ -173,9 +175,12 @@ void Wish::closeWindow()
         wishList->clearFocus(); //clear focus
         emit wishList->lineEditTextEdited(false); //reconnect wish list signal
 
-        //remove empty wish list
-        if (isWishListEmpty(wishList)) {
-            wishList->emitBinLabelClickedSignal();
+        //IMPORTANT: wishVec.size() must > 1, why? see setAddWishWindow function
+        if (wishVec.size() > 1) {
+            //remove empty wish list except the first one
+            if (isWishListEmpty(wishList)) {
+                wishList->emitBinLabelClickedSignal();
+            }
         }
 
         wishListValues.clear(); //clear wishListValues, each time when window reopen, it will be set to new values
