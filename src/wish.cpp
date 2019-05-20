@@ -26,6 +26,7 @@ Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
                   );
 
     createNewWishVec();
+
     wishVec.first()->isBinLabelHidden(false); //default wish vec can not be deleted
     createWishLabel();
 
@@ -39,21 +40,14 @@ Wish::~Wish()
     delete ui;
 }
 
-void Wish::setWishInfo(int num, QString wish, int goal, int years, int months, int days)
+void Wish::setWishInfo(int index, QString wish, int goal, int years, int months, int days)
 {
-//    int i;
-
-    qDebug() << num;
-
-//    for (i = 0; i < num; ++i) {
-        WishList *w = wishVec.first(); //change it later
-        w->editVec[0]->setText(wish);
-        w->editVec[1]->setText(QString::number(goal));
-        w->editVec[2]->setText(QString::number(years));
-        w->editVec[3]->setText(QString::number(months));
-        w->editVec[4]->setText(QString::number(days));
-
-//    }
+    WishList *w = wishVec[index];
+    w->editVec[0]->setText(wish);
+    w->editVec[1]->setText(QString::number(goal));
+    w->editVec[2]->setText(QString::number(years));
+    w->editVec[3]->setText(QString::number(months));
+    w->editVec[4]->setText(QString::number(days));
 
     origWish = wish; //change later
     origGoal = goal; //change later
@@ -77,6 +71,11 @@ void Wish::setChangeWishWindow()
     ui->addWishes->hide();
     ui->saveButton->hide();
     wishVec.first()->isBinLabelHidden(true);
+}
+
+void Wish::emitWishLabelClickedSignal()
+{
+    emit wishLabel->clicked();
 }
 
 void Wish::createWishLabel()

@@ -189,10 +189,13 @@ void MainContent::setWishWindowInfo()
         setWishDetail(0);
 
         connect(wishDetail, &WishDetail::changeWish, [this, wish, goal, years, months, days](){
-            int i = returnCurrWishIndex(), n = wishes.size(); //change it later
-//            for (i = 0; i < n; ++i) {
-                this->wish->setWishInfo(n, get<1>(wishes[i]), get<2>(wishes[i]), get<3>(wishes[i]), get<4>(wishes[i]), get<5>(wishes[i])); //wish, goal, years, months, days
-//            }
+            int i, n = wishes.size();
+            for (i = 0; i < n; ++i) {
+                if (i != 0) {
+                    this->wish->emitWishLabelClickedSignal();
+                }
+                this->wish->setWishInfo(i, get<1>(wishes[i]), get<2>(wishes[i]), get<3>(wishes[i]), get<4>(wishes[i]), get<5>(wishes[i])); //wish, goal, years, months, days
+            }
             this->wish->setChangeWishWindow(); //call this funtion again, or the window won't change when label is clicked
             setWindowToTop(this->wish);
         });

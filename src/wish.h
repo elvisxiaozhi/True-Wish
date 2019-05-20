@@ -23,6 +23,7 @@ public:
     void setWishInfo(int, QString, int, int, int, int);
     void setAddWishWindow();
     void setChangeWishWindow();
+    void emitWishLabelClickedSignal();
 
 private:
     Ui::Wish *ui;
