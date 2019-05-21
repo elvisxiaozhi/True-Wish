@@ -23,7 +23,8 @@ public:
     void setWishInfo(int, QString, int, int, int, int);
     void setAddWishWindow();
     void setChangeWishWindow();
-    void emitWishLabelClickedSignal();
+    int returnWishVecSize();
+    void createMoreWishLists(int);
 
 private:
     Ui::Wish *ui;
@@ -35,7 +36,7 @@ private:
     QString origWish, origGoal;
     QVBoxLayout *scrollVLayout;
 
-    void createNewWishVec();
+    void createNewWishList();
     void createWishLabel();
     void mousePressEvent(QMouseEvent *);
     bool allFilled();

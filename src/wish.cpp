@@ -25,7 +25,7 @@ Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
                   "QScrollBar::handle:vertical { background: #414B66; }"
                   );
 
-    createNewWishVec();
+    createNewWishList();
 
     wishVec.first()->isBinLabelHidden(false); //default wish vec can not be deleted
     createWishLabel();
@@ -75,9 +75,17 @@ void Wish::setChangeWishWindow()
     wishVec.first()->isBinLabelHidden(true);
 }
 
-void Wish::emitWishLabelClickedSignal()
+int Wish::returnWishVecSize()
 {
-    emit wishLabel->clicked();
+    return wishVec.size();
+}
+
+void Wish::createMoreWishLists(int max)
+{
+    int i, n = max - wishVec.size();
+    for (i = 0; i < n; ++i) {
+        createNewWishList();
+    }
 }
 
 void Wish::createWishLabel()
@@ -173,7 +181,6 @@ void Wish::closeWindow()
 {
     for (auto wishList : wishVec) {
         wishList->clearFocus(); //clear focus
-        emit wishList->lineEditTextEdited(false); //reconnect wish list signal
 
         //IMPORTANT: wishVec.size() must > 1, why? see setAddWishWindow function
         if (wishVec.size() > 1) {
@@ -181,10 +188,12 @@ void Wish::closeWindow()
             if (isWishListEmpty(wishList)) {
                 wishList->emitBinLabelClickedSignal();
             }
+        //delete later
+//        emit wishList->lineEditTextEdited(false); //reconnect wish list signal
         }
 
-        wishListValues.clear(); //clear wishListValues, each time when window reopen, it will be set to new values
     }
+    wishListValues.clear(); //clear wishListValues, each time when window reopen, it will be set to new values
 
     close(); //close must be called after wish list is removed
 }
@@ -261,7 +270,7 @@ void Wish::on_closeButton_clicked()
     closeWindow();
 }
 
-void Wish::createNewWishVec()
+void Wish::createNewWishList()
 {
     QFrame *frame = new QFrame(this);
     frame->setFixedHeight(WISH_HEIGHT);
@@ -298,20 +307,19 @@ void Wish::on_addWishes_clicked()
             int years = e->editVec[2]->text().toInt();
             int months = e->editVec[3]->text().toInt();
             int days = e->editVec[4]->text().toInt();
+
             Database::addWish(QDate::currentDate().toString("yyyy-MM-dd"), wish, goal, years, months, days);
-
-            resetLineEdits();
-            closeWindow();
-
-            emit wishAdded();
         }
+
+        resetLineEdits();
+        closeWindow();
+
+        emit wishAdded();
     }
 }
 
 void Wish::on_modifyButton_clicked()
 {
-    printVec(wishListValues);
-
     QVector<tuple<QString, int, int, int, int> > newWishes = getWishes();
     int i, n = wishListValues.size();
     if (n > newWishes.size()) {
@@ -331,7 +339,7 @@ void Wish::on_modifyButton_clicked()
 
 void Wish::wishLabelClicked()
 {
-     createNewWishVec();
+     createNewWishList();
 
      if (wishVec.size() <= 2) {
          setFixedHeight(MIN_HEIGHT + WISH_HEIGHT * wishVec.size());
@@ -371,9 +379,9 @@ void Wish::on_saveButton_clicked()
     }
 }
 
-void Wish::saveToBeModifiedWishList(bool isEdited)
+void Wish::saveToBeModifiedWishList(bool /*isEdited*/)
 {
-    qDebug() << isEdited;
+//    qDebug() << isEdited;
 
 //    qDebug() << "To be modified";
 }
