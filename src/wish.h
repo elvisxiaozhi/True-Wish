@@ -47,6 +47,7 @@ private:
     void closeWindow();
     QVector<tuple<QString, int, int, int, int> > getWishes();
     void printVec(QVector<tuple<QString, int, int, int, int> >); //delete later
+    void setWishWindowSize();
 
 signals:
     void wishAdded();

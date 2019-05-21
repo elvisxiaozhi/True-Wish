@@ -32,7 +32,7 @@ Wish::Wish(PaintedWidget *parent, int width) : PaintedWidget(parent, width),
 
     connect(this, &Wish::actionChanged, [this](){ closeWindow(); });
 
-    setFixedHeight(MIN_HEIGHT + WISH_HEIGHT * wishVec.size());
+    setWishWindowSize();
 }
 
 Wish::~Wish()
@@ -74,7 +74,7 @@ void Wish::setChangeWishWindow()
     ui->saveButton->hide();
     wishVec.first()->isBinLabelHidden(true);
 
-    setFixedHeight(MIN_HEIGHT + WISH_HEIGHT * wishVec.size());
+    setWishWindowSize();
 }
 
 int Wish::returnWishVecSize()
@@ -222,6 +222,16 @@ void Wish::printVec(QVector<tuple<QString, int, int, int, int> > res)
     }
 }
 
+void Wish::setWishWindowSize()
+{
+    if (wishVec.size() <= 2) {
+        setFixedHeight(MIN_HEIGHT + WISH_HEIGHT * wishVec.size());
+    }
+    else {
+        setFixedHeight(MIN_HEIGHT + WISH_HEIGHT * 2);
+    }
+}
+
 void Wish::focusIn(CustomLineEdit *edit)
 {
     int i, n = wishVec.size();
@@ -254,7 +264,7 @@ void Wish::deleteWishList()
                 wishVec[i]->clearFocus();
             }
 
-            setFixedHeight(MIN_HEIGHT + WISH_HEIGHT * wishVec.size());
+            setWishWindowSize();
 
             break;
         }
@@ -343,9 +353,7 @@ void Wish::wishLabelClicked()
 {
      createNewWishList();
 
-     if (wishVec.size() <= 2) {
-         setFixedHeight(MIN_HEIGHT + WISH_HEIGHT * wishVec.size());
-     }
+     setWishWindowSize();
 
      ui->modifyButton->hide();
      ui->addWishes->hide();
@@ -359,8 +367,6 @@ void Wish::on_saveButton_clicked()
     }
     else {
         QVector<tuple<QString, int, int, int, int> > newWishes = getWishes();
-        printVec(newWishes);
-
         int i, n = wishListValues.size();
         for (i = 0; i < n; ++i) {
             if (wishListValues[i] != newWishes[i]) {
@@ -369,7 +375,7 @@ void Wish::on_saveButton_clicked()
             }
         }
 
-        int j = n;
+        int j = i;
         n = newWishes.size();
         for (i = j; i < n; ++i) {
             Database::addWish(QDate::currentDate().toString("yyyy-MM-dd"), get<0>(newWishes[i]), get<1>(newWishes[i]), get<2>(newWishes[i]), get<3>(newWishes[i]), get<4>(newWishes[i]));
