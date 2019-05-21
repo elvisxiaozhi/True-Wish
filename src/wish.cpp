@@ -73,6 +73,8 @@ void Wish::setChangeWishWindow()
     ui->addWishes->hide();
     ui->saveButton->hide();
     wishVec.first()->isBinLabelHidden(true);
+
+    setFixedHeight(MIN_HEIGHT + WISH_HEIGHT * wishVec.size());
 }
 
 int Wish::returnWishVecSize()
