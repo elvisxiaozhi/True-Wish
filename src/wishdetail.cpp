@@ -24,7 +24,7 @@ WishDetail::WishDetail(QWidget *parent) :
     hLayout->addLayout(vLayout);
     hLayout->addWidget(nextLbl);
 
-    connect(goalBar, &CustomProgressBar::updateToolTip, [this](){ goalBar->toolTip = QString::number(moneyNeeded) + " needed"; });
+    connect(goalBar, &CustomProgressBar::updateToolTip, this, &WishDetail::setGoalBarDetail);
     connect(dateBar, &CustomProgressBar::updateToolTip, [this](){ dateBar->toolTip = QString::number(daysLeft) + " days left"; });
 }
 
@@ -41,6 +41,8 @@ void WishDetail::setGoalBar(QString date, int goal)
     moneyNeeded = goal - saved;
 
     goalBar->setBarValues(saved, goal);
+
+    setGoalBarDetail(); //this is will make a difference when moneyNeeded <= 0
 }
 
 void WishDetail::setDateBar(QString date, int years, int months, int days)
@@ -105,4 +107,16 @@ void WishDetail::createChangeWishLabels()
         else
             nextLbl->show();
     });
+}
+
+void WishDetail::setGoalBarDetail()
+{
+    if (moneyNeeded > 0) {
+        goalBar->toolTip = QString::number(moneyNeeded) + " needed";
+    }
+    else {
+        goalBar->setBarValues(goalBar->maximum(), goalBar->maximum());
+        goalBar->setFormat("Goal accomplished");
+        goalBar->toolTip = QString::number(goalBar->maximum()) + " saved";
+    }
 }

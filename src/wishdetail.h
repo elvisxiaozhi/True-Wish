@@ -33,6 +33,9 @@ signals:
     void nextWish();
     void hidePrevLbl(bool isHidden = true);
     void hideNextLbl(bool isHidden = true);
+
+private slots:
+    void setGoalBarDetail();
 };
 
 #endif // WISHDETAIL_H
