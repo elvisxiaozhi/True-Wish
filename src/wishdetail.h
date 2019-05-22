@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "customprogressbar.h"
 #include "customlabel.h"
+#include <QSpacerItem>
 
 using std::pair;
 
@@ -21,11 +22,14 @@ public:
 
 private:
     CustomLabel *wishLbl, *prevLbl, *nextLbl;
+    QSpacerItem *prevSpacer, *nextSpacer;
     CustomProgressBar *goalBar, *dateBar;
     int daysLeft, moneyNeeded;
+    const int FIXED_WIDTH = 65;
 
     void createWishLabel();
     void createChangeWishLabels();
+    void setSpacerSize(QSpacerItem *, bool);
 
 signals:
     void changeWish();
@@ -36,6 +40,8 @@ signals:
 
 private slots:
     void setGoalBarDetail();
+    void setPrevLblVis(bool);
+    void setNextLblVis(bool);
 };
 
 #endif // WISHDETAIL_H
